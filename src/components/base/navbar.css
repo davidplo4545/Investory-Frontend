@@ -1,0 +1,34 @@
+.navbar-center {
+  width: 60%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+}
+
+.collapsed-center {
+  display: flex;
+  /* justify-content: space-between; */
+}
+
+.navbar {
+  background: white !important;
+  padding-top: 30px;
+  padding-bottom: 20px;
+  border-bottom: solid 1px rgba(41, 41, 41, 1);
+}
+
+@media only screen and (max-width: 992px) {
+  .navbar-center {
+    width: 100%;
+    margin: 0;
+    display: block;
+  }
+
+  .navbar {
+    padding-top: 10px;
+  }
+}
+
+.nav-link:hover {
+  color: #3d9970 !important;
+}

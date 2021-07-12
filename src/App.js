@@ -1,23 +1,61 @@
-import logo from './logo.svg';
+import {useState, useEffect} from 'react';
 import './App.css';
+import NavbarMenu from './components/base/Navbar.js';
+import { Route, Switch } from "react-router-dom";
+import './components/base/navbar.css';
+import HomePage from './pages/HomePage'
+import SignInPage from './pages/SignInPage'
+import GetStartedPage from './pages/GetStartedPage'
+import AssetsPage from './pages/AssetsPage'
+import {UserContext} from './context/UserContext'
+import useToken from './context/useToken'
+import { getMyUserDetails } from './api/authentication'
+
 
 function App() {
+  const {token,setToken} = useToken();
+  const [user, setUser] = useState({})
+
+  useEffect(() => {
+    if (token)
+      getMyUserDetails(token,setUser)
+  }, [token]);
+
+
   return (
     <div className="App">
+      <UserContext.Provider value={{token, user, setToken, setUser}}>
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+            <NavbarMenu token={token}/>
       </header>
+      <main>
+        <Switch>
+          <Route exact path="/">
+            <HomePage />
+          </Route>
+          <Route exact path="/register">
+            <GetStartedPage/>
+          </Route>
+          <Route exact path="/signin">
+            <SignInPage/>
+          </Route>
+          <Route exact path="/assets/isr">
+          <AssetsPage assetType={"isr"}/>
+          </Route>
+          <Route exact path="/assets/us">
+          <AssetsPage assetType={"us"}/>
+          </Route>
+          <Route exact path="/assets/crypto">
+            <AssetsPage assetType={"crypto"}/>
+          </Route>
+          <Route exact path="/profile">
+            {/* <ProfilePage/> */}
+            <div>Profile Page</div>
+          </Route>
+        </Switch> 
+      </main>
+        {/* <footer className="footer">Footer</footer> */}
+      </UserContext.Provider>
     </div>
   );
 }
