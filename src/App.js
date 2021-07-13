@@ -11,7 +11,7 @@ import AssetPage from './pages/AssetPage'
 import {UserContext} from './context/UserContext'
 import useToken from './context/useToken'
 import { getMyUserDetails } from './api/authentication'
-
+import {Container} from 'react-bootstrap'
 
 function App() {
   const {token,setToken} = useToken();
@@ -31,22 +31,24 @@ function App() {
       </header>
       <main>
         <Switch>
-          <Route exact path="/">
-            <HomePage />
-          </Route>
-          <Route exact path="/register">
-            <GetStartedPage/>
-          </Route>
-          <Route exact path="/signin">
-            <SignInPage/>
-          </Route>
-          <Route path="/assets/:assetType" component={AssetsPage}/>
-          <Route path="/asset/:assetId" component={AssetPage}/>
+          <Container>
+            <Route exact path="/">
+              <HomePage />
+            </Route>
+            <Route exact path="/register">
+              <GetStartedPage/>
+            </Route>
+            <Route exact path="/signin">
+              <SignInPage/>
+            </Route>
+            <Route path="/assets/:assetType" component={AssetsPage}/>
+            <Route path="/asset/:assetId" component={AssetPage}/>
 
-          <Route exact path="/profile">
-            {/* <ProfilePage/> */}
-            <div>Profile Page</div>
-          </Route>
+            <Route exact path="/profile">
+              {/* <ProfilePage/> */}
+              <div>Profile Page</div>
+            </Route>
+          </Container>
         </Switch> 
       </main>
         {/* <footer className="footer">Footer</footer> */}

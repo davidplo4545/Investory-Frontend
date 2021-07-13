@@ -10,6 +10,19 @@ export const getAllAssets = (userToken, assetType, setAssets) =>{
     })
     .then((res) =>{
         setAssets(res.data)
-        console.log('herere');
+    })
+}
+
+export const getAsset = (userToken, assetId, setAsset, setIsValid) =>{
+    axios.get(domain + `/assets/${assetId}`,{
+        headers:{
+            'Authorization': `Token ${userToken}`
+        }
+    })
+    .then((res) =>{
+        setAsset(res.data)
+    })
+    .catch((error) =>{
+        setIsValid(false)
     })
 }

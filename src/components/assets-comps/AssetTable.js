@@ -1,7 +1,9 @@
 import React,{useState} from 'react'
 import MaterialTable  from 'material-table';
+import {useHistory} from 'react-router-dom'
 
 const AssetTable = ({assetType, assets}) =>{
+    let history = useHistory();
     const equityColumns = [
         { title: 'Id', field: 'id' },
         { title: 'Type', field: 'type' },
@@ -18,9 +20,10 @@ const AssetTable = ({assetType, assets}) =>{
     const [selectedRow, setSelectedRow] = useState(null);
 
     const handleRowClicked = (rowData) =>{
-        console.log("row clicked");
         const id = rowData.id
-        console.log(id)
+        history.push({
+            pathname:`/asset/${id}`,
+           });
     }
 
     return(
