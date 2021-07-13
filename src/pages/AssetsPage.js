@@ -1,22 +1,33 @@
 import React, {useState, useContext, useEffect} from 'react'
 import {UserContext} from '../context/UserContext'
 import {getAllAssets} from '../api/assets.js'
+import AssetTable from '../components/assets-comps/AssetTable'
 
-const AssetPage = ({assetType}) =>{
+const AssetPage = ({match}) =>{
+    const assetType = match.params.assetType
     const user = useContext(UserContext)
-    console.log(assetType)
-    const [setAssets, assets] = useState()
+    const [assets, setAssets] = useState()
+    const [isValid, setIsValid] = useState(true)
+
     useEffect(() => {
-        // if (user.token)
-          getAllAssets(user.token,assetType,setAssets)
-      }, []);
+        if (assetType !== "us" && assetType !== "isr" && assetType !== "crypto")
+            setIsValid(false)
+        else
+            {
+                setIsValid(true)
+                getAllAssets(user.token,assetType,setAssets)
+            }
+      },[assetType]);
 
     return(
-        <div>
-            {assets != null &&
-                <div>Assets Page</div>
+        <React.Fragment>
+            {isValid ?
+                <AssetTable assetType={assetType} assets={assets}/>
+                :
+                <div>Not Valid</div>
             }
-        </div>
+        </React.Fragment>
+        
     )
 }
 

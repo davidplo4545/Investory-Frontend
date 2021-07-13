@@ -41,13 +41,11 @@ const NavbarMenu = () => {
                     :
                         <Navbar.Collapse id="basic-navbar-nav"> 
                             <Nav className="mr-auto">
-                                <Nav.Link as={Link} to='/us'>US</Nav.Link>
-                                <Nav.Link as={Link} to='/crypto'>Crypto</Nav.Link>
                                 {/* <Nav.Link as={Link} to='profile'>Profile</Nav.Link> */}
                                 <NavDropdown title="Assets" id="basic-nav-dropdown">
-                                    <NavDropdown.Item as={Link} to='assets/isr'>Israeli</NavDropdown.Item>
-                                    <NavDropdown.Item as={Link} to='assets/us'>US</NavDropdown.Item>
-                                    <NavDropdown.Item as={Link} to='assets/crypto'>Crypto</NavDropdown.Item>
+                                    <NavDropdown.Item as={Link} to='/assets/isr'>Israeli</NavDropdown.Item>
+                                    <NavDropdown.Item as={Link} to='/assets/us'>US</NavDropdown.Item>
+                                    <NavDropdown.Item as={Link} to='/assets/crypto'>Crypto</NavDropdown.Item>
                                 </NavDropdown>
                                 <NavDropdown title="My Profile" id="basic-nav-dropdown">
                                     <NavDropdown.Item href="#action/3.1">Photos</NavDropdown.Item>

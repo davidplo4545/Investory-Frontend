@@ -7,6 +7,7 @@ import HomePage from './pages/HomePage'
 import SignInPage from './pages/SignInPage'
 import GetStartedPage from './pages/GetStartedPage'
 import AssetsPage from './pages/AssetsPage'
+import AssetPage from './pages/AssetPage'
 import {UserContext} from './context/UserContext'
 import useToken from './context/useToken'
 import { getMyUserDetails } from './api/authentication'
@@ -39,15 +40,9 @@ function App() {
           <Route exact path="/signin">
             <SignInPage/>
           </Route>
-          <Route exact path="/assets/isr">
-          <AssetsPage assetType={"isr"}/>
-          </Route>
-          <Route exact path="/assets/us">
-          <AssetsPage assetType={"us"}/>
-          </Route>
-          <Route exact path="/assets/crypto">
-            <AssetsPage assetType={"crypto"}/>
-          </Route>
+          <Route path="/assets/:assetType" component={AssetsPage}/>
+          <Route path="/asset/:assetId" component={AssetPage}/>
+
           <Route exact path="/profile">
             {/* <ProfilePage/> */}
             <div>Profile Page</div>

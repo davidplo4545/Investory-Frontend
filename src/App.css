@@ -9,15 +9,35 @@
   justify-content: space-between;
 }
 main {
-  flex: 1;
-  outline: 1px solid black;
-  display: inline-flex;
-  flex-direction: column;
-  align-items: center;
+  /* flex: 1 1 auto; */
+  /* flex: 1; */
+  /* display: inline-flex; */
+  height: 100%;
+  /* display: flex; */
+  /* flex-direction: column; */
+  /* align-items: center; */
   /* justify-content: center; */
+}
+
+.assets-table {
+  width: 100%;
+  /* height: auto; */
+  padding-top: 50px;
+  display: flex;
+  justify-content: center;
+}
+
+.MuiPaper-root {
+  width: 60%;
 }
 
 .footer {
   background-color: red;
   padding: 10px;
+}
+
+@media only screen and (max-width: 992px) {
+  .MuiPaper-root {
+    width: 90%;
+  }
 }
