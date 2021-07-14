@@ -13,7 +13,7 @@ export const getAllAssets = (userToken, assetType, setAssets) =>{
     })
 }
 
-export const getAsset = (userToken, assetId, setAsset, setIsValid) =>{
+export const getAsset = (userToken, assetId, setAsset, setRecords, setIsValid) =>{
     axios.get(domain + `/assets/${assetId}`,{
         headers:{
             'Authorization': `Token ${userToken}`
@@ -21,6 +21,8 @@ export const getAsset = (userToken, assetId, setAsset, setIsValid) =>{
     })
     .then((res) =>{
         setAsset(res.data)
+        setRecords(res.data.records)
+        console.log(res.data.records)
     })
     .catch((error) =>{
         setIsValid(false)

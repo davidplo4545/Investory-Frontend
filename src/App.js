@@ -30,26 +30,26 @@ function App() {
             <NavbarMenu token={token}/>
       </header>
       <main>
-        <Switch>
           <Container>
-            <Route exact path="/">
-              <HomePage />
-            </Route>
-            <Route exact path="/register">
-              <GetStartedPage/>
-            </Route>
-            <Route exact path="/signin">
-              <SignInPage/>
-            </Route>
-            <Route path="/assets/:assetType" component={AssetsPage}/>
-            <Route path="/asset/:assetId" component={AssetPage}/>
+            <Switch>
+              <Route exact path="/">
+                <HomePage />
+              </Route>
+              <Route exact path="/register">
+                <GetStartedPage/>
+              </Route>
+              <Route exact path="/signin">
+                <SignInPage/>
+              </Route>
+              <Route path="/assets/:assetType" component={AssetsPage}/>
+              <Route path="/asset/:assetId" component={AssetPage}/>
 
-            <Route exact path="/profile">
-              {/* <ProfilePage/> */}
-              <div>Profile Page</div>
-            </Route>
+              <Route exact path="/profile">
+                {/* <ProfilePage/> */}
+                <div>Profile Page</div>
+              </Route>
+            </Switch> 
           </Container>
-        </Switch> 
       </main>
         {/* <footer className="footer">Footer</footer> */}
       </UserContext.Provider>
