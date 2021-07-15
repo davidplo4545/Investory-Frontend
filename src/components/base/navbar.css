@@ -3,6 +3,7 @@
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
+  padding-top: 30px;
 }
 
 .collapsed-center {
@@ -12,9 +13,22 @@
 
 .navbar {
   background: white !important;
-  padding-top: 30px;
-  padding-bottom: 20px;
+  padding-bottom: 5px;
   /* border-bottom: solid 1px rgba(41, 41, 41, 1); */
+}
+
+.navbar-secondary {
+  width: 60%;
+  margin: 0 auto;
+  height: 50px;
+}
+
+.big-navbar {
+  display: block;
+}
+
+.small-navbar {
+  display: none;
 }
 
 @media only screen and (max-width: 992px) {
@@ -22,6 +36,14 @@
     width: 100%;
     margin: 0;
     display: block;
+  }
+
+  .small-navbar {
+    display: block;
+  }
+
+  .big-navbar {
+    display: none;
   }
 
   .navbar {

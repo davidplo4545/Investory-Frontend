@@ -23,7 +23,10 @@ main {
   padding-top: 30px;
   max-width: 65%;
   height: 100%;
-  background-color: lightblue;
+  /* background-color: lightblue; */
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+  /* width: 40%; */
 }
 
 /* .assets-table {

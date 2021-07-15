@@ -1,6 +1,6 @@
 import {useState, useEffect} from 'react';
 import './App.css';
-import NavbarMenu from './components/base/Navbar.js';
+import NavbarMenu from './components/base/NavbarMenu.js';
 import { Route, Switch } from "react-router-dom";
 import './components/base/navbar.css';
 import HomePage from './pages/HomePage'
