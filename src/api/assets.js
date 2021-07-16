@@ -13,7 +13,7 @@ export const getAllAssets = (userToken, assetType, setAssets) =>{
     })
 }
 
-export const getAsset = (userToken, assetId, setAsset, setPrices, setDates, setIsValid) =>{
+export const getAsset = (userToken, assetId, setAsset, setRecords, setIsValid) =>{
     axios.get(domain + `/assets/${assetId}`,{
         headers:{
             'Authorization': `Token ${userToken}`
@@ -21,15 +21,7 @@ export const getAsset = (userToken, assetId, setAsset, setPrices, setDates, setI
     })
     .then((res) =>{
         setAsset(res.data)
-        let records = res.data.records
-        let prices = []
-        let dates = []
-        records.forEach((record) => {
-            prices.push(record.price)
-            dates.push(record.date)
-        });
-        setPrices(prices)
-        setDates(dates)
+        setRecords(res.data.records)
     })
     .catch((error) =>{
         setIsValid(false)

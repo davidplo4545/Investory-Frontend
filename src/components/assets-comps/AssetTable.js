@@ -17,7 +17,7 @@ const AssetTable = ({assetType, assets}) =>{
         { title: 'Ticker', field: 'symbol' },
         { title: 'Last Price (USD)', field: 'last_price', searchable:false }
       ];
-    const [selectedRow, setSelectedRow] = useState(null);
+    const [selectedRow] = useState(null);
 
     const handleRowClicked = (rowData) =>{
         const id = rowData.id

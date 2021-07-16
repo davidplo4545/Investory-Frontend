@@ -11,7 +11,6 @@ export const BigNavbar = () =>{
     const [secMenuItems, setSecMenuItems] = useState([])
     const handleMenuItemClick = (item) =>{
         setSecMenuItems(item.secMenuItems)
-        console.log(item.secMenuItems)
     }
 
     const onLogout = () => {
@@ -42,8 +41,8 @@ export const BigNavbar = () =>{
 
                                     {menuItems.map((item) => {
                                         return (item.link === null ?
-                                            <Nav.Link onClick={() => handleMenuItemClick(item)}>{item.title}</Nav.Link> :
-                                            <Nav.Link onClick={() => handleMenuItemClick(item)} as={Link} to={item.link}>{item.title}</Nav.Link> 
+                                            <Nav.Link key={item.title} onClick={() => handleMenuItemClick(item)}>{item.title}</Nav.Link> :
+                                            <Nav.Link key={item.title} onClick={() => handleMenuItemClick(item)} as={Link} to={item.link}>{item.title}</Nav.Link> 
                                         )
                                     })}  
                                 </Nav>
@@ -55,33 +54,30 @@ export const BigNavbar = () =>{
                     
                 </div>
             </Navbar>
-        
-            <Navbar bg="light"  variant="light" expand="lg">
-            <div className="navbar-secondary">
-                    <div className="collapsed-center">
-                        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                    </div>
-                    <Navbar.Collapse id="basic-navbar-nav"> 
-                        <Nav className="mr-auto">
-                            {secMenuItems.map((item) => {
-                                return <Nav.Link as={Link} to={item.link}>{item.title}</Nav.Link>
-                            })}
-                        </Nav>
-                    </Navbar.Collapse>
-                        
-                    
+            {user.token !== null &&
+                <div className="navbar-secondary">
+                    <Navbar className="secondary" bg="light"  variant="light" expand="lg">
+                            <div className="collapsed-center">
+                                <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                            </div>
+                            <Navbar.Collapse id="basic-navbar-nav"> 
+                                <Nav className="mr-auto">
+                                    {secMenuItems.map((item) => {
+                                        return <Nav.Link key={item.title}  as={Link} to={item.link}>{item.title}</Nav.Link>
+                                    })}
+                                </Nav>
+                            </Navbar.Collapse>
+                                
+                            
+                    </Navbar>
                 </div>
-            </Navbar>
+            }
         </div>
     )
 }
 
 export const SmallNavbar = () =>{
     const user = useContext(UserContext)
-    const [secMenuItem, setSecMenuItems] = useState([])
-    const handleMenuItemClick = (item) =>{
-        setSecMenuItems(item.secMenuItems)
-    }
 
     const onLogout = () => {
         userLogout(user.token,user.setToken)
@@ -109,20 +105,17 @@ export const SmallNavbar = () =>{
                             :
                                 <Navbar.Collapse id="basic-navbar-nav"> 
                                     <Nav className="mr-auto">
-                                        {/* <Nav.Link as={Link} to='profile'>Profile</Nav.Link> */}
-                                        <NavDropdown title="Assets" id="basic-nav-dropdown">
-                                            <NavDropdown.Item as={Link} to='/assets/isr'>Israeli</NavDropdown.Item>
-                                            <NavDropdown.Item as={Link} to='/assets/us'>US</NavDropdown.Item>
-                                            <NavDropdown.Item as={Link} to='/assets/crypto'>Crypto</NavDropdown.Item>
-                                        </NavDropdown>
-                                        <NavDropdown title="My Profile" id="basic-nav-dropdown">
-                                            <NavDropdown.Item href="#action/3.1">Photos</NavDropdown.Item>
-                                            <NavDropdown.Item href="friends">Friends</NavDropdown.Item>
-                                            <NavDropdown.Item href="#action/3.3">Collections</NavDropdown.Item>
-                                            <NavDropdown.Divider />
-                                            <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
-                                        </NavDropdown>
-                                        
+                                        {menuItems.map(item => {
+                                        return (item.link !== null ?
+                                                <Nav.Link key={item.title}  as={Link} to={item.link}>{item.title}</Nav.Link> :
+                                                <NavDropdown key={item.title}  title={item.title} id="basic-nav-dropdown">
+                                                    {item.secMenuItems.map(secItem => {
+                                                        return <NavDropdown.Item as={Link} key={secItem.title}  to={secItem.link}>{secItem.title}</NavDropdown.Item>            
+                                                    })}
+                                                </NavDropdown>        
+                                            
+                                        )})}
+                                
                                     </Nav>
                                     <Nav>
                                         <Nav.Link onClick={onLogout}>Logout</Nav.Link>

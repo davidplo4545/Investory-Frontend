@@ -1,0 +1,20 @@
+.tool-tip {
+  border-radius: 0.25rem;
+  background: white;
+  color: #3d9970;
+  padding: 1rem;
+  box-shadow: 15px 30px 40px 5px rgba(0, 0, 0, 0.5);
+  text-align: left;
+}
+
+p {
+  padding: 0;
+  margin: 0;
+  font-size: 0.8rem;
+}
+
+/* hiding first and last lines in cartesian grid */
+.recharts-wrapper .recharts-cartesian-grid-horizontal line:first-child,
+.recharts-wrapper .recharts-cartesian-grid-horizontal line:last-child {
+  stroke-opacity: 0;
+}

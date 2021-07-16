@@ -1,56 +1,58 @@
 import React, { useEffect, useState, useContext } from 'react'
 import {getAsset} from '../api/assets'
 import {UserContext} from '../context/UserContext'
-import Plot from 'react-plotly.js';
+import AssetChart from '../components/assets-comps/AssetChart'
+
+
 
 const AssetPage = ({match}) =>{
     const user = useContext(UserContext)
     const [asset, setAsset] = useState([])
-    const [prices, setPrices] = useState([])
-    const [dates, setDates] = useState([])
+    const [records, setRecords] = useState([])
     const [isValid, setIsValid] = useState(true)
     const assetId = match.params.assetId
 
-    const layout = {
-        title: `${asset.name} Stock Chart`,
-        paper_bgcolor:"#3d9970",
-        plot_bgcolor:"#3d9970",
-        xaxis: {
-            tickcolor: '#000'
-          },
-    }
     useEffect(() => {
-        getAsset(user.token,assetId,setAsset, setPrices, setDates, setIsValid)      
+        getAsset(user.token,assetId,setAsset, setRecords, setIsValid)      
       },[]);
+    
 
     return(
-        <div>
+        <React.Fragment>
             {isValid ?
-            <div>
-                <h1>{asset.name}</h1>
-                <h1>{asset.symbol}</h1>
-                <h2>{asset.sector}</h2>
-                <h2>{asset.industry}</h2>
-                <h2>{asset.last_price}</h2>
-                <Plot
-                    data={[
-                    {
-                        x: dates,
-                        y: prices,
-                        type: 'scatter',
-                        mode: 'lines',
-                        marker: {color: 'white'},
-                        name: 'Scatter + Lines',
-                    }
-                    ]}
-                    layout={layout}
-                />
-            </div>
+            <React.Fragment>
+                <div className="asset-data">
+                    <div className="asset-info">
+                        <h4>{asset.symbol} - {asset.name}</h4>
+                        <h2>{asset.sector}</h2>
+                        <h2>{asset.industry}</h2>
+                        {asset.last_price !== undefined && asset.last_price > 10 &&
+                            <h2>Last Price: ${asset.last_price.toFixed(2)}</h2>
+                        }
+
+                        {asset.last_price !== undefined && asset.last_price < 10 &&
+                            <h2>Last Price: ${asset.last_price.toFixed(4)}</h2>
+                        }
+                    </div>
+                    <AssetChart asset={asset} records={records}/>
+                </div>
+                <div className="recent-assets">
+                    <h1>Recently viewed tickers:</h1>
+                    <p>Apple</p>
+                    <p>Google</p>
+                    <p>Apple</p>
+                </div>
+
+            </React.Fragment>
             :
-            <div>not valid</div>
+            <React.Fragment>not valid</React.Fragment>
             }
-        </div>
+        </React.Fragment>
     )
+
+
 }
+
+
 
 export default AssetPage

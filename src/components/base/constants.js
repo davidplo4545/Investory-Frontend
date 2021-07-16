@@ -4,7 +4,7 @@ export const menuItems = [
         {title:"US", link:"/assets/us"},
         {title:"Crypto", link:"/assets/crypto"},
     ]},
-    {title:"Assets", link:null, secMenuItems:[
+    {title:"Portfolios", link:null, secMenuItems:[
         {title:"Israel 1", link:"/assets/isr"},
         {title:"US 2", link:"/assets/us"},
         {title:"Crypto 3", link:"/assets/crypto"},
