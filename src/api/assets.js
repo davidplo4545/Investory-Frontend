@@ -13,15 +13,17 @@ export const getAllAssets = (userToken, assetType, setAssets) =>{
     })
 }
 
-export const getAsset = (userToken, assetId, setAsset, setRecords, setIsValid) =>{
-    axios.get(domain + `/assets/${assetId}`,{
+export const getAsset = async (userToken, assetId, setAsset, setRecords, setIsValid) =>{
+    await axios.get(domain + `/assets/${assetId}`,{
         headers:{
             'Authorization': `Token ${userToken}`
         }
     })
     .then((res) =>{
-        setAsset(res.data)
-        setRecords(res.data.records)
+        // setAsset(res.data)
+        // setRecords(res.data.records)
+        console.log(res.data)
+        return res.data
     })
     .catch((error) =>{
         setIsValid(false)

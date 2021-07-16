@@ -4,6 +4,7 @@ import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
 import { Link, Redirect } from "react-router-dom";
 import {userLogout} from '../../api/authentication.js'
 import {UserContext} from '../../context/UserContext'
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 export const BigNavbar = () =>{
 
@@ -41,7 +42,7 @@ export const BigNavbar = () =>{
 
                                     {menuItems.map((item) => {
                                         return (item.link === null ?
-                                            <Nav.Link key={item.title} onClick={() => handleMenuItemClick(item)}>{item.title}</Nav.Link> :
+                                            <Nav.Link key={item.title} onClick={() => handleMenuItemClick(item)}>{item.title}<ExpandMoreIcon/></Nav.Link> :
                                             <Nav.Link key={item.title} onClick={() => handleMenuItemClick(item)} as={Link} to={item.link}>{item.title}</Nav.Link> 
                                         )
                                     })}  
