@@ -12,20 +12,3 @@ export const getAllAssets = (userToken, assetType, setAssets) =>{
         setAssets(res.data)
     })
 }
-
-export const getAsset = async (userToken, assetId, setAsset, setRecords, setIsValid) =>{
-    await axios.get(domain + `/assets/${assetId}`,{
-        headers:{
-            'Authorization': `Token ${userToken}`
-        }
-    })
-    .then((res) =>{
-        // setAsset(res.data)
-        // setRecords(res.data.records)
-        console.log(res.data)
-        return res.data
-    })
-    .catch((error) =>{
-        setIsValid(false)
-    })
-}

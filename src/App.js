@@ -8,6 +8,8 @@ import SignInPage from './pages/SignInPage'
 import GetStartedPage from './pages/GetStartedPage'
 import AssetsPage from './pages/AssetsPage'
 import AssetPage from './pages/AssetPage'
+import PortfoliosPage from './pages/PortfoliosPage'
+import PortfolioPage from './pages/PortfolioPage'
 import {UserContext} from './context/UserContext'
 import useToken from './context/useToken'
 import { getMyUserDetails } from './api/authentication'
@@ -43,7 +45,8 @@ function App() {
               </Route>
               <Route path="/assets/:assetType" component={AssetsPage}/>
               <Route path="/asset/:assetId" component={AssetPage}/>
-
+              <Route exact path="/portfolios" component={PortfoliosPage}/>
+              <Route exact path="/portfolios/:portfolioId" component={PortfolioPage}/>
               <Route exact path="/profile">
                 {/* <ProfilePage/> */}
                 <div>Profile Page</div>
