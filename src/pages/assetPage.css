@@ -7,7 +7,7 @@
 }
 
 .asset-headers {
-  border-bottom: 1px solid black;
+  /* border-bottom: 1px solid black; */
   padding: 15px;
   display: flex;
   flex-direction: row;
@@ -18,9 +18,9 @@
   font-weight: bold !important;
 }
 
-.recharts-responsive-container {
+/* .recharts-responsive-container {
   margin-top: 30px;
-}
+} */
 
 .asset-info {
   flex: 1;

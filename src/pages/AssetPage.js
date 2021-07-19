@@ -32,7 +32,7 @@ const AssetPage = ({match}) =>{
             if (recAssets.length > 9)
                 recAssets.pop()
             const recAssets1 = recAssets.filter((asset) => asset.link !== link)
-            
+            // console.log(recAssets1)
             recAssets1.unshift({'name':currAsset.name,'symbol':currAsset.symbol,'link':link})
             localStorage.setItem('recentlyViewedAssets', JSON.stringify(recAssets1))
             setRecentlyViewedAssets(recAssets1)
@@ -57,7 +57,7 @@ const AssetPage = ({match}) =>{
             })
         }
         getAsset()
-    },[asset]);
+    },[match]);
     return(
         
         <React.Fragment>
@@ -124,7 +124,7 @@ const AssetPage = ({match}) =>{
                     <div className="recent-assets">
                         <h4>Recently viewed tickers:</h4>
                         {recentlyViewedAssets.map((asset) => {
-                            return <Link key={asset.symbol} to={asset.link}>
+                            return <Link key={asset.link} to={asset.link}>
                                         <p className="recent-asset-symbol">{asset.symbol}</p>
                                         <p className="recent-asset-name">{asset.name}</p>
                                     </Link>

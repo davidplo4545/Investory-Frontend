@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import './charts.css'
 import {
     ResponsiveContainer,
@@ -13,6 +13,7 @@ import {
 import { format, parseISO } from "date-fns";
   
 const AssetChart = ({asset, records}) =>{
+    const [interval, setInterval] = useState(365)
     const formatNumber = (number) =>{
         if (number === 0)
             return number.toFixed(0)
@@ -41,8 +42,26 @@ const AssetChart = ({asset, records}) =>{
         }  
     }
 
+    useEffect(() =>{
+        if (records && records.length)
+        {
+            console.log(records)
+            let daysDifference = Math.abs(Date.parse(records[records.length-1].date) - Date.parse(records[0].date))
+            daysDifference = Math.ceil(daysDifference / (1000 * 60 * 60 * 24)); 
+            if (daysDifference > 730)
+                setInterval(365)
+            else if(daysDifference > 365)
+                setInterval(70)
+            else if(daysDifference > 100)
+                setInterval(30)
+        }
+    },[records])
+  
+    // console.log(records[records.length-1].date)
+    // console.log(records[0].date)
+    // console.log(daysDifference)
     return (
-        <ResponsiveContainer width="100%" height={400}>
+        <ResponsiveContainer width="99%" height={400}>
                 <AreaChart data={records}>
                     <defs>
                     <linearGradient id="color" x1="0" y1="0" x2="0" y2="1">
@@ -57,8 +76,8 @@ const AssetChart = ({asset, records}) =>{
                     dataKey="date"
                     axisLine={false}
                     tickLine={false}
-                    interval={365}
-                        tickFormatter={(str) => {
+                    interval={interval}
+                    tickFormatter={(str) => {
                             const date = parseISO(str);
                             try{
                                 return format(date, "MMM yy");

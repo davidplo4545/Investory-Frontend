@@ -6,26 +6,31 @@
 
 .portfolios-page h1 {
   margin-left: 2.5rem;
-  margin-top: 1rem;
+  /* margin-top: 0.5rem; */
 }
 
 .portfolios {
   height: 100%;
-  width: 100%;
+  width: auto;
   /* overflow: auto; */
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  grid-auto-rows: fit-content(1em);
-  gap: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  /* justify-content: left; */
+  align-items: center;
+
   margin-top: 10px;
-  /* padding: 1rem 0;
-  padding: 0; */
   list-style-type: none;
 }
+
 .portfolio-card {
   position: relative;
   display: block;
   height: auto;
+  flex: 0 0 33.333333%;
+  margin-right: 2rem;
+  margin-bottom: 1rem;
+  border: 1px solid lightgray;
   border-radius: 30px;
   overflow: hidden;
   text-decoration: none;
@@ -48,6 +53,10 @@
   background-color: #fff;
   transform: translateY(100%);
   transition: 0.2s ease-in-out;
+}
+
+.card__overlay a {
+  text-decoration: none;
 }
 
 .portfolio-card:hover .card__overlay {
@@ -119,4 +128,120 @@
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
   overflow: hidden;
+}
+
+@media only screen and (max-width: 992px) {
+  .portfolios {
+    margin: 0;
+    padding: 0;
+    padding-left: 0.2rem;
+    padding-top: 15px;
+  }
+  /* .portfolio-card {
+    margin: 0;
+    margin-right: 30px;
+  } */
+}
+
+.recharts-surface {
+  padding: 5px;
+}
+.portfolio-page {
+  width: 100%;
+  display: grid;
+  overflow: hidden;
+  grid-template-columns: 1fr 2fr;
+  /* grid-template-rows: 1fr; */
+  /* max-width: 99%; */
+  grid-column-gap: 5px;
+  grid-row-gap: 5px;
+}
+
+.holdings-pie-chart {
+  width: 455px;
+  height: 455px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 2rem;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.portfolio-actions {
+  display: flex;
+  margin: 0 auto;
+  width: 60%;
+}
+
+.portfolio-line-chart {
+  padding: 2rem;
+  /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); */
+}
+
+.portfolio-line-chart h2 {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  padding: 0.5rem;
+  text-decoration: underline;
+}
+
+.portfolio-details {
+  display: flex;
+  justify-content: space-between;
+}
+
+.portfolio-details .portfolio-number {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.holdings-table {
+  padding-right: 1rem;
+}
+
+@media only screen and (max-width: 992px) {
+  .portfolio-page {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  .holdings-pie-chart {
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: 0;
+  }
+  .portfolio-line-chart {
+    width: 100%;
+    padding: 0;
+  }
+
+  .portfolio-line-chart p {
+    font-size: 16px;
+    /* padding: 1rem 0; */
+  }
+
+  .portfolio-details {
+    padding: 1rem 0;
+  }
+
+  .portfolio-wrapper {
+    padding: 1rem;
+  }
+
+  .holdings-table {
+    margin: 0;
+    padding: 0;
+  }
+
+  .MuiPaper-root {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+  }
+
+  .recharts-cartesian-axis-tick {
+    font-size: 12px;
+  }
 }

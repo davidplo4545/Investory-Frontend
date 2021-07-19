@@ -46,7 +46,7 @@ const InvestmentCalculator = ({records}) =>{
         const lastPrice = records[records.length - 1].price
         setPriceAtStartDate(startPrice)
         setResult(lastPrice / startPrice * amount)
-        setReturnRate(lastPrice / startPrice * 100)
+        setReturnRate((lastPrice / startPrice -1)* 100)
     }
 
     return(

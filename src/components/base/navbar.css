@@ -11,7 +11,7 @@
 }
 
 .navbar {
-  background: white !important;
+  background: #2c3531 !important;
   padding-bottom: 5px;
 }
 
@@ -20,12 +20,14 @@
   height: 50px;
   justify-content: center;
   margin-bottom: 10px;
-  background-color: #9dc88d !important;
+  /* background-color: #5cdb95 !important; */
+  box-shadow: 0 4px 2px -2px gray;
+  /* border-bottom: 1px solid rgba(161, 161, 161, 0.3); */
 }
 
 .secondary {
   width: 60%;
-  background-color: #9dc88d !important;
+  background-color: #2c3531 !important;
 }
 
 .big-navbar {
@@ -75,7 +77,7 @@
 }
 
 .nav-link {
-  color: #164a41 !important;
+  color: #ffcb9a !important;
 }
 .nav-link:hover {
   color: #4d774e !important;
