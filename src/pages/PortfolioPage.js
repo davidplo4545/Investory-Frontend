@@ -9,6 +9,8 @@ import { Button } from '@material-ui/core'
 import axios from 'axios'
 import './portfolios.css'
 
+  
+
 
 const PortfolioPage = ({match}) =>{
     const user = useContext(UserContext)
@@ -42,7 +44,7 @@ const PortfolioPage = ({match}) =>{
                 
                 <HoldingsChart className="holdings-pie-chart" portfolio={portfolio} width={350} height={350} innerRadius={90} outerRadius={140}/> 
                 <div className="portfolio-actions">
-                    <Button color="default">Edit Actions</Button>
+                    <Button  color="default">Edit Actions</Button>
                     <Button color="default">Edit</Button>
                     <Button color="default">Edit</Button>
                 </div>
@@ -58,10 +60,10 @@ const PortfolioPage = ({match}) =>{
                         </p>
                         }
                         <p>Gain:<br/>
-                            <p className="portfolio-number" style={{color:portfolioGain > 0 ? "green" : "red"}}>{portfolioGain.toFixed(2)}$</p>
+                            <p className="portfolio-number" style={{color:portfolioGain > 0 ? "#9dc88d" : "red"}}>{portfolioGain.toFixed(2)}$</p>
                         </p>
                         <p>Return:<br/>
-                            <p className="portfolio-number" style={{color: portfolioReturn > 0 ? "green" : "red"}}>{portfolioReturn.toFixed(2)}%</p>
+                            <p className="portfolio-number" style={{color: portfolioReturn > 0 ? "#9dc88d" : "red"}}>{portfolioReturn.toFixed(2)}%</p>
                         </p>
                     </div>
                     <AssetChart records={portfolio.records} />

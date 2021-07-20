@@ -1,7 +1,7 @@
 import React,{useState} from 'react'
 import MaterialTable  from 'material-table';
 import {useHistory} from 'react-router-dom'
-
+import {makeStyles} from '@material-ui/core'
 const HoldingsTable = ({holdings}) =>{
     let history = useHistory();
     const columns = [
@@ -19,6 +19,29 @@ const HoldingsTable = ({holdings}) =>{
         //     pathname:`/asset/${id}`,
         //    });
     }
+    const useStyles = makeStyles({
+        root: {
+          backgroundColor: "blue",
+          color: "green"
+        },
+        toolbar: {
+          backgroundColor: "white"
+        },
+        caption: {
+          color: "red",
+          fontSize: "20px"
+        },
+        selectIcon: {
+          color: "green"
+        },
+        select: {
+          color: "green",
+          fontSize: "20px"
+        },
+        actions: {
+          color: "blue"
+        }
+      });
 
     return(
 
@@ -32,6 +55,14 @@ const HoldingsTable = ({holdings}) =>{
                     handleRowClicked(evt, selectedRow)
                 }
                 width={800}
+                classes={{
+                    root: useStyles.root,
+                    toolbar: useStyles.toolbar,
+                    caption: useStyles.caption,
+                    selectIcon: useStyles.selectIcon,
+                    select: useStyles.select,
+                    actions: useStyles.actions
+                  }}
                 options={{
                 // pageSize:10,
                 // pageSizeOptions:[10],

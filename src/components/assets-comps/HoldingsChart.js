@@ -37,10 +37,10 @@ const HoldingChart = ({portfolio,width, height, innerRadius, outerRadius, cx, cy
     };
     return (
         <PieChart width={width} height={height}>
-                <text fontSize="14" x={width/2} y={height/2 -10} textAnchor="middle" dominantBaseline="middle">
+                <text fontSize="14" style={{fill:'white'}} x={width/2} y={height/2 -10} textAnchor="middle" dominantBaseline="middle">
                     {portfolio.name}
                 </text>
-                <text fontSize="12" x={width/2} y={height/2 + 10} textAnchor="middle" dominantBaseline="middle">
+                <text fontSize="12" style={{fill:'white'}} x={width/2} y={height/2 + 10} textAnchor="middle" dominantBaseline="middle">
                     {Object.keys(portfolio).length > 0 &&
                         portfolio.total_value.toFixed(2) + '$'
                     }
