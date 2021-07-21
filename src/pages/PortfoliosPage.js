@@ -3,6 +3,7 @@ import { UserContext } from '../context/UserContext'
 import { getAllPortfolios } from '../api/portfolios'
 import './portfolios.css'
 import HoldingsChart from '../components/assets-comps/HoldingsChart'
+import { Container, Paper } from '@material-ui/core'
 import { Link } from "react-router-dom";
 
 const PortfoliosPage = () =>{
@@ -19,7 +20,7 @@ const PortfoliosPage = () =>{
                 {portfolios.map((portfolio) =>{
                     return(
                     <li key={portfolio.id}>
-                        <div className="portfolio-card">
+                        <Paper className="portfolio-card" elevation={2} clas>
                             <div className="card__image">
                                 <HoldingsChart portfolio={portfolio} 
                                 width={350}
@@ -43,13 +44,20 @@ const PortfoliosPage = () =>{
                                     </Link>
                                 <p className="card__description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores, blanditiis?</p>
                             </div>
-                        </div>
+                        </Paper>
                     </li>
                     ) 
                 })
-
                 }
+                <Paper className="add-portfolio-wrapper">
+                    <div className="add-portfolio-box">
+                        <Link to="/portfolio-create">
+                            Add new portfolio +
+                        </Link>
+                    </div>
+                </Paper>
             </ul>
+
         </div>
     )
 }

@@ -10,6 +10,7 @@ import AssetsPage from './pages/AssetsPage'
 import AssetPage from './pages/AssetPage'
 import PortfoliosPage from './pages/PortfoliosPage'
 import PortfolioPage from './pages/PortfolioPage'
+import CreatePortfolioPage from './pages/CreatePortfolioPage'
 import {UserContext} from './context/UserContext'
 import useToken from './context/useToken'
 import { getMyUserDetails } from './api/authentication'
@@ -48,6 +49,7 @@ function App() {
               <Route path="/asset/:assetId" component={AssetPage}/>
               <Route exact path="/portfolios" component={PortfoliosPage}/>
               <Route exact path="/portfolios/:portfolioId" component={PortfolioPage}/>
+              <Route exact path="/portfolio-create" component={CreatePortfolioPage}/>
               <Route exact path="/profile">
                 {/* <ProfilePage/> */}
                 <div>Profile Page</div>

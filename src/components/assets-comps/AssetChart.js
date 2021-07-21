@@ -45,7 +45,6 @@ const AssetChart = ({asset, records}) =>{
     useEffect(() =>{
         if (records && records.length)
         {
-            console.log(records)
             let daysDifference = Math.abs(Date.parse(records[records.length-1].date) - Date.parse(records[0].date))
             daysDifference = Math.ceil(daysDifference / (1000 * 60 * 60 * 24)); 
             if (daysDifference > 730)

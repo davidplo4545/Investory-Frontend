@@ -19,6 +19,7 @@ const PortfolioPage = ({match}) =>{
     const [portfolioReturn, setPortfolioReturn] = useState(0)
     const portfolioId = match.params.portfolioId
     useEffect(() => {
+        console.log('here')
         // getPortfolio(user.token, portfolioId, setPortfolio)
         const getPortfolio = async () => {
             const domain = "http://127.0.0.1:8000/api"
@@ -55,16 +56,16 @@ const PortfolioPage = ({match}) =>{
                 <div className="portfolio-wrapper">
                     <div className="portfolio-details">
                         {Object.keys(portfolio).length !== 0 && 
-                        <p>Value:<br/>
+                        <div>Value:<br/>
                             <p className="portfolio-number">{portfolio.total_value.toFixed(2)}$</p>
-                        </p>
+                        </div>
                         }
-                        <p>Gain:<br/>
+                        <div>Gain:<br/>
                             <p className="portfolio-number" style={{color:portfolioGain > 0 ? "#9dc88d" : "red"}}>{portfolioGain.toFixed(2)}$</p>
-                        </p>
-                        <p>Return:<br/>
+                        </div>
+                        <div>Return:<br/>
                             <p className="portfolio-number" style={{color: portfolioReturn > 0 ? "#9dc88d" : "red"}}>{portfolioReturn.toFixed(2)}%</p>
-                        </p>
+                        </div>
                     </div>
                     <AssetChart records={portfolio.records} />
                 </div>

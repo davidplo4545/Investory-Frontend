@@ -130,6 +130,41 @@
   overflow: hidden;
 }
 
+.add-portfolio-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 350px;
+  height: 350px;
+  margin-bottom: 1rem;
+  margin-right: 2rem;
+  background-color: transparent;
+
+  padding: 5rem;
+}
+.add-portfolio-box {
+  text-decoration: none;
+  background: white;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+}
+
+.action-form {
+  background: white;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  border-radius: 20px;
+}
+.portfolio-create-wrapper .MuiFormControl-root {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
 @media only screen and (max-width: 992px) {
   .portfolios {
     margin: 0;
