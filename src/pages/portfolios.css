@@ -160,10 +160,6 @@
   flex-direction: column;
   border-radius: 20px;
 }
-.portfolio-create-wrapper .MuiFormControl-root {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-}
 
 @media only screen and (max-width: 992px) {
   .portfolios {
@@ -177,6 +173,10 @@
     margin-right: 30px;
   } */
 }
+
+/* .MuiPaper-root {
+  height: 100%;
+} */
 
 .recharts-surface {
   padding: 5px;
