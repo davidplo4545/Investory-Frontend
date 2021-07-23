@@ -26,7 +26,6 @@ const InvestmentCalculator = ({records}) =>{
     const handleAmountChange = (e) =>{
         if(parseInt(e.target.value) < 0)
         {
-            console.log('here')
             setAmount(0)
         }
         // console.log(e.target.value)
@@ -37,7 +36,6 @@ const InvestmentCalculator = ({records}) =>{
         event.preventDefault();
         const recordsTemp = [...records]
         let i =0
-        console.log(selectedDate)
         while (selectedDate > Date.parse(records[i].date) && i < records.length - 1)
         {
             i++;

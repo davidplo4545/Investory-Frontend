@@ -56,9 +56,6 @@ const AssetChart = ({asset, records}) =>{
         }
     },[records])
   
-    // console.log(records[records.length-1].date)
-    // console.log(records[0].date)
-    // console.log(daysDifference)
     return (
         <ResponsiveContainer width="99%" height={400}>
                 <AreaChart data={records}>

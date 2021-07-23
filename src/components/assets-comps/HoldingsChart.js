@@ -16,7 +16,7 @@ const HoldingChart = ({portfolio,width, height, innerRadius, outerRadius, cx, cy
             const holdingsPercentages = []
             holdings.forEach(holding => holdingsPercentages.push(
                 {value: holding.total_value / totalValue,
-                asset:holding.asset}))
+                asset:holding.asset.symbol}))
             setData(holdingsPercentages)
             setHoldingsTitle(`${portfolio.name} \n ${portfolio.total_value}`)
         }

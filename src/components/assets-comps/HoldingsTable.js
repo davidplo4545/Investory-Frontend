@@ -2,14 +2,21 @@ import React,{useState} from 'react'
 import MaterialTable  from 'material-table';
 import {useHistory} from 'react-router-dom'
 import {makeStyles} from '@material-ui/core'
-const HoldingsTable = ({holdings}) =>{
+const HoldingsTable = ({portfolio, holdings}) =>{
     let history = useHistory();
+    console.log(holdings)
     const columns = [
-        { title: 'Type', field: 'type' },
-        { title: 'Name', field: 'asset' },
+        { title: 'Type', field: 'asset.type' },
+        { title: 'Symbol', field: 'asset.symbol' },
+        { title: 'Name', field: 'asset.name' },
+        { title: 'Cost Basis', field: 'cost_basis' },
+        { title: 'Last Price', field: 'asset.last_price' },
+        { title: 'Cost', field: 'total_cost' },
         { title: 'Value', field: 'total_value' },
-        { title: 'Gain', field: 'total_cost' }
+        { title: '% Gain', field: 'gainPercentage' },
+        { title: '% of Portfolio', field: 'percentage' }
       ];
+
     const [selectedRow, setSelectedRow] = useState(null);
 
     const handleRowClicked = (event, rowData) =>{

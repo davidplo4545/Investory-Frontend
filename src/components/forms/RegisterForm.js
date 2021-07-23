@@ -15,7 +15,6 @@ const RegisterForm = () =>{
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log('register request sent.')
         userRegister({
             'email': email,
             'password1': password,

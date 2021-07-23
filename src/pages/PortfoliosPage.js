@@ -3,16 +3,23 @@ import { UserContext } from '../context/UserContext'
 import { getAllPortfolios } from '../api/portfolios'
 import './portfolios.css'
 import HoldingsChart from '../components/assets-comps/HoldingsChart'
-import { Container, Paper } from '@material-ui/core'
-import { Link } from "react-router-dom";
+import { Container, Paper, Button } from '@material-ui/core'
+import { Link, useHistory } from "react-router-dom";
 
 const PortfoliosPage = () =>{
     const user = useContext(UserContext)
+    let history = useHistory()
     const [portfolios, setPortfolios] = useState([])
     useEffect(() => {
         getAllPortfolios(user.token, setPortfolios)
     },[])
     
+    const navigateToPortfolioCreate = () =>{
+        history.push({
+            pathname: `/portfolio-create`,
+            state: {portfolio:null}
+        })
+    }
     return (
         <div className="portfolios-page">
             <h1>Portfolios Page</h1>
@@ -20,7 +27,7 @@ const PortfoliosPage = () =>{
                 {portfolios.map((portfolio) =>{
                     return(
                     <li key={portfolio.id}>
-                        <Paper className="portfolio-card" elevation={2} clas>
+                        <Paper className="portfolio-card" elevation={2}>
                             <div className="card__image">
                                 <HoldingsChart portfolio={portfolio} 
                                 width={350}
@@ -51,9 +58,9 @@ const PortfoliosPage = () =>{
                 }
                 <Paper className="add-portfolio-wrapper">
                     <div className="add-portfolio-box">
-                        <Link to="/portfolio-create">
+                        <Button onClick={navigateToPortfolioCreate}>
                             Add new portfolio +
-                        </Link>
+                        </Button>
                     </div>
                 </Paper>
             </ul>

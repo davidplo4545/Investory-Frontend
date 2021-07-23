@@ -3,6 +3,7 @@ import { DataGrid } from '@material-ui/data-grid';
 import { Paper, Button } from '@material-ui/core';
 import { makeStyles, TextField } from '@material-ui/core'
 import { Autocomplete } from '@material-ui/lab';
+import DeleteIcon from "@material-ui/icons/Delete";
 // import {actions} from './testing'
 
 const useStyles = makeStyles({
@@ -16,11 +17,8 @@ const useStyles = makeStyles({
   });
 
 
-  
-
-const ActionsDataGrid = ({assets, rows, setRows}) =>{
-    // const [rows, setRows] = useState(actions)
-    const columns = [
+const ActionsDataGrid = ({isEdit, assets, rows, setRows}) =>{
+    const columns = [    
     {
         field: 'type',
         headerName: 'Type',
@@ -34,13 +32,12 @@ const ActionsDataGrid = ({assets, rows, setRows}) =>{
         editable: true,
         },
     {
-        field: 'assetId',
+        field: 'asset',
         headerName: 'Id',
         type: 'number',
         hide:true,
         sortable: false,
         minWidth: 50,
-        // valueGetter: getAssetId,
         editable: false,
     },
     {
@@ -70,9 +67,33 @@ const ActionsDataGrid = ({assets, rows, setRows}) =>{
         headerName: 'Date',
         type: 'date',
         editable:true,
+        valueFormatter: (params) => {
+            const valueFormatted = new Date(params.value).toISOString().slice(0, 10);
+            return valueFormatted
+          },
         description: 'This column has a value getter and is not sortable.', 
-        width: 100,
+        width: 150,
     },
+    {
+        field: 'delete',
+        headerName: 'Delete',
+        sortable: false,
+        width: 140,
+        disableClickEventBubbling: true,
+        renderCell: (params) => (
+          <div>
+            {/* {params.value.getFullYear()} */}
+            <Button
+              variant="contained"
+              color="secondary"
+              size="small"
+              startIcon={<DeleteIcon />}
+            >
+              DELETE
+            </Button>
+          </div>
+        ),
+      }
     ];
 
     const [newSymbol, setNewSymbol] = useState(null)
@@ -83,14 +104,13 @@ const ActionsDataGrid = ({assets, rows, setRows}) =>{
         if(values)
             setNewSymbol(values)
     }
-
     const handleFormSubmit = (e) =>{
         e.preventDefault()
         if (newSymbol)
         {
             const newAction = { 
                 id: generateKey(newSymbol.name),
-                assetId: newSymbol.id,
+                asset: newSymbol.id,
                 type:"BUY", 
                 name:newSymbol.name, 
                 quantity: 0, 
@@ -110,7 +130,15 @@ const ActionsDataGrid = ({assets, rows, setRows}) =>{
         setRows(rows)
     }
     
+    const handleCellClicked = (params) =>{
 
+        if (params.field === "delete")
+        {
+            const newRows = rows.filter((row) => row.id !== params.id)
+            setRows(newRows)
+        }
+        return
+    }
     const classes = useStyles()
     return(
         <Paper className={classes.root} elevation={10} style={{padding: 20}}>
@@ -121,6 +149,7 @@ const ActionsDataGrid = ({assets, rows, setRows}) =>{
                     <Autocomplete
                     options={assets}
                     getOptionLabel={(option) => option.name}
+                    getOptionSelected={(option, value) => option.id === value.id}
                     onChange={handleAssetSelectionChanged}
                     style={{ width: 300 }}
                     renderInput={(params) => <TextField {...params} label="Choose Asset" variant="outlined" />}
@@ -133,6 +162,7 @@ const ActionsDataGrid = ({assets, rows, setRows}) =>{
             pageSize={rows.length} 
             autoHeight={true} 
             columns={columns} 
+            onCellClick={handleCellClicked}
             rows={rows}
             rowsPerPageOptions={[]}/>
         </Paper>

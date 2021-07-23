@@ -32,7 +32,6 @@ const AssetPage = ({match}) =>{
             if (recAssets.length > 9)
                 recAssets.pop()
             const recAssets1 = recAssets.filter((asset) => asset.link !== link)
-            // console.log(recAssets1)
             recAssets1.unshift({'name':currAsset.name,'symbol':currAsset.symbol,'link':link})
             localStorage.setItem('recentlyViewedAssets', JSON.stringify(recAssets1))
             setRecentlyViewedAssets(recAssets1)

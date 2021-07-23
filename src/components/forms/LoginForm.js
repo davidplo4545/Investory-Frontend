@@ -11,7 +11,6 @@ const LoginForm = () =>{
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log('login request sent.')
         userLogin({
             'email': email,
             'password': password

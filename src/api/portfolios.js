@@ -33,7 +33,42 @@ export const getPortfolio = async (userToken, portfolioId, setPortfolio) =>{
     })
     .then((res) =>{
         setPortfolio(res.data)
-        console.log(res.data)
     })
 }
+
+export const postPortfolio = async (userToken, requestData, history) =>{
+    await axios.post(domain + `/portfolios/`,
+        requestData,
+        {headers:{
+            'Authorization': `Token ${userToken}`
+        }}
+    )
+    .then((res) =>{
+        console.log(res.data)
+        history.push({
+            pathname: `/portfolios/${res.data.id}`,
+        })
+        
+    })
+    .catch(error => console.log(error))
+}
+
+export const patchPortfolio = async (userToken,portfolioId, requestData, setPortfolio, history) =>{
+    await axios.patch(domain + `/portfolios/${portfolioId}/`,
+        requestData,
+        {headers:{
+            'Authorization': `Token ${userToken}`
+        }}
+    )
+    .then((res) =>{
+        setPortfolio(res.data)
+        history.push({
+            pathname: `/portfolios/${res.data.id}`,
+        })
+        
+    })
+    .catch(error => console.log(error, userToken))
+}
+
+
 
