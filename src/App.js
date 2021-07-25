@@ -15,6 +15,7 @@ import {UserContext} from './context/UserContext'
 import useToken from './context/useToken'
 import { getMyUserDetails } from './api/authentication'
 import {  Grid, makeStyles } from '@material-ui/core'
+import ComparePortfolioPage from './pages/ComparePortfolioPage';
 
 
 const useStyles = makeStyles({
@@ -56,6 +57,7 @@ function App() {
               <Route exact path="/portfolios/:portfolioId" component={PortfolioPage}/>
               <Route exact path="/portfolios/:portfolioId/edit" component={CreatePortfolioPage}/>
               <Route exact path="/portfolio-create" component={CreatePortfolioPage}/>
+              <Route exact path="/portfolios/:portfolioId/compare" component={ComparePortfolioPage}/>
               <Route exact path="/profile">
                 {/* <ProfilePage/> */}
                 <div>Profile Page</div>

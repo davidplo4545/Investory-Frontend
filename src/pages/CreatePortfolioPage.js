@@ -89,7 +89,6 @@ const CreatePortfolioPage = () =>{
                     completed_at = completed_at.toISOString().slice(0, 10)
                 if (typeof(asset_id) === 'undefined')
                     asset_id = row.asset
-                console.log(asset_id)
                 let record = {
                     type: row.type,
                     asset_id: parseInt(asset_id),

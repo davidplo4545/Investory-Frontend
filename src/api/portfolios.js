@@ -3,6 +3,22 @@ import axios from 'axios'
 
 const domain = "http://127.0.0.1:8000/api"
 
+const calculatePortfolioDetails = (portfolio) =>{
+    portfolio.gain = portfolio.total_value - portfolio.total_cost 
+    portfolio.return = (portfolio.total_value / portfolio.total_cost - 1) * 100
+    let portHoldings = portfolio.holdings
+    portHoldings.forEach(holding => {
+        const {total_value, total_cost, cost_basis} = holding
+        holding.percentage = parseFloat(((total_value / portfolio.total_value)).toFixed(2))
+        holding.gainPercentage = parseFloat(((total_value / total_cost - 1) * 100).toFixed(2))
+        holding.total_cost = parseFloat(total_cost.toFixed(2))
+        holding.total_value = parseFloat(total_value.toFixed(2))
+        holding.cost_basis = parseFloat(cost_basis.toFixed(2))
+        holding.asset.last_price = holding.asset.last_price.toFixed(2)
+        })
+    
+    return portfolio
+}
 export const getAllPortfolios = (userToken, setPortfolios) =>{
     axios.get(domain + `/portfolios/me`,{
         headers:{
@@ -11,19 +27,13 @@ export const getAllPortfolios = (userToken, setPortfolios) =>{
     })
     .then((res) =>{
         const portfolios = res.data
-        const portfolio = {...portfolios[0]}
-        const portfolio1 = {...portfolio}
-        portfolio1.id = 5
-        portfolios.push(portfolio1)
-        const portfolio2 = {...portfolio}
-        portfolio2.id = 3
-        portfolios.push(portfolio2)
-        const portfolio3 = {...portfolio}
-        portfolio3.id = 4
-        portfolios.push(portfolio3)
+        portfolios.forEach((portfolio) =>{
+            calculatePortfolioDetails(portfolio)
+        })
         setPortfolios(portfolios)
     })
 }
+
 
 export const getPortfolio = async (userToken, portfolioId, setPortfolio) =>{
     await axios.get(domain + `/portfolios/${portfolioId}`,{
@@ -32,7 +42,10 @@ export const getPortfolio = async (userToken, portfolioId, setPortfolio) =>{
         }
     })
     .then((res) =>{
-        setPortfolio(res.data)
+        let portfolio = res.data
+        calculatePortfolioDetails(portfolio)
+        setPortfolio(portfolio)
+        
     })
 }
 
@@ -68,6 +81,23 @@ export const patchPortfolio = async (userToken,portfolioId, requestData, setPort
         
     })
     .catch(error => console.log(error, userToken))
+}
+
+export const postComparedAssetPortfolio = async (userToken, portfolioId, requestData, setComparedAssetPortfolio) =>{
+    await axios.post(domain + `/portfolios/${portfolioId}/compare/`,
+    requestData,
+    {headers:{
+        'Authorization': `Token ${userToken}`
+    }}
+)
+.then((res) =>{
+    let portfolio = res.data
+    calculatePortfolioDetails(portfolio)
+    console.log(portfolio)
+    setComparedAssetPortfolio(portfolio)
+    
+})
+.catch(error => console.log(error))
 }
 
 

@@ -8,18 +8,10 @@ const RADIAN = Math.PI / 180;
 
 const HoldingChart = ({portfolio,width, height, innerRadius, outerRadius, cx, cy}) =>{
     const [holdingsTitle, setHoldingsTitle] = useState("")
-    const holdings = portfolio.holdings
-    const totalValue = portfolio.total_value
-    const [data, setData] = useState([])
+    const [holdings, setHoldings] = useState(null)
     useEffect(() =>{
-        if(holdings && holdings.length) { 
-            const holdingsPercentages = []
-            holdings.forEach(holding => holdingsPercentages.push(
-                {value: holding.total_value / totalValue,
-                asset:holding.asset.symbol}))
-            setData(holdingsPercentages)
-            setHoldingsTitle(`${portfolio.name} \n ${portfolio.total_value}`)
-        }
+        setHoldings(portfolio.holdings)
+        setHoldingsTitle(`${portfolio.name} \n ${portfolio.total_value}`)
     },[portfolio])
 
     const renderCustomizedLabel = ({
@@ -31,11 +23,13 @@ const HoldingChart = ({portfolio,width, height, innerRadius, outerRadius, cx, cy
         
         return (
             <text x={x} y={y} fill="black" fontSize="10" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central">
-                {`${data[index].asset} ${(percent * 100).toFixed(0)}%`}
+                {`${holdings[index].asset.symbol} ${(percent * 100).toFixed(0)}%`}
             </text>
         );
     };
     return (
+        <React.Fragment>
+            {holdings && holdings.length &&
         <PieChart width={width} height={height}>
                 <text fontSize="14" style={{fill:'white'}} x={width/2} y={height/2 -10} textAnchor="middle" dominantBaseline="middle">
                     {portfolio.name}
@@ -46,7 +40,7 @@ const HoldingChart = ({portfolio,width, height, innerRadius, outerRadius, cx, cy
                     }
                 </text>
             <Pie
-                data={data}
+                data={holdings}
                 cx={cx}
                 cy={cy}
                 labelLine={false}
@@ -54,14 +48,16 @@ const HoldingChart = ({portfolio,width, height, innerRadius, outerRadius, cx, cy
                 innerRadius={innerRadius}
                 outerRadius={outerRadius}
                 fill="#8884d8"
-                dataKey="value"
+                dataKey="percentage"
             >
                 {
-                    data.map((entry, index) => <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />)
+                    holdings.map((entry, index) => <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />)
                 }
                 <Tooltip/>
             </Pie>
         </PieChart>
+        }
+        </React.Fragment>
     );
 	}
 export default HoldingChart;

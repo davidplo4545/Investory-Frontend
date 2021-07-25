@@ -4,17 +4,16 @@ import {useHistory} from 'react-router-dom'
 import {makeStyles} from '@material-ui/core'
 const HoldingsTable = ({portfolio, holdings}) =>{
     let history = useHistory();
-    console.log(holdings)
     const columns = [
         { title: 'Type', field: 'asset.type' },
         { title: 'Symbol', field: 'asset.symbol' },
         { title: 'Name', field: 'asset.name' },
-        { title: 'Cost Basis', field: 'cost_basis' },
-        { title: 'Last Price', field: 'asset.last_price' },
-        { title: 'Cost', field: 'total_cost' },
-        { title: 'Value', field: 'total_value' },
-        { title: '% Gain', field: 'gainPercentage' },
-        { title: '% of Portfolio', field: 'percentage' }
+        { title: 'Cost Basis', field: 'cost_basis', render: rowData => `${rowData.cost_basis}$`  },
+        { title: 'Last Price', field: 'asset.last_price', render: rowData => `${rowData.asset.last_price}$`  },
+        { title: 'Cost', field: 'total_cost', render: rowData => `${rowData.total_cost}$`  },
+        { title: 'Value', field: 'total_value', render: rowData => `${rowData.total_value}$` },
+        { title: '% Gain', field: 'gainPercentage', render: rowData => `${rowData.gainPercentage}%` },
+        { title: '% of Portfolio', field: 'percentage', render: rowData => `${(rowData.percentage * 100).toFixed(0)}%` }
       ];
 
     const [selectedRow, setSelectedRow] = useState(null);
