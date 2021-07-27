@@ -93,7 +93,6 @@ export const postComparedAssetPortfolio = async (userToken, portfolioId, request
 .then((res) =>{
     let portfolio = res.data
     calculatePortfolioDetails(portfolio)
-    console.log(portfolio)
     setComparedAssetPortfolio(portfolio)
     
 })
