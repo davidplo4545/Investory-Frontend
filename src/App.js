@@ -18,11 +18,19 @@ import {  Grid, makeStyles } from '@material-ui/core'
 import ComparePortfolioPage from './pages/ComparePortfolioPage';
 
 
-const useStyles = makeStyles({
+const useStyles =  makeStyles((theme) => ({
   root: {
-    width: '75%',
+    [theme.breakpoints.down('sm')]: {
+      width: "100%",
+    },
+    [theme.breakpoints.up('md')]: {
+      width: "100%",
+    },
+    [theme.breakpoints.up('lg')]: {
+      width: "75%",
+    },
   },
-});
+}));
 function App() {
   const {token,setToken} = useToken();
   const [user, setUser] = useState({})

@@ -6,10 +6,11 @@ const COLORS = ['#0088FE', '#00C49F', 'black', '#FF8042'];
 const RADIAN = Math.PI / 180;
 
 
-const HoldingChart = ({portfolio,width, height, innerRadius, outerRadius, cx, cy}) =>{
+const HoldingsPieChart = ({portfolio,width, height, innerRadius, outerRadius, cx, cy}) =>{
     const [holdingsTitle, setHoldingsTitle] = useState("")
-    const [holdings, setHoldings] = useState(null)
+    const [holdings, setHoldings] = useState([])
     useEffect(() =>{
+        console.log(portfolio)
         setHoldings(portfolio.holdings)
         setHoldingsTitle(`${portfolio.name} \n ${portfolio.total_value}`)
     },[portfolio])
@@ -40,7 +41,8 @@ const HoldingChart = ({portfolio,width, height, innerRadius, outerRadius, cx, cy
                     }
                 </text>
             <Pie
-                data={holdings}
+            animationDuration={3000}
+                data={[...holdings]}
                 cx={cx}
                 cy={cy}
                 labelLine={false}
@@ -60,6 +62,6 @@ const HoldingChart = ({portfolio,width, height, innerRadius, outerRadius, cx, cy
         </React.Fragment>
     );
 	}
-export default HoldingChart;
+export default HoldingsPieChart;
 
 

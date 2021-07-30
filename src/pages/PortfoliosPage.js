@@ -2,7 +2,7 @@ import React, {useEffect, useContext, useState} from 'react'
 import { UserContext } from '../context/UserContext'
 import { getAllPortfolios } from '../api/portfolios'
 import './portfolios.css'
-import HoldingsChart from '../components/assets-comps/HoldingsChart'
+import HoldingsPieChart from '../components/charts/HoldingsPieChart'
 import { Container, Paper, Button } from '@material-ui/core'
 import { Link, useHistory } from "react-router-dom";
 
@@ -29,7 +29,7 @@ const PortfoliosPage = () =>{
                     <li key={portfolio.id}>
                         <Paper className="portfolio-card" elevation={2}>
                             <div className="card__image">
-                                <HoldingsChart portfolio={portfolio} 
+                                <HoldingsPieChart portfolio={portfolio} 
                                 width={350}
                                 height={350}
                                 innerRadius={40} 

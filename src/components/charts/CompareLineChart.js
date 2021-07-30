@@ -3,11 +3,23 @@ import { LineChart, ResponsiveContainer, CartesianGrid, Tooltip, Legend, YAxis, 
 import { format, parseISO } from "date-fns";
 import { Forward5 } from '@material-ui/icons';
 const CompareLineChart = ({portfolio, comparedAssetPortfolio}) =>{
-    const [data, setData] = useState(null)
+  const [data, setData] = useState(null)
+  const [interval, setInterval] = useState(365)
     useEffect(() =>{
       const portfolioRecords = portfolio.records
       const assetPortfolioRecords = comparedAssetPortfolio.records
       const tempData = []
+      if (portfolioRecords && portfolioRecords.length)
+      {
+          let daysDifference = Math.abs(Date.parse(portfolioRecords[portfolioRecords.length-1].date) - Date.parse(portfolioRecords[0].date))
+          daysDifference = Math.ceil(daysDifference / (1000 * 60 * 60 * 24)); 
+          if (daysDifference > 730)
+              setInterval(365)
+          else if(daysDifference > 365)
+              setInterval(70)
+          else if(daysDifference > 100)
+              setInterval(30)
+      }
       for(let i=0; i<portfolio.records.length; i++){
         tempData.push({
           date:portfolioRecords[i].date,
@@ -60,13 +72,24 @@ const CompareLineChart = ({portfolio, comparedAssetPortfolio}) =>{
             <CartesianGrid opacity={0.1} vertical={false} />
             <XAxis dataKey="date"
                     axisLine={false}
-                    tickLine={false} />
+                    tickLine={false} 
+                    interval={interval}
+                    tickFormatter={(str) => {
+                      const date = parseISO(str);
+                      try{
+                          return format(date, "MMM yy");
+                      }
+                      catch(e)
+                      {
+                      }
+                  }}
+              />
             <YAxis  axisLine={false}
                     tickLine={false}/>
           <Tooltip content={<CustomTooltip/>}/>
           <Legend />
-          <Line type="monotone" dataKey="price1" stroke="#8884d8" dot={false}/>
-          <Line type="monotone" dataKey="price2" stroke="#82ca9d" dot={false}/>
+          <Line isAnimationActive={true} type="monotone" dataKey="price1" stroke="#8884d8" dot={false}/>
+          <Line isAnimationActive={true} type="monotone" dataKey="price2" stroke="#82ca9d" dot={false}/>
         </LineChart>
       </ResponsiveContainer>
     )
@@ -76,8 +99,8 @@ const CompareLineChart = ({portfolio, comparedAssetPortfolio}) =>{
         return (
           <div className="tool-tip">
             <p>{formatTooltipDate(label)}</p>
-            <p>${formatToolTipNumber(payload, "price1")}</p>
-            <p>${formatToolTipNumber(payload, "price2")}</p>
+            <p>Price1: ${formatToolTipNumber(payload, "price1")}</p>
+            <p>Price2: ${formatToolTipNumber(payload, "price2")}</p>
           </div>
         );
       }

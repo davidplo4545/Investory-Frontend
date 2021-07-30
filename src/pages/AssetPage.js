@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react'
 import {UserContext} from '../context/UserContext'
-import AssetChart from '../components/assets-comps/AssetChart'
-import InvestmentCalculator from '../components/assets-comps/InvestmentCalculator'
+import AssetAreaChart from '../components/charts/AssetAreaChart'
+import InvestmentCalculator from '../components/assets/InvestmentCalculator'
 import axios from 'axios'
 import { Link } from "react-router-dom";
 import './assetPage.css'
@@ -78,7 +78,7 @@ const AssetPage = ({match}) =>{
                             <Button color="default"><Link to={'/portfolios'}>Add to portfolio</Link></Button>
                         </div>                       
                     </div>
-                    <AssetChart asset={asset} records={records}/>
+                    <AssetAreaChart asset={asset} records={records}/>
                     <div className="asset-info">
                         <div className="first-info">
                             <p>Type: {asset.type}</p>

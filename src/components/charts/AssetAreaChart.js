@@ -12,7 +12,7 @@ import {
 
 import { format, parseISO } from "date-fns";
   
-const AssetChart = ({asset, records}) =>{
+const AssetAreaChart = ({asset, records}) =>{
     const [interval, setInterval] = useState(365)
     const formatNumber = (number) =>{
         if (number === 0)
@@ -115,4 +115,4 @@ const AssetChart = ({asset, records}) =>{
       }
 }
 
-export default AssetChart
+export default AssetAreaChart

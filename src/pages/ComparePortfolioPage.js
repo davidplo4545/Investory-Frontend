@@ -1,12 +1,20 @@
 import React, {useEffect, useContext, useState} from 'react'
 import { Autocomplete } from '@material-ui/lab';
 import { useLocation } from 'react-router';
-import { Paper, Grid, Button, TextField } from '@material-ui/core';
+import { Paper, Grid, Button, TextField, makeStyles, Card } from '@material-ui/core';
 import { UserContext } from '../context/UserContext';
 import { getPortfolio, postComparedAssetPortfolio } from '../api/portfolios';
 import { getAllAssets1 } from '../api/assets';
-import HoldingsChart from '../components/assets-comps/HoldingsChart';
-import CompareLineChart from '../components/assets-comps/CompareLineChart'
+import HoldingsChart from '../components/charts/HoldingsPieChart';
+import CompareLineChart from '../components/charts/CompareLineChart'
+
+const useStyles = makeStyles({
+    paper: {
+    //   width: "100%",
+    //   height: "100%",
+      background: 'transparent',
+    }
+  });
 
 const ComparePortfolioPage = ({match}) =>{
     const user = useContext(UserContext)
@@ -23,6 +31,7 @@ const ComparePortfolioPage = ({match}) =>{
         else{
             getPortfolio(user.token, portfolioId, setPortfolio)
         }
+
         getAllAssets1(user.token, '', setAssets)
         
     },[])
@@ -34,6 +43,8 @@ const ComparePortfolioPage = ({match}) =>{
             }
     }
 
+    const classes = useStyles()
+
     const handleFormSubmit = (e) =>{
         e.preventDefault();
         if(selectedAsset){
@@ -41,38 +52,47 @@ const ComparePortfolioPage = ({match}) =>{
             postComparedAssetPortfolio(user.token, portfolioId, requestData, setComparedAssetPortfolio)
         }
     }
+
+
     return(
-    <Grid container style={{height: '100%'}}>
         <React.Fragment>
-        {portfolio &&
-        <Grid item xl={3} md={3} style={{backgroundColor:'green'}}>
-                <HoldingsChart className="holdings-pie-chart" portfolio={portfolio} width={350} height={350} innerRadius={90} outerRadius={140}/> 
-                <form onSubmit={handleFormSubmit}>
-                    <Autocomplete
-                        options={assets}
-                        getOptionLabel={(option) => option.name}
-                        getOptionSelected={(option, value) => option.id === value.id}
-                        onChange={handleAssetSelectionChanged}
-                        style={{ width: 300 }}
-                        renderInput={(params) => <TextField {...params} label="Choose Asset" variant="outlined" />}
-                        />
-                    <Button type="submit">Compare</Button>
-                </form>
+                {portfolio &&
+    <Grid container style={{height: '100%'}}>
+        <Grid item xl={12}>
+            <form style={{display:'flex', flexDirection:'row'}} onSubmit={handleFormSubmit}>
+                <Autocomplete
+                    options={assets}
+                    getOptionLabel={(option) => option.name}
+                    getOptionSelected={(option, value) => option.id === value.id}
+                    onChange={handleAssetSelectionChanged}
+                    style={{ width: 300 }}
+                    renderInput={(params) => <TextField {...params} label="Choose Asset" variant="outlined" />}
+                    />
+                <Button type="submit">Compare</Button>
+            </form>
         </Grid>
-        }
-        {comparedAssetPortfolio && portfolio &&
+        <Paper className={classes.paper} elevation={7}>
+        <Grid item xl={3} md={3}>
+            <HoldingsChart className="holdings-pie-chart" portfolio={portfolio} width={350} height={350} innerRadius={90} outerRadius={140}/> 
+        </Grid>
+        </Paper>
         <Grid item xl={6} md={6} xs={12}>
+        {comparedAssetPortfolio && portfolio &&
             <CompareLineChart portfolio={portfolio} comparedAssetPortfolio={comparedAssetPortfolio}/>
-        </Grid>
         }
-        <Grid item xl={3} md={3} style={{backgroundColor:'blue'}}>
+        </Grid>
+        <Paper className={classes.paper} xl={5} elevation={7}>
+        <Grid item xl={3} md={3}>
         {comparedAssetPortfolio &&
             <HoldingsChart className="holdings-pie-chart" portfolio={comparedAssetPortfolio} width={350} height={350} innerRadius={90} outerRadius={140}/> 
+            // <h1> Compared Data</h1>
         }
         </Grid>
-        </React.Fragment>
+    </Paper>
         {/* <h1>Portfolio Compare</h1> */}
     </Grid>
+}
+        </React.Fragment>
     )}
 
 export default ComparePortfolioPage;

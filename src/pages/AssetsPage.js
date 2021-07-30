@@ -1,12 +1,12 @@
 import React, {useState, useContext, useEffect} from 'react'
 import {UserContext} from '../context/UserContext'
 import {getAllAssets} from '../api/assets.js'
-import AssetTable from '../components/assets-comps/AssetTable'
+import AssetTable from '../components/tables/AssetTable'
 
 const AssetPage = ({match}) =>{
     const assetType = match.params.assetType
     const user = useContext(UserContext)
-    const [assets, setAssets] = useState()
+    const [assets, setAssets] = useState([])
     const [isValid, setIsValid] = useState(true)
 
     useEffect(() => {

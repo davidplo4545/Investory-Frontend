@@ -2,9 +2,9 @@ import React, {useEffect, useContext, useState} from 'react'
 import { useHistory } from 'react-router'
 import { UserContext } from '../context/UserContext'
 import { getPortfolio } from '../api/portfolios'
-import AssetChart from '../components/assets-comps/AssetChart'
-import HoldingsChart from '../components/assets-comps/HoldingsChart'
-import HoldingsTable from '../components/assets-comps/HoldingsTable'
+import AssetAreaChart from '../components/charts/AssetAreaChart'
+import HoldingsPieChart from '../components/charts/HoldingsPieChart'
+import HoldingsTable from '../components/tables/HoldingsTable'
 import { Button, Grid, Paper } from '@material-ui/core'
 import axios from 'axios'
 import './portfolios.css'
@@ -42,7 +42,7 @@ const PortfolioPage = ({match}) =>{
             justifyContent="center" >
                 <Grid item xl={4} className="holdings-pie-chart">
                     
-                    <HoldingsChart className="holdings-pie-chart" portfolio={portfolio} width={350} height={350} innerRadius={90} outerRadius={140}/> 
+                    <HoldingsPieChart className="holdings-pie-chart" portfolio={portfolio} width={350} height={350} innerRadius={90} outerRadius={140}/> 
                     <div className="portfolio-actions">
                         <Button onClick={navigateToPortfolioEdit} color="default">Edit Actions</Button>
                         <Button color="default" onClick={navigateToPortfolioCompare}>Compare</Button>
@@ -63,7 +63,7 @@ const PortfolioPage = ({match}) =>{
                                 <p className="portfolio-number" style={{color: portfolio.return > 0 ? "#9dc88d" : "red"}}>{portfolio.return.toFixed(2)}%</p>
                             </div>
                         </div>
-                        <AssetChart records={portfolio.records} />
+                        <AssetAreaChart records={portfolio.records} />
                     </div>
                 </Grid>
                 <Grid container justifyContent="flex-start">

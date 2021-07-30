@@ -5,7 +5,7 @@ import { UserContext } from '../context/UserContext'
 import ActionCreateForm from '../components/forms/ActionCreateForm'
 import { TextField, Paper, Grid, Button } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core'
-import ActionsDataGrid from './ActionsDataGrid'
+import ActionsDataGrid from '../components/tables/ActionsDataGrid'
 import { useHistory, useLocation } from 'react-router-dom'
 
 const actions = [
