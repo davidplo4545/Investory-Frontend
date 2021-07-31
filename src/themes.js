@@ -1,6 +1,8 @@
 export const theme = {
-    backgroundColor: "#2c3531",
-    textColor: "#fff",
+    // backgroundColor: "#2c3531",
+    backgroundColor:'#fff',
+    // textColor: "#fff",
+    textColor: "black",
     borderColor:'rgba(122, 122, 122, 0.5)',
     // primary: "#77ccdd"
   }

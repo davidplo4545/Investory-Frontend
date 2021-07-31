@@ -12,6 +12,7 @@
 main {
   height: auto;
   display: flex;
+  min-height: calc(100vh - 167px);
   flex-direction: column;
   align-items: center;
   flex: 1;
@@ -63,5 +64,9 @@ main {
   }
   .App {
     height: auto !important;
+  }
+
+  main {
+    min-height: calc(100vh - 85px);
   }
 }

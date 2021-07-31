@@ -82,7 +82,6 @@ const ActionsDataGrid = ({isEdit, assets, rows, setRows}) =>{
         disableClickEventBubbling: true,
         renderCell: (params) => (
           <div>
-            {/* {params.value.getFullYear()} */}
             <Button
               variant="contained"
               color="secondary"
@@ -124,7 +123,6 @@ const ActionsDataGrid = ({isEdit, assets, rows, setRows}) =>{
     }
 
     const handleEditCellChange = ({id, field, props}) =>{
-        // setRows(rows)
         const rowIndex = rows.findIndex(row => row.id == id)
         rows[rowIndex][field] = props.value;
         setRows(rows)
@@ -159,7 +157,7 @@ const ActionsDataGrid = ({isEdit, assets, rows, setRows}) =>{
             </div>
             <DataGrid disableColumnMenu 
             onEditCellChange={handleEditCellChange}
-            pageSize={rows.length} 
+            pageSize={rows.length < 100 ? rows.length : 100} 
             autoHeight={true} 
             columns={columns} 
             onCellClick={handleCellClicked}
