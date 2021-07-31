@@ -1,42 +1,11 @@
-import React,{useState} from 'react'
+import React from 'react'
 import {useHistory} from 'react-router-dom'
-import { Paper, Button, Grid, Box, makeStyles } from '@material-ui/core';
+import {  Button,   makeStyles } from '@material-ui/core';
 import { DataGrid } from '@material-ui/data-grid';
 import PageviewIcon from '@material-ui/icons/Pageview';
-import { CropLandscapeSharp } from '@material-ui/icons';
 
 
 const useStyles =  makeStyles((theme) => ({
-  paper: {
-    background:'transparent',
-    width: "100%",
-    [theme.breakpoints.down('sm')]: {
-      padding:"10px",
-    },
-    [theme.breakpoints.up('md')]: {
-      padding:"15px",
-    },
-    [theme.breakpoints.up('lg')]: {
-      padding:"20px",
-    },
-  },
-  grid:{
-    width: "100%",
-    [theme.breakpoints.down('sm')]: {
-      flexDirection:'column'
-    },
-    [theme.breakpoints.up('md')]: {
-      flexDirection:'column'
-
-    },
-    [theme.breakpoints.up('lg')]: {
-      flexDirection:'row',
-      justifyContent:'space-between',
-      width: "100%",
-
-      // padding:"20px",
-    },
-  },
   datagrid:{
     [theme.breakpoints.down('xs')]: {
       fontSize: 11,
@@ -73,7 +42,7 @@ const AssetTable = ({assets}) =>{
               variant="contained"
               color="primary"
               size="small"
-              startIcon={<PageviewIcon />}
+              endIcon={<PageviewIcon />}
             >
               <p className={classes.datagrid}>VIEW</p>
             </Button>
@@ -90,7 +59,6 @@ const AssetTable = ({assets}) =>{
     {
         field: 'name',
         headerName: 'Name',
-        // minWidth: 50,
         flex: 0.4,
         editable: false,
     },
@@ -117,26 +85,15 @@ const AssetTable = ({assets}) =>{
     return
   }
   return(
-      <Paper elevation={6} className={classes.paper}>
-          <Grid container className={classes.grid}>
-            <Grid item xl={9} style={{width: '100%', flex:1}}>
-                <p>Search your asset here:</p>
-                <DataGrid 
-                  className={classes.datagrid}
-                    pageSize={10} 
-                    autoHeight={true} 
-                    columns={columns} 
-                    onCellClick={handleCellClicked}
-                    rows={assets}
-                    rowsPerPageOptions={[]}/>
-            </Grid>
-            <Grid item xl={4}>
-                <Box style={{background:'transparent', height: '100%'}}>
-                <p>Recently viewed</p>
-                </Box>
-            </Grid>
-      </Grid>
-      </Paper>
+          <DataGrid 
+            className={classes.datagrid}
+              pageSize={15} 
+              autoHeight={true} 
+              columns={columns} 
+              onCellClick={handleCellClicked}
+              rows={assets}
+              rowsPerPageOptions={[]}/>
+            
   )
 }
 

@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import { LineChart, ResponsiveContainer, CartesianGrid, Tooltip, Legend, YAxis, XAxis, Line } from 'recharts';
 import { format, parseISO } from "date-fns";
-import { Forward5 } from '@material-ui/icons';
 const CompareLineChart = ({portfolio, comparedAssetPortfolio}) =>{
   const [data, setData] = useState(null)
   const [interval, setInterval] = useState(365)

@@ -5,7 +5,16 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router } from "react-router-dom";
 import App from './App';
 import {theme} from './themes'
-import styled, { createGlobalStyle } from 'styled-components';
+import { createTheme, ThemeProvider } from '@material-ui/core';
+import { createGlobalStyle } from 'styled-components';
+
+const muiTheme = createTheme({
+  palette:{
+    primary:{
+      main:theme.hoverBgColor,
+    }
+  },
+})
 
 export const GlobalStyle = createGlobalStyle`
   body {
@@ -13,12 +22,11 @@ export const GlobalStyle = createGlobalStyle`
     color: ${theme.textColor};
   }
 
-  .container {
-
-  }
   .navbar { 
     background: ${theme.backgroundColor} !important;
     color: ${theme.textColor} !important; 
+    font-family: ${theme.fontFamily};
+    font-weight: bold;
   }
   .nav-link {
     font-size: 1rem;
@@ -26,9 +34,23 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   .navbar-brand {
-    // font-size: 1.25rem;
+    font-size: 1.25rem;
     color: ${theme.textColor} !important;
   }
+
+  .navbar-brand:hover {
+    color: ${theme.hoverBgColor} !important;
+  }
+
+  .nav-link:hover {
+    color: ${theme.hoverBgColor} !important;
+  }
+  .secondary .nav-link:hover {
+    background-color: ${theme.hoverBgColor} !important;
+    color: #fff !important;
+    transition: all ease-in 0.3s;
+  }
+
   .portfolio-actions button{
     color: white !important;
   }
@@ -39,10 +61,12 @@ export const GlobalStyle = createGlobalStyle`
 `;
 
 ReactDOM.render(
-  <Router>
-    <GlobalStyle/>
-      <App />
-  </Router>,
+  <ThemeProvider theme={muiTheme}>
+    <Router>
+      <GlobalStyle/>
+        <App />
+    </Router>
+  </ThemeProvider>,
   document.getElementById('root')
 );
 

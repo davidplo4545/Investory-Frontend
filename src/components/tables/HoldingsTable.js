@@ -1,9 +1,7 @@
 import React,{useState} from 'react'
 import MaterialTable  from 'material-table';
-import {useHistory} from 'react-router-dom'
 import {makeStyles} from '@material-ui/core'
 const HoldingsTable = ({portfolio, holdings}) =>{
-    let history = useHistory();
     const columns = [
         { title: 'Type', field: 'asset.type' },
         { title: 'Symbol', field: 'asset.symbol' },
@@ -20,10 +18,6 @@ const HoldingsTable = ({portfolio, holdings}) =>{
 
     const handleRowClicked = (event, rowData) =>{
         setSelectedRow(rowData.tableData.id)
-        // const id = rowData.id
-        // history.push({
-        //     pathname:`/asset/${id}`,
-        //    });
     }
     const useStyles = makeStyles({
         root: {

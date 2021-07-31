@@ -42,7 +42,7 @@ export const BigNavbar = () =>{
 
                                     {menuItems.map((item) => {
                                         return (item.link === null ?
-                                            <Nav.Link key={item.title} onClick={() => handleMenuItemClick(item)}>{item.title}<ExpandMoreIcon/></Nav.Link> :
+                                            <Nav.Link key={item.title} onClick={() => handleMenuItemClick(item)}>{item.title}</Nav.Link> :
                                             <Nav.Link key={item.title} onClick={() => handleMenuItemClick(item)} as={Link} to={item.link}>{item.title}</Nav.Link> 
                                         )
                                     })}  

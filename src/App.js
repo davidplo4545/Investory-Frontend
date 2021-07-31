@@ -14,12 +14,14 @@ import CreatePortfolioPage from './pages/CreatePortfolioPage'
 import {UserContext} from './context/UserContext'
 import useToken from './context/useToken'
 import { getMyUserDetails } from './api/authentication'
-import {  Grid, makeStyles } from '@material-ui/core'
+import {  Grid, makeStyles, Box } from '@material-ui/core'
 import ComparePortfolioPage from './pages/ComparePortfolioPage';
 
 
 const useStyles =  makeStyles((theme) => ({
   root: {
+    height: '100%',
+    alignItems:'flex-start',
     [theme.breakpoints.down('sm')]: {
       width: "100%",
     },
@@ -30,6 +32,23 @@ const useStyles =  makeStyles((theme) => ({
       width: "75%",
     },
   },
+  paper: {
+    background:'#fefefe',
+    width: "100%",
+    height: "auto",
+    [theme.breakpoints.down('sm')]: {
+      padding:"10px",
+      width: "100%",
+    },
+    [theme.breakpoints.up('md')]: {
+      padding:"15px",
+      width: "100%",
+    },
+    [theme.breakpoints.up('lg')]: {
+      padding:"20px",
+      width: "75%",
+    },
+  }
 }));
 function App() {
   const {token,setToken} = useToken();
@@ -48,7 +67,8 @@ function App() {
             <NavbarMenu token={token}/>
       </header>
       <main>
-          <Grid container className={classes.root}  alignItems="center" justifyContent="center">
+        <Box className={classes.paper}>
+          <Grid container alignItems="center" justifyContent="center">
             <Switch>
               <Route exact path="/">
                 <HomePage />
@@ -72,6 +92,7 @@ function App() {
               </Route>
             </Switch> 
           </Grid>
+        </Box>
       </main>
         {/* <footer className="footer">Footer</footer> */}
       </UserContext.Provider>

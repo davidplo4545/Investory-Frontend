@@ -123,7 +123,7 @@ const ActionsDataGrid = ({isEdit, assets, rows, setRows}) =>{
     }
 
     const handleEditCellChange = ({id, field, props}) =>{
-        const rowIndex = rows.findIndex(row => row.id == id)
+        const rowIndex = rows.findIndex(row => row.id === id)
         rows[rowIndex][field] = props.value;
         setRows(rows)
     }

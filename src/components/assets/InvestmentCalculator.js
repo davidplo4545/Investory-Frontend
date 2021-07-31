@@ -1,12 +1,10 @@
 import React, {useState} from 'react'
-import Grid from '@material-ui/core/Grid';
 import DateFnsUtils from '@date-io/date-fns';
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
 } from '@material-ui/pickers';
 import TextField from '@material-ui/core/TextField';
-import FormControl from '@material-ui/core/FormControl';
 import { Button } from '@material-ui/core';
 
 const InvestmentCalculator = ({records}) =>{
@@ -34,7 +32,6 @@ const InvestmentCalculator = ({records}) =>{
 
     const handleSubmit = (event) =>{
         event.preventDefault();
-        const recordsTemp = [...records]
         let i =0
         while (selectedDate > Date.parse(records[i].date) && i < records.length - 1)
         {

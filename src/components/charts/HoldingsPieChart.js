@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {  PieChart, Pie, Sector, Cell, Tooltip } from 'recharts';
+import {  PieChart, Pie, Cell, Tooltip } from 'recharts';
 
 const COLORS = ['#0088FE', '#00C49F', 'black', '#FF8042'];
 
@@ -7,12 +7,9 @@ const RADIAN = Math.PI / 180;
 
 
 const HoldingsPieChart = ({portfolio,width, height, innerRadius, outerRadius, cx, cy}) =>{
-    const [holdingsTitle, setHoldingsTitle] = useState("")
     const [holdings, setHoldings] = useState([])
     useEffect(() =>{
-        console.log(portfolio)
         setHoldings(portfolio.holdings)
-        setHoldingsTitle(`${portfolio.name} \n ${portfolio.total_value}`)
     },[portfolio])
 
     const renderCustomizedLabel = ({

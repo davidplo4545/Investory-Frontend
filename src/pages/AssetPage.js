@@ -1,42 +1,25 @@
 import React, { useEffect, useState, useContext } from 'react'
 import {UserContext} from '../context/UserContext'
 import AssetAreaChart from '../components/charts/AssetAreaChart'
-import InvestmentCalculator from '../components/assets/InvestmentCalculator'
 import axios from 'axios'
 import { Link } from "react-router-dom";
+import RightSidebarData from '../components/assets/RightSidebarData'
 import './assetPage.css'
-import {Button} from '@material-ui/core'
+import {Button, Grid, makeStyles} from '@material-ui/core'
 
+const useStyles = makeStyles((theme) =>{
+    return{
+        grid:{
+            background:'red',
+        }
+    }
+})
 
 const AssetPage = ({match}) =>{
     const user = useContext(UserContext)
-    const [asset, setAsset] = useState([])
-    const [recentlyViewedAssets, setRecentlyViewedAssets] = useState([])
-    const [records, setRecords] = useState([])
-    const [isValid, setIsValid] = useState(true)
+    const [asset, setAsset] = useState(null)
+    const [isValid, setIsValid] = useState(false)
     const assetId = match.params.assetId
-
-    const getRecentlyViewedAssets = (currAsset) =>{
-        // const recentlyViewedItems = []
-        const recAssets = JSON.parse(localStorage.getItem('recentlyViewedAssets'))
-        const link = `/asset/${assetId}`
-        
-        if (recAssets == null)
-        {
-            const recAssets = []
-            recAssets.push({'name':currAsset.name,'symbol':currAsset.symbol,'link':link})
-            localStorage.setItem('recentlyViewedAssets', JSON.stringify(recAssets))
-            setRecentlyViewedAssets(recAssets)
-        }
-        else{
-            if (recAssets.length > 9)
-                recAssets.pop()
-            const recAssets1 = recAssets.filter((asset) => asset.link !== link)
-            recAssets1.unshift({'name':currAsset.name,'symbol':currAsset.symbol,'link':link})
-            localStorage.setItem('recentlyViewedAssets', JSON.stringify(recAssets1))
-            setRecentlyViewedAssets(recAssets1)
-        }
-    }
 
     useEffect(() => {
         const getAsset = async () =>{ 
@@ -48,21 +31,20 @@ const AssetPage = ({match}) =>{
             })
             .then((res) =>{
                 setAsset(res.data)
-                setRecords(res.data.records)
-                getRecentlyViewedAssets(res.data)
             })
             .catch((error) =>{
                 setIsValid(false)
             })
         }
         getAsset()
+        setIsValid(true)
     },[match]);
     return(
         
         <React.Fragment>
-            {isValid ?
-            <React.Fragment>
-                <div className="asset-data">
+            {asset ?
+            <Grid container>
+                <Grid item xl={9} className="asset-data">
                     <div className="asset-headers">
                         <div className="header-info">
                             <h2>{asset.symbol} - {asset.name}</h2>
@@ -78,7 +60,7 @@ const AssetPage = ({match}) =>{
                             <Button color="default"><Link to={'/portfolios'}>Add to portfolio</Link></Button>
                         </div>                       
                     </div>
-                    <AssetAreaChart asset={asset} records={records}/>
+                    <AssetAreaChart asset={asset} records={asset.records}/>
                     <div className="asset-info">
                         <div className="first-info">
                             <p>Type: {asset.type}</p>
@@ -104,36 +86,14 @@ const AssetPage = ({match}) =>{
                             <p>Industry: {asset.industry}</p>
                         </div>
                     </div>
-                </div>
+                </Grid>
+                <Grid item xl={3}>
+                    {asset &&
+                        <RightSidebarData isSingleAsset={true} asset={asset}/>
+                    }
+                </Grid>
 
-                <div className="right-column-main">
-                    <div className="investment-calculator">
-                        {records.length > 0 ?
-                            <InvestmentCalculator records={records}/>
-                             : 
-                             <div/>
-                        }
-                    </div>
-                    <div className="portfolios-in">
-                        <h4>Portfolios in:</h4>
-                        <p>Growth Portfolio</p>
-                        <p>Value Portfolio</p>
-                        <p>Cryptos</p>
-                    </div>
-                    <div className="recent-assets">
-                        <h4>Recently viewed tickers:</h4>
-                        {recentlyViewedAssets.map((asset) => {
-                            return <Link key={asset.link} to={asset.link}>
-                                        <p className="recent-asset-symbol">{asset.symbol}</p>
-                                        <p className="recent-asset-name">{asset.name}</p>
-                                    </Link>
-                        })
-
-                        }
-                    </div>
-                </div>
-
-            </React.Fragment>
+            </Grid>
             :
             <React.Fragment>not valid</React.Fragment>
             }

@@ -2,7 +2,6 @@ import React, {useState, useContext, useEffect} from 'react'
 import { getAllAssets1 } from '../api/assets'
 import { patchPortfolio, postPortfolio } from '../api/portfolios'
 import { UserContext } from '../context/UserContext'
-import ActionCreateForm from '../components/forms/ActionCreateForm'
 import { TextField, Paper, Grid, Button } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core'
 import ActionsDataGrid from '../components/tables/ActionsDataGrid'
@@ -113,9 +112,6 @@ const CreatePortfolioPage = () =>{
                 <Paper elevation={10} >
                     <h1>Create your new portfolio</h1>
                     <TextField value={name} label="Portfolio Name" onChange={(e) =>setName(e.target.value)}/>
-                    {/* {assets && assets.length &&
-                        <ActionCreateForm assets={assets}/>
-                    } */}
                     {errors.map((error, index) => 
                         <p key={index}>{error}</p>
                     )}

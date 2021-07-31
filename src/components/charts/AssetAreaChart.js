@@ -11,8 +11,10 @@ import {
   } from "recharts";
 
 import { format, parseISO } from "date-fns";
+import { useTheme } from '@material-ui/core';
   
 const AssetAreaChart = ({asset, records}) =>{
+    const theme = useTheme()
     const [interval, setInterval] = useState(365)
     const formatNumber = (number) =>{
         if (number === 0)
@@ -55,18 +57,18 @@ const AssetAreaChart = ({asset, records}) =>{
                 setInterval(30)
         }
     },[records])
-  
+
     return (
         <ResponsiveContainer width="99%" height={400}>
                 <AreaChart data={records}>
                     <defs>
                     <linearGradient id="color" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stopColor="#9dc88d" stopOpacity={0.4} />
-                        <stop offset="90%" stopColor="#9dc88d" stopOpacity={0.05} />
+                        <stop offset="0%" stopColor={theme.palette.primary.main} stopOpacity={0.4} />
+                        <stop offset="90%" stopColor={theme.palette.primary.main} stopOpacity={0.05} />
                     </linearGradient>
                     </defs>
 
-                    <Area dataKey="price" stroke="#9dc88d" fill="url(#color)" />
+                    <Area dataKey="price" stroke={theme.palette.primary.main} fill="url(#color)" />
 
                     <XAxis
                     dataKey="date"
