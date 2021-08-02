@@ -19,10 +19,14 @@ const HoldingsTable = ({portfolio, holdings}) =>{
     const handleRowClicked = (event, rowData) =>{
         setSelectedRow(rowData.tableData.id)
     }
-    const useStyles = makeStyles({
+    const useStyles = makeStyles((theme) =>{
+    return{
         root: {
           backgroundColor: "blue",
-          color: "green"
+          color: "green",
+          '& .MuiDataGrid-main': {
+            color: theme.palette.common.black
+          }
         },
         toolbar: {
           backgroundColor: "white"
@@ -41,7 +45,7 @@ const HoldingsTable = ({portfolio, holdings}) =>{
         actions: {
           color: "blue"
         }
-      });
+      }});
 
     return(
 

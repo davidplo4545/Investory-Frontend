@@ -10,9 +10,8 @@
   justify-content: flex-start;
 }
 main {
-  height: auto;
   display: flex;
-  min-height: calc(100vh - 167px);
+  /* min-height: calc(100vh - 167px); */
   flex-direction: column;
   align-items: center;
   flex: 1;

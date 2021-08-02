@@ -121,7 +121,7 @@ const CreatePortfolioPage = () =>{
                 {assets && assets.length &&
                    <ActionsDataGrid isEdit={isEdit} assets={assets} rows={rows} setRows={setRows}/>
                 }
-                <Button onClick={handlePortfolioCreate}><h1>{isEdit ? `Update` : `Create`}</h1></Button>
+                <Button variant="contained" color="primary" onClick={handlePortfolioCreate}><h1>{isEdit ? `Update` : `Create`}</h1></Button>
             </Grid>
         </Grid>
     )

@@ -66,6 +66,8 @@ const RecentlyViewedAssetsBox = ({asset}) =>{
             direction="column"
             alignItems="flex-start">
         <Typography variant="h6">Recently viewed tickers:</Typography>
+        {recentlyViewedAssets &&
+        <React.Fragment>
         {recentlyViewedAssets.map((asset) => {
             return <Grid item  className={classes.gridItem} key={generateKey(asset.name)} xl={12} style={{width:'100%'}}>
                         <MuiLink className={classes.link}  component={Link} key={asset.link} to={asset.link}>
@@ -75,7 +77,8 @@ const RecentlyViewedAssetsBox = ({asset}) =>{
                     </Grid>
         })
 
-        }
+        }</React.Fragment>}
+        
     </Grid>
     )
 }

@@ -43,14 +43,14 @@ const AssetsPage = ({match}) =>{
 
     return(
         <Grid container className={classes.grid}>
-            <Grid item xl={9} style={{width: '100%', flex:1}}>
+            <Grid item xl={9} sm={12} style={{width: '100%', flex:1}}>
                 {isValid ?
                     <AssetTable assetType={assetType} assets={assets}/>
                     :
                     <div>Not Valid</div>
                 }
             </Grid>
-            <Grid item xl={3}>
+            <Grid item xl={3} sm={12}>
                 <RightSidebarData isSingleAsset={false} asset={null}/>
             </Grid>
         </Grid>

@@ -3,7 +3,7 @@ import { UserContext } from '../context/UserContext'
 import { getAllPortfolios } from '../api/portfolios'
 import './portfolios.css'
 import HoldingsPieChart from '../components/charts/HoldingsPieChart'
-import { Container, Paper, Button } from '@material-ui/core'
+import { Grid,Paper, Card, Button, CardContent, Typography, CardActions, CardHeader, CardMedia } from '@material-ui/core'
 import { Link, useHistory } from "react-router-dom";
 
 const PortfoliosPage = () =>{
@@ -20,39 +20,44 @@ const PortfoliosPage = () =>{
             state: {portfolio:null}
         })
     }
+
+    const navigateToPortfolio = (id) =>{
+        history.push({
+            pathname: `/portfolios/${id}`,
+        })
+    }
     return (
         <div className="portfolios-page">
-            <h1>Portfolios Page</h1>
-            <ul className="portfolios">
+            <h1>Your Portfolios :</h1>
+            <Grid container spacing={3} >
                 {portfolios.map((portfolio) =>{
                     return(
-                    <li key={portfolio.id}>
-                        <Paper className="portfolio-card" elevation={2}>
-                            <div className="card__image">
+                    <Grid item key={portfolio.id}>
+                        <Card elevation={2} style={{background:'transparent'}}>
+                            <CardMedia>
                                 <HoldingsPieChart portfolio={portfolio} 
                                 width={350}
-                                height={350}
-                                innerRadius={40} 
-                                outerRadius={80}
+                                height={230}
+                                innerRadius={60} 
+                                outerRadius={100}
                                 cx={175}
-                                cy={100}/>
-                            </div>
-                            <div className="card__overlay">
-                                    <Link to={`/portfolios/${portfolio.id}`}>
-                                <div className="card__header">
-                                    <svg className="card__arc" xmlns="http://www.w3.org/2000/svg"><path /></svg>                     
-                                    {/* <img className="card__thumb" src="https://i.imgur.com/7D7I6dI.png" alt="" /> */}
-                                    <div className="card__header-text">
-                                        <h3 className="card__title">{portfolio.name}</h3>
-                                        <span className="card__tagline">Lorem ipsum dolor sit amet consectetur</span>            
-                                        <span className="card__status">1 hour ago</span>
-                                    </div>
-                                </div>
-                                    </Link>
-                                <p className="card__description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores, blanditiis?</p>
-                            </div>
-                        </Paper>
-                    </li>
+                                cy={120}/>
+                            </CardMedia>
+                            <CardContent>
+                                <Typography gutterBottom color="textPrimary" variant="h6" component="h2">
+                                        {portfolio.name}
+                                    </Typography>
+                                <Typography  color="primary" variant="body1" component="h2">
+                                    Holdings:
+                                </Typography>
+                            </CardContent>
+                            <CardActions>
+                                <Button variant="contained" color="primary" onClick={() => navigateToPortfolio(portfolio.id)}>
+                                    View
+                                </Button>
+                            </CardActions>
+                        </Card>
+                    </Grid>
                     ) 
                 })
                 }
@@ -63,7 +68,7 @@ const PortfoliosPage = () =>{
                         </Button>
                     </div>
                 </Paper>
-            </ul>
+            </Grid>
 
         </div>
     )

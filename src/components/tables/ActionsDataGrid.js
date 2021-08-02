@@ -1,21 +1,25 @@
 import React, {useState} from 'react'
 import { DataGrid } from '@material-ui/data-grid';
-import { Paper, Button } from '@material-ui/core';
+import { Paper, Button, Typography } from '@material-ui/core';
 import { makeStyles, TextField } from '@material-ui/core'
 import { Autocomplete } from '@material-ui/lab';
 import DeleteIcon from "@material-ui/icons/Delete";
 // import {actions} from './testing'
 
-const useStyles = makeStyles({
-    root: {
-        height: "auto",
-    },
-    flexRow:{
-        display:"flex",
-        "flex-direction":"row",
-    },
-  });
-
+const useStyles = makeStyles((theme) =>{
+    return({
+        root:{
+            height:'auto',
+            '& .MuiDataGrid-main': {
+                color: theme.palette.common.black
+              }
+        },
+        flexRow:{
+            display:'flex',
+            flexDirection:'row',
+        }
+    })
+})
 
 const ActionsDataGrid = ({isEdit, assets, rows, setRows}) =>{
     const columns = [    
@@ -141,8 +145,7 @@ const ActionsDataGrid = ({isEdit, assets, rows, setRows}) =>{
     return(
         <Paper className={classes.root} elevation={10} style={{padding: 20}}>
             <div className={classes.flexRow}>
-                <h1>Data grid</h1>
-                <Button>Edit</Button>
+                <Typography variant="h4" color="primary">Data grid</Typography>
                 <form onSubmit={handleFormSubmit}>
                     <Autocomplete
                     options={assets}
@@ -152,7 +155,7 @@ const ActionsDataGrid = ({isEdit, assets, rows, setRows}) =>{
                     style={{ width: 300 }}
                     renderInput={(params) => <TextField {...params} label="Choose Asset" variant="outlined" />}
                     />
-                    <Button type="submit">Add symbol</Button>
+                    <Button variant="contained" color="primary" type="submit">Add symbol</Button>
                 </form>
             </div>
             <DataGrid disableColumnMenu 

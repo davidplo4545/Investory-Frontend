@@ -6,6 +6,7 @@ import {  Grid, makeStyles } from '@material-ui/core'
 const useStyles = makeStyles((theme) =>{
     return{
         grid:{
+            width: '100%',
             height: '100%',
             [theme.breakpoints.down('xs')]: {
                 width: "100%",
@@ -13,7 +14,7 @@ const useStyles = makeStyles((theme) =>{
             [theme.breakpoints.down('sm')]: {
                 flexDirection:'row',
                 border:"none",
-                'justify-content':'space-evenly',
+                // 'justify-content':'center',
             },
             [theme.breakpoints.up('md')]: {
                 flexDirection:'row',
@@ -31,22 +32,24 @@ const RightSidebarData = ({isSingleAsset, asset}) =>{
         className={classes.grid}>
             {/* Only show investment calculator in /assets/id url */}
             {isSingleAsset &&
-                <Grid item md={12} xl={12} sm={4}className="investment-calculator">
+            <React.Fragment>
+                <Grid item md={12} xl={12} className="investment-calculator">
                     {asset.records.length > 0 ?
                         <InvestmentCalculator records={asset.records}/>
                             : 
                             <div/>
                     }
                 </Grid>
+                <Grid item  md={12} xl={12} className="portfolios-in">
+                    <h4>Portfolios in:</h4>
+                    <p>Growth Portfolio</p>
+                    <p>Value Portfolio</p>
+                    <p>Cryptos</p>
+                </Grid>
+                </React.Fragment>
             }
-            <Grid item sm={4} md={12} xl={12}>
+            <Grid item  md={12} xl={12}>
                 <RecentlyViewedAssetsBox asset={asset}/>
-            </Grid>
-            <Grid item sm={4} md={12} xl={12} className="portfolios-in">
-                <h4>Portfolios in:</h4>
-                <p>Growth Portfolio</p>
-                <p>Value Portfolio</p>
-                <p>Cryptos</p>
             </Grid>
         </Grid>
     )

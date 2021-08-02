@@ -1,6 +1,7 @@
 import {useState, useEffect} from 'react';
 import './App.css';
 import NavbarMenu from './components/base/NavbarMenu.js';
+import Footer from './components/base/Footer.js';
 import { Route, Switch } from "react-router-dom";
 import './components/base/navbar.css';
 import HomePage from './pages/HomePage'
@@ -56,40 +57,40 @@ const useStyles =  makeStyles((theme) => ({
 }));
 function App() {
 
-  const [isLightTheme, setIsLightTheme] = useState(true);
+  const [isTheme, setIsTheme] = useState(true);
 
   const GlobalStyle = createGlobalStyle`
   body {
-    background-color: ${!isLightTheme ? darkTheme.backgroundColor : lightTheme.backgroundColor};
-    color:  ${!isLightTheme ? darkTheme.textColor : lightTheme.textColor};
+    background-color: ${!isTheme ? darkTheme.backgroundColor : lightTheme.backgroundColor};
+    color:  ${!isTheme ? darkTheme.textColor : lightTheme.textColor};
   }
 
   .navbar { 
-    background:  ${!isLightTheme ? darkTheme.backgroundColor : lightTheme.backgroundColor} !important;
-    color:  ${!isLightTheme ? darkTheme.textColor : lightTheme.textColor} !important; 
+    background:  ${!isTheme ? darkTheme.backgroundColor : lightTheme.backgroundColor} !important;
+    color:  ${!isTheme ? darkTheme.textColor : lightTheme.textColor} !important; 
     
     font-weight: bold;
   }
   .nav-link {
     font-size: 1rem;
-    color:  ${!isLightTheme ? darkTheme.textColor : lightTheme.textColor} !important;
+    color:  ${!isTheme ? darkTheme.textColor : lightTheme.textColor} !important;
     font-family: ${darkTheme.fontFamily};
   }
 
   .navbar-brand {
     font-size: 1.25rem;
-    color: ${!isLightTheme ? darkTheme.textColor : lightTheme.textColor} !important;
+    color: ${!isTheme ? darkTheme.textColor : lightTheme.textColor} !important;
   }
 
   .navbar-brand:hover {
-    color: ${!isLightTheme ? darkTheme.hoverBgColor : lightTheme.hoverBgColor} !important;
+    color: ${!isTheme ? darkTheme.hoverBgColor : lightTheme.hoverBgColor} !important;
   }
 
   .nav-link:hover {
-    color: ${!isLightTheme ? darkTheme.hoverBgColor : lightTheme.hoverBgColor} !important;
+    color: ${!isTheme ? darkTheme.hoverBgColor : lightTheme.hoverBgColor} !important;
   }
   .secondary .nav-link:hover {
-    background-color: ${!isLightTheme ? darkTheme.hoverBgColor : lightTheme.hoverBgColor} !important;
+    background-color: ${!isTheme ? darkTheme.hoverBgColor : lightTheme.hoverBgColor} !important;
     color: #fff !important;
     transition: all ease-in 0.3s;
   }
@@ -108,7 +109,7 @@ const muiDarkTheme = createTheme({
       main:darkTheme.hoverBgColor,
     },
     text:{
-      primary:darkTheme.textColor
+      primary:darkTheme.textColor,
     }
   },
   overrides: {
@@ -146,7 +147,7 @@ const muiLightTheme = createTheme({
     color: "red",
   },
 })
-const appliedTheme = createTheme(isLightTheme ? muiLightTheme : muiDarkTheme);
+const appliedTheme = createTheme(isTheme ? muiLightTheme : muiDarkTheme);
 
 
   const {token,setToken} = useToken();
@@ -168,12 +169,6 @@ const appliedTheme = createTheme(isLightTheme ? muiLightTheme : muiDarkTheme);
             <NavbarMenu token={token}/>
       </header>
       <main>
-            <IconButton
-            edge="end"
-            color="inherit"
-            aria-label="mode"
-            onClick={() => setIsLightTheme(!isLightTheme)}
-          >Click here</IconButton>
         <Box className={classes.paper}>
           <Grid container>
             <Switch>
@@ -201,6 +196,7 @@ const appliedTheme = createTheme(isLightTheme ? muiLightTheme : muiDarkTheme);
           </Grid>
         </Box>
       </main>
+      <Footer isTheme={isTheme} setIsTheme={setIsTheme}/>
         {/* <footer className="footer">Footer</footer> */}
       </UserContext.Provider>
     </div>
