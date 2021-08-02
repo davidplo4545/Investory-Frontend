@@ -7,6 +7,7 @@ import PageviewIcon from '@material-ui/icons/Pageview';
 
 const useStyles =  makeStyles((theme) => ({
   datagrid:{
+    color: theme.palette.text.main,
     [theme.breakpoints.down('xs')]: {
       fontSize: 11,
       fontWeight:'bold',

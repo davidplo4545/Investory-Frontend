@@ -16,6 +16,10 @@ import useToken from './context/useToken'
 import { getMyUserDetails } from './api/authentication'
 import {  Grid, makeStyles, Box } from '@material-ui/core'
 import ComparePortfolioPage from './pages/ComparePortfolioPage';
+import {darkTheme, lightTheme} from './themes'
+import { createTheme, ThemeProvider } from '@material-ui/core';
+import { createGlobalStyle } from 'styled-components';
+import IconButton from "@material-ui/core/IconButton";
 
 
 const useStyles =  makeStyles((theme) => ({
@@ -33,7 +37,7 @@ const useStyles =  makeStyles((theme) => ({
     },
   },
   paper: {
-    background:'#fefefe',
+    background:'transparent',
     width: "100%",
     height: "auto",
     [theme.breakpoints.down('sm')]: {
@@ -51,6 +55,100 @@ const useStyles =  makeStyles((theme) => ({
   }
 }));
 function App() {
+
+  const [isLightTheme, setIsLightTheme] = useState(true);
+
+  const GlobalStyle = createGlobalStyle`
+  body {
+    background-color: ${!isLightTheme ? darkTheme.backgroundColor : lightTheme.backgroundColor};
+    color:  ${!isLightTheme ? darkTheme.textColor : lightTheme.textColor};
+  }
+
+  .navbar { 
+    background:  ${!isLightTheme ? darkTheme.backgroundColor : lightTheme.backgroundColor} !important;
+    color:  ${!isLightTheme ? darkTheme.textColor : lightTheme.textColor} !important; 
+    
+    font-weight: bold;
+  }
+  .nav-link {
+    font-size: 1rem;
+    color:  ${!isLightTheme ? darkTheme.textColor : lightTheme.textColor} !important;
+    font-family: ${darkTheme.fontFamily};
+  }
+
+  .navbar-brand {
+    font-size: 1.25rem;
+    color: ${!isLightTheme ? darkTheme.textColor : lightTheme.textColor} !important;
+  }
+
+  .navbar-brand:hover {
+    color: ${!isLightTheme ? darkTheme.hoverBgColor : lightTheme.hoverBgColor} !important;
+  }
+
+  .nav-link:hover {
+    color: ${!isLightTheme ? darkTheme.hoverBgColor : lightTheme.hoverBgColor} !important;
+  }
+  .secondary .nav-link:hover {
+    background-color: ${!isLightTheme ? darkTheme.hoverBgColor : lightTheme.hoverBgColor} !important;
+    color: #fff !important;
+    transition: all ease-in 0.3s;
+  }
+
+  .portfolio-actions button{
+    color: white !important;
+  }
+  .portfolio-actions button:hover{
+    background: white !important;
+    color:black !important;
+  }
+`;
+const muiDarkTheme = createTheme({
+  palette:{
+    primary:{
+      main:darkTheme.hoverBgColor,
+    },
+    text:{
+      primary:darkTheme.textColor
+    }
+  },
+  overrides: {
+    MuiPickersCalendarHeader: {
+      switchHeader: {
+        color: '#424242',
+        textTransform: 'uppercase',
+      },
+      dayLabel: {
+        textTransform: 'uppercase',
+      },
+    },
+    MuiPickersDay: {
+      day: {
+        color: '#707070',
+      },
+      current: {
+        color: 'red',
+      },
+    },
+  },
+
+})
+
+const muiLightTheme = createTheme({
+  palette:{
+    primary:{
+      main:lightTheme.hoverBgColor,
+    },
+    text:{
+      primary:lightTheme.textColor
+    }
+  },
+  KeyboardDatePicker: {
+    color: "red",
+  },
+})
+const appliedTheme = createTheme(isLightTheme ? muiLightTheme : muiDarkTheme);
+
+
   const {token,setToken} = useToken();
   const [user, setUser] = useState({})
 
@@ -61,14 +159,23 @@ function App() {
 
   const classes = useStyles()
   return (
+  <ThemeProvider theme={appliedTheme}>
+
     <div className="App">
+      <GlobalStyle/>
       <UserContext.Provider value={{token, user, setToken, setUser}}>
       <header className="App-header">
             <NavbarMenu token={token}/>
       </header>
       <main>
+            <IconButton
+            edge="end"
+            color="inherit"
+            aria-label="mode"
+            onClick={() => setIsLightTheme(!isLightTheme)}
+          >Click here</IconButton>
         <Box className={classes.paper}>
-          <Grid container alignItems="center" justifyContent="center">
+          <Grid container>
             <Switch>
               <Route exact path="/">
                 <HomePage />
@@ -97,6 +204,7 @@ function App() {
         {/* <footer className="footer">Footer</footer> */}
       </UserContext.Provider>
     </div>
+    </ThemeProvider>
   );
 }
 

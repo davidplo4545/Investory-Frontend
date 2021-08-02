@@ -43,8 +43,8 @@ const AssetPage = ({match}) =>{
         
         <React.Fragment>
             {asset ?
-            <Grid container>
-                <Grid item xl={9} className="asset-data">
+            <Grid container alignItems="stretch">
+                <Grid item xl={9} md={8} sm={12} className="asset-data">
                     <div className="asset-headers">
                         <div className="header-info">
                             <h2>{asset.symbol} - {asset.name}</h2>
@@ -56,9 +56,9 @@ const AssetPage = ({match}) =>{
                                 <h3 className="last-price">${asset.last_price.toFixed(4)}</h3>
                             }
                         </div> 
-                        <div className="header-buttons">
+                        {/* <div className="header-buttons">
                             <Button color="default"><Link to={'/portfolios'}>Add to portfolio</Link></Button>
-                        </div>                       
+                        </div>                        */}
                     </div>
                     <AssetAreaChart asset={asset} records={asset.records}/>
                     <div className="asset-info">
@@ -87,7 +87,7 @@ const AssetPage = ({match}) =>{
                         </div>
                     </div>
                 </Grid>
-                <Grid item xl={3}>
+                <Grid item xl={3} md={3} sm={12}>
                     {asset &&
                         <RightSidebarData isSingleAsset={true} asset={asset}/>
                     }

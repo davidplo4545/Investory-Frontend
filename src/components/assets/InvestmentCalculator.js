@@ -5,14 +5,24 @@ import {
   KeyboardDatePicker,
 } from '@material-ui/pickers';
 import TextField from '@material-ui/core/TextField';
-import { Button } from '@material-ui/core';
+import { Button, makeStyles } from '@material-ui/core';
+import { composeClasses } from '@material-ui/data-grid';
 
+const useStyles = makeStyles((theme) =>{
+    console.log(theme)
+    return{
+    root:{
+        color:'red',
+    }
+}
+})
 const InvestmentCalculator = ({records}) =>{
     const [selectedDate, setSelectedDate] = useState(Date.parse(records[0].date));
     const [amount, setAmount] = useState(0)
     const [result, setResult] = useState(0)
     const [priceAtStartDate, setPriceAtStartDate] = useState(0)
     const [returnRate, setReturnRate] = useState(0)
+    const classes = useStyles()
     const handleDateChange = (date) => {
     setSelectedDate(date);
     };
@@ -56,6 +66,7 @@ const InvestmentCalculator = ({records}) =>{
                         format="dd/MM/yyyy"
                         margin="normal"
                         id="date-picker-inline"
+                        style={{color:'red !imporant'}}
                         label="Date:"
                         disableFuture={true}
                         value={selectedDate}
@@ -78,7 +89,7 @@ const InvestmentCalculator = ({records}) =>{
                             <p>Rate of return: {returnRate.toFixed(0)}%</p>
                         </React.Fragment>
                     }
-                    <Button color='default' type="submit" value="Submit">Submit</Button>
+                    <Button color='primary' variant="contained" type="submit" value="Submit">Calculate</Button>
                 </form>
             </MuiPickersUtilsProvider>
         </React.Fragment>

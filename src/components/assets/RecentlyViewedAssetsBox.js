@@ -5,13 +5,23 @@ import {Link as MuiLink, makeStyles}  from '@material-ui/core';
 
 const useStyles = makeStyles((theme) =>{
     return ({
-        link:{
-            fontWeight:'bold',
-            textDecoration:'none',
+        gridItem:{
+            borderBottomWidth: 1,
+            borderBottomStyle: 'solid',
+            paddingBottom: theme.spacing(0.5),
+            // fontFamily: 'Helvetica',
             '&:hover':{
-                textDecoration:'none',
+                color: theme.palette.primary.main,
             }
         },
+        link:{
+            color:theme.palette.text.primary,
+            '&:hover':{
+                textDecoration:'none',
+                color: theme.palette.primary.main,
+                background:'white',
+            }
+        }
     })
 })
 const RecentlyViewedAssetsBox = ({asset}) =>{
@@ -52,14 +62,15 @@ const RecentlyViewedAssetsBox = ({asset}) =>{
     return(
         <Grid 
             container 
+            style={{marginTop:'1rem'}}
             direction="column"
             alignItems="flex-start">
         <Typography variant="h6">Recently viewed tickers:</Typography>
         {recentlyViewedAssets.map((asset) => {
-            return <Grid item key={generateKey(asset.name)} xl={12} style={{width:'100%'}}>
-                        <MuiLink className={classes.link} component={Link} key={asset.link} to={asset.link}>
-                            <Typography color="primary" variant="subtitle1" style={{fontSize: '1rem'}}>{asset.symbol}</Typography>
-                            <Typography color="primary" variant="body2" style={{fontSize:'0.7rem'}}>{asset.name}</Typography>
+            return <Grid item  className={classes.gridItem} key={generateKey(asset.name)} xl={12} style={{width:'100%'}}>
+                        <MuiLink className={classes.link}  component={Link} key={asset.link} to={asset.link}>
+                            <Typography fontSize={16}  variant="subtitle1">{asset.symbol}</Typography>
+                            <Typography fontWeight="fontWeightBold" variant="body1" style={{fontSize:'0.7rem'}}>{asset.name}</Typography>
                         </MuiLink>
                     </Grid>
         })

@@ -1,19 +1,20 @@
-export const theme = {
+export const lightTheme = {
     // backgroundColor: "#2c3531",
     backgroundColor:'#fff',
     // textColor: "#fff",
     textColor: "#878f99",
     hoverBgColor: '#6b5b95',
-    fontFamily:'Quicksand',
+    // fontFamily:'Roboto',
     borderColor:'rgba(122, 122, 122, 0.5)',
     fontWeight: 'bold',
     // primary: "#77ccdd"
   }
   
-  export const lightTheme = {
-    backgroundColor: "#e0e0e0",
-    textColor: "#ffffff",
-    primary: "#55aacc"
+  export const darkTheme = {
+    backgroundColor: "#424242",
+    textColor: "#fefefe",
+    fontFamily:'Quicksand',
+    hoverBgColor: '#379683',
   }
   
   export const partyTheme = {

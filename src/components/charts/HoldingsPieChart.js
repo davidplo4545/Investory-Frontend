@@ -1,3 +1,4 @@
+import { useTheme } from '@material-ui/core';
 import React, {useState, useEffect} from 'react';
 import {  PieChart, Pie, Cell, Tooltip } from 'recharts';
 
@@ -7,6 +8,7 @@ const RADIAN = Math.PI / 180;
 
 
 const HoldingsPieChart = ({portfolio,width, height, innerRadius, outerRadius, cx, cy}) =>{
+    const theme = useTheme()
     const [holdings, setHoldings] = useState([])
     useEffect(() =>{
         setHoldings(portfolio.holdings)
@@ -20,7 +22,7 @@ const HoldingsPieChart = ({portfolio,width, height, innerRadius, outerRadius, cx
         const y = cy + radius * Math.sin(-midAngle * RADIAN);
         
         return (
-            <text x={x} y={y} fill="black" fontSize="10" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central">
+            <text x={x} y={y} fill={theme.palette.primary.main} fontSize="10" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central">
                 {`${holdings[index].asset.symbol} ${(percent * 100).toFixed(0)}%`}
             </text>
         );
@@ -29,10 +31,10 @@ const HoldingsPieChart = ({portfolio,width, height, innerRadius, outerRadius, cx
         <React.Fragment>
             {holdings && holdings.length &&
         <PieChart width={width} height={height}>
-                <text fontSize="14" style={{fill:'white'}} x={width/2} y={height/2 -10} textAnchor="middle" dominantBaseline="middle">
+                <text fontSize="14" style={{fill:theme.palette.primary.main}} x={width/2} y={height/2 -10} textAnchor="middle" dominantBaseline="middle">
                     {portfolio.name}
                 </text>
-                <text fontSize="12" style={{fill:'white'}} x={width/2} y={height/2 + 10} textAnchor="middle" dominantBaseline="middle">
+                <text fontSize="12" style={{fill:theme.palette.primary.main}} x={width/2} y={height/2 + 10} textAnchor="middle" dominantBaseline="middle">
                     {Object.keys(portfolio).length > 0 &&
                         portfolio.total_value.toFixed(2) + '$'
                     }

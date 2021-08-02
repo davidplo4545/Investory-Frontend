@@ -107,7 +107,7 @@ const AssetAreaChart = ({asset, records}) =>{
     function CustomTooltip({ active, payload, label }) {
         if (active) {
           return (
-            <div className="tool-tip">
+            <div className="tool-tip" style={{color:theme.palette.primary.main}}>
               <p>{formatTooltipDate(label)}</p>
               <p>${formatToolTipNumber(payload)}</p>
             </div>
