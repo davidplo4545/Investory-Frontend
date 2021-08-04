@@ -42,7 +42,7 @@ const PortfolioPage = ({match}) =>{
             justifyContent="center" >
                 <Grid item xl={4} className="holdings-pie-chart">
                     
-                    <HoldingsPieChart className="holdings-pie-chart" portfolio={portfolio} width={350} height={350} innerRadius={90} outerRadius={140}/> 
+                    <HoldingsPieChart className="holdings-pie-chart" portfolio={portfolio} isSingle={false} width={350} height={350} innerRadius={90} outerRadius={140}/> 
                     <div className="portfolio-actions">
                         <Button onClick={navigateToPortfolioEdit} color="default">Edit Actions</Button>
                         <Button color="default" onClick={navigateToPortfolioCompare}>Compare</Button>

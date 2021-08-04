@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const domain = "http://192.168.1.106:8000/api"
+const domain = "http://localhost:8000/api"
 export const userLogin = (userCredentials, setToken, setError) => {
     axios.post(domain + '/login/',{
         'email':userCredentials['email'],

@@ -105,8 +105,12 @@ function App() {
 `;
 const muiDarkTheme = createTheme({
   palette:{
+    type:'dark',
     primary:{
       main:darkTheme.hoverBgColor,
+    },
+    secondary:{
+      main:darkTheme.secondaryColor,
     },
     text:{
       primary:darkTheme.textColor,
@@ -136,8 +140,12 @@ const muiDarkTheme = createTheme({
 
 const muiLightTheme = createTheme({
   palette:{
+    type:'light',
     primary:{
       main:lightTheme.hoverBgColor,
+    },
+    secondary:{
+      main:lightTheme.secondaryColor,
     },
     text:{
       primary:lightTheme.textColor

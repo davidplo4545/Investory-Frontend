@@ -15,7 +15,7 @@ const Footer = ({isTheme, setIsTheme}) =>{
                                 onClick={() => setIsTheme(!isTheme)}
                             >Click here</IconButton>
                         </Grid>
-                        <Grid item xs={12} sm={4}>
+                        {/* <Grid item xs={12} sm={4}>
                             <Box borderBottom={1}>Help</Box>
                             <Box>
                                 <Link href="/" >
@@ -30,7 +30,7 @@ const Footer = ({isTheme, setIsTheme}) =>{
                                     Contact
                                 </Link>
                             </Box>
-                        </Grid>
+                        </Grid> */}
                     </Grid>
                 </Container>
             </Box>

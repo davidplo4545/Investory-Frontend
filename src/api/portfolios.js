@@ -1,7 +1,7 @@
 // import { ContactSupportOutlined } from '@material-ui/icons'
 import axios from 'axios'
 
-const domain = "http://192.168.1.106:8000/api"
+const domain = "http://localhost:8000/api"
 
 const calculatePortfolioDetails = (portfolio) =>{
     portfolio.gain = portfolio.total_value - portfolio.total_cost 
@@ -10,6 +10,7 @@ const calculatePortfolioDetails = (portfolio) =>{
     portHoldings.forEach(holding => {
         const {total_value, total_cost, cost_basis} = holding
         holding.percentage = parseFloat(((total_value / portfolio.total_value)).toFixed(2))
+        holding.fill = `${Math.floor(Math.random()*16777215).toString(16)}#`
         holding.gainPercentage = parseFloat(((total_value / total_cost - 1) * 100).toFixed(2))
         holding.total_cost = parseFloat(total_cost.toFixed(2))
         holding.total_value = parseFloat(total_value.toFixed(2))
@@ -57,7 +58,6 @@ export const postPortfolio = async (userToken, requestData, history) =>{
         }}
     )
     .then((res) =>{
-        console.log(res.data)
         history.push({
             pathname: `/portfolios/${res.data.id}`,
         })
@@ -98,6 +98,22 @@ export const postComparedAssetPortfolio = async (userToken, portfolioId, request
 })
 .catch(error => console.log(error))
 }
+
+export const deletePortfolio = async (userToken, portfolioId, portfolios, setPortfolios) =>{
+    await axios.delete(domain + `/portfolios/${portfolioId}`,
+    {headers:{
+        'Authorization': `Token ${userToken}`
+    }}
+)
+.then((res) =>{
+    const portfoliosTemp = [...portfolios].filter(p => p.id !== portfolioId)
+    setPortfolios(portfoliosTemp)
+    console.log(res.data)
+})
+.catch(error => console.log(error))
+}
+
+
 
 
 
