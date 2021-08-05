@@ -33,14 +33,14 @@ const RightSidebarData = ({isSingleAsset, asset}) =>{
             {/* Only show investment calculator in /assets/id url */}
             {isSingleAsset &&
             <React.Fragment>
-                <Grid item md={12} xl={12} className="investment-calculator">
+                <Grid item xs={12} className="investment-calculator">
                     {asset.records.length > 0 ?
                         <InvestmentCalculator records={asset.records}/>
                             : 
                             <div/>
                     }
                 </Grid>
-                <Grid item  md={12} xl={12} className="portfolios-in">
+                <Grid item xs={12} className="portfolios-in">
                     <h4>Portfolios in:</h4>
                     <p>Growth Portfolio</p>
                     <p>Value Portfolio</p>
@@ -48,7 +48,7 @@ const RightSidebarData = ({isSingleAsset, asset}) =>{
                 </Grid>
                 </React.Fragment>
             }
-            <Grid item  md={12} xl={12}>
+            <Grid item xs={12}>
                 <RecentlyViewedAssetsBox asset={asset}/>
             </Grid>
         </Grid>

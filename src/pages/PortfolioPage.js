@@ -13,7 +13,6 @@ const PortfolioPage = ({match}) =>{
     let history = useHistory()
     const user = useContext(UserContext)
     const [portfolio, setPortfolio] = useState(null)
-    const [holdings, setHoldings] = useState(null)
     const portfolioId = match.params.portfolioId
     useEffect(() => { 
         getPortfolio(user.token, portfolioId, setPortfolio)
@@ -38,7 +37,6 @@ const PortfolioPage = ({match}) =>{
         <Grid 
             container 
             direction="row"
-            // alignItems="center"
             justifyContent="center" >
                 <Grid item xl={4} className="holdings-pie-chart">
                     
