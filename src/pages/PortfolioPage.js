@@ -5,15 +5,42 @@ import { getPortfolio } from '../api/portfolios'
 import AssetAreaChart from '../components/charts/AssetAreaChart'
 import HoldingsPieChart from '../components/charts/HoldingsPieChart'
 import HoldingsTable from '../components/tables/HoldingsTable'
-import { Button, Grid, Paper } from '@material-ui/core'
+import { Button, Grid, Box, Typography, makeStyles, ButtonGroup, Accordion, AccordionSummary, useTheme } from '@material-ui/core'
+import AccordionDetails from '@material-ui/core/AccordionDetails';
 import axios from 'axios'
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import './portfolios.css'
+
+const useStyles = makeStyles((theme) =>{
+    return({
+        root:{
+            '& h4':{
+                fontWeight: 'bold',
+                fontFamily:'Quicksand',
+            },
+            '& p':{
+                fontWeight:'bold',
+                fontSize: '1.1rem'
+            },
+            '& h6':{
+                fontWeight:'bold',
+                textDecoration:'underline'
+            }
+        }
+    })
+})
+
+const numberFormatter = new Intl.NumberFormat('en-US',  {style: 'currency', currency: 'USD'})
 
 const PortfolioPage = ({match}) =>{
     let history = useHistory()
     const user = useContext(UserContext)
     const [portfolio, setPortfolio] = useState(null)
     const portfolioId = match.params.portfolioId
+    const [expanded, setExpanded] = useState(false)
+    const [selectedHolding , setSelectedHolding] = useState(null)
+    const [activeCellIndex, setActiveCellIndex] = useState(null)
+
     useEffect(() => { 
         getPortfolio(user.token, portfolioId, setPortfolio)
     },[])
@@ -30,6 +57,13 @@ const PortfolioPage = ({match}) =>{
             state: {portfolio:portfolio}
         })
     }
+
+    const handleChange = (panel) => (event, isExpanded) => {
+        setExpanded(isExpanded ? panel : false);
+        console.log(isExpanded)
+      };
+    const classes = useStyles()
+    const theme = useTheme()
     return ( 
         
         <React.Fragment>
@@ -37,41 +71,71 @@ const PortfolioPage = ({match}) =>{
         <Grid 
             container 
             direction="row"
-            justifyContent="center" >
+            justifyContent="space-around" >
                 <Grid item xl={4} className="holdings-pie-chart">
-                    
-                    <HoldingsPieChart className="holdings-pie-chart" portfolio={portfolio} isSingle={false} width={350} height={350} innerRadius={90} outerRadius={140}/> 
-                    <div className="portfolio-actions">
-                        <Button onClick={navigateToPortfolioEdit} color="default">Edit Actions</Button>
-                        <Button color="default" onClick={navigateToPortfolioCompare}>Compare</Button>
-                        <Button color="default">Edit</Button>
-                    </div>
-                </Grid>       
-                <Grid item xl={8} md={12} className="portfolio-line-chart">
-                    <h2>{portfolio.name}</h2>
-                    <div className="portfolio-wrapper">
-                        <div className="portfolio-details">
-                            <div>Value:<br/>
-                                <p className="portfolio-number">{portfolio.total_value.toFixed(2)}$</p>
-                            </div>
-                            <div>Gain:<br/>
-                                <p className="portfolio-number" style={{color:portfolio.gain > 0 ? "#9dc88d" : "red"}}>{portfolio.gain.toFixed(2)}$</p>
-                            </div>
-                            <div>Return:<br/>
-                                <p className="portfolio-number" style={{color: portfolio.return > 0 ? "#9dc88d" : "red"}}>{portfolio.return.toFixed(2)}%</p>
-                            </div>
-                        </div>
-                        <AssetAreaChart records={portfolio.records} />
-                    </div>
+                    <HoldingsPieChart className="holdings-pie-chart"
+                     selectedHolding={selectedHolding} 
+                     setSelectedHolding={setSelectedHolding} 
+                     portfolio={portfolio} 
+                     isSingle={false} 
+                     width={350} 
+                     height={350} 
+                     innerRadius={120} 
+                     outerRadius={160} 
+                     activeCellIndex={activeCellIndex} 
+                     setActiveCellIndex={setActiveCellIndex}/> 
+
+                    <ButtonGroup color="default" style={{marginTop:'1rem'}}>
+                        <Button onClick={navigateToPortfolioEdit}>Edit Actions</Button>
+                        <Button onClick={navigateToPortfolioCompare}>Compare</Button>
+                        <Button>Edit</Button>
+                    </ButtonGroup>
+                </Grid>  
+                    <Grid item container direction="column" xl={7} md={12}>
+                            <Grid item>
+                                <Typography gutterBottom variant="h4">{portfolio.name}</Typography>
+                            </Grid>
+                <Accordion style={{marginBottom: '1rem'}}
+                            onChange={handleChange('panel1')}
+                            expanded={expanded}> 
+                    <AccordionSummary
+                        expandIcon={<ExpandMoreIcon />}
+                        style={{borderBottom:`1px solid ${theme.palette.primary.light}`}}>
+                        <Typography variant="subtitle1">{expanded ? `Hide Portfolio Chart` : `Show Portfolio Chart`}</Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                        <Grid item container direction="column">
+                            <Grid item container className={classes.root} item direction="row" justifyContent="space-between">
+                                <Grid item>
+                                    <Typography variant="subtitle1">Value:</Typography>
+                                    <Typography variant="body1">{numberFormatter.format(portfolio.total_value)}</Typography>                                    
+                                </Grid>
+                                <Grid item>
+                                    <Typography variant="subtitle1">Gain:</Typography>
+                                    <Typography variant="body1" style={{color:portfolio.gain > 0 ? "#9dc88d" : "red"}}>{numberFormatter.format(portfolio.gain)}</Typography>                                    
+                                </Grid>
+                                <Grid item>
+                                    <Typography variant="subtitle1">Return:</Typography>
+                                    <Typography variant="body1" style={{color:portfolio.return > 0 ? "#9dc88d" : "red"}}>{portfolio.return.toFixed(2)}%</Typography>                                    
+                                </Grid>
+
+                            </Grid>
+                            <Grid item>
+                                <AssetAreaChart records={portfolio.records} />                                    
+                            </Grid>
+                        </Grid>
+                    </AccordionDetails>
+                </Accordion>
+                        <Grid item container direction="column">
+                            <Grid item>
+                                <Box>
+                                    {/* <Typography variant="h4">Holdings:</Typography> */}
+                                    <HoldingsTable setActiveCellIndex={setActiveCellIndex} setSelectedHolding={setSelectedHolding} holdings={portfolio.holdings}/>
+                                </Box>
+                            </Grid>
+                        </Grid>
                 </Grid>
-                <Grid container justifyContent="flex-start">
-                    <Grid item xl={9} md={12}>
-                        <Paper elevation={6}>
-                            <h2>Portflio Holdings:</h2>
-                            <HoldingsTable holdings={portfolio.holdings}/>
-                        </Paper>
-                    </Grid>
-                </Grid>
+                
 
 
         </Grid>

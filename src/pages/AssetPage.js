@@ -4,7 +4,7 @@ import AssetAreaChart from '../components/charts/AssetAreaChart'
 import axios from 'axios'
 import RightSidebarData from '../components/assets/RightSidebarData'
 import './assetPage.css'
-import {Box, Grid, makeStyles, Typography} from '@material-ui/core'
+import {Box, Grid, makeStyles, Typography, useTheme} from '@material-ui/core'
 
 const useStyles = makeStyles((theme) =>{
     return{
@@ -46,15 +46,16 @@ const AssetPage = ({match}) =>{
 
     const numberFormatter = new Intl.NumberFormat('en-US',  {style: 'currency', currency: 'USD'})
     const classes = useStyles()
+    const theme = useTheme()
     return(
         
         <React.Fragment>
             {asset ?
             <Grid container alignItems="stretch" justifyContent="center" spacing={3}>
-                <Grid container item xl={9} md={8} sm={12} direction="column" spacing={3}>
+                <Grid container item lg={8} md={8} sm={12} direction="column" spacing={3}>
                     <Grid item>
-                            <Typography gutterBottom variant="h4">{asset.symbol} - {asset.name}</Typography>
-                            <Typography variant="h5">{numberFormatter.format(asset.last_price)}</Typography>
+                            <Typography gutterBottom style={{fontWeight:'bold'}} variant="h4">{asset.symbol} - {asset.name}</Typography>
+                            <Typography variant="h5" style={{fontWeight:'bold'}}>{numberFormatter.format(asset.last_price)}</Typography>
                             {/* {asset.last_price !== undefined && asset.last_price > 10 &&
                             }
 
@@ -67,9 +68,9 @@ const AssetPage = ({match}) =>{
                     </Grid>
                     <Grid container item justifyContent="space-between"
                          alignItems={'stretch'}>
-                        <Grid item gutterBottom xs={12} md={12} lg={4} className={classes.gridItem}>
+                        <Grid item xs={12} md={12} lg={4} className={classes.gridItem}>
                             <Box>
-                                <Typography variant="h6" style={{'textDecoration':'underline'}} gutterBottom>Info:</Typography>
+                                <Typography variant="h6" style={{borderBottom: `1px solid ${theme.palette.primary.main}`}} gutterBottom>Info:</Typography>
                                 <Typography variant="body2" gutterBottom>Type: {asset.type}</Typography>
                                 <Typography variant="body2" gutterBottom>Sector: {asset.sector}</Typography>
                                 <Typography variant="body2" gutterBottom>Industry: {asset.industry}</Typography>
@@ -77,13 +78,13 @@ const AssetPage = ({match}) =>{
                         </Grid>
                         <Grid item xs={12} md={12} lg={4} className={classes.gridItem}>
                             <Box>
-                                <Typography variant="h6" style={{'textDecoration':'underline'}} gutterBottom>Description:</Typography>
+                                <Typography variant="h6" style={{borderBottom: `1px solid ${theme.palette.primary.main}`}} gutterBottom>Description:</Typography>
                                 <Typography variant="body2" gutterBottom>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dapibus tellus ut neque convallis pretium. Pellentesque tincidunt tellus diam, lobortis condimentum magna placerat vitae. Fusce sagittis lacus quis lorem dapibus, a eleifend neque feugiat. Vivamus eget mi dui. Aenean dolor nulla, congue sit amet pellentesque a, elementum pretium massa. Suspendisse ut ipsum sed velit blandit pretium quis id ipsum. Etiam fermentum ligula eu nunc condimentum feugiat. In non ligula eleifend, ultrices dolor rhoncus, suscipit libero. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed non urna tempus, accumsan magna ac, mattis ligula. Cras lacus magna, egestas id nisl luctus, facilisis consectetur erat. Aenean a elit bibendum, posuere ipsum eu, consectetur nisl. Duis mattis eleifend vestibulum.</Typography>
                             </Box>
                         </Grid>
                         <Grid item xs={12} md={12} lg={3} className={classes.gridItem}>
                             <Box>
-                            <Typography variant="h6" style={{'textDecoration':'underline'}} gutterBottom>Returns:</Typography>
+                            <Typography variant="h6" style={{borderBottom: `1px solid ${theme.palette.primary.main}`}} gutterBottom>Returns:</Typography>
                             <Typography variant="body2" gutterBottom>YTD: 5%</Typography>
                             <Typography variant="body2" gutterBottom>1 Month: 9%</Typography>
                             <Typography variant="body2" gutterBottom>6 Month: 9%</Typography>
@@ -94,7 +95,7 @@ const AssetPage = ({match}) =>{
                         </Grid>
                     </Grid>
                 </Grid>
-                <Grid item xl={3} md={3} sm={12}>
+                <Grid item lg={3} md={3} sm={12}>
                     {asset &&
                         <RightSidebarData isSingleAsset={true} asset={asset}/>
                     }

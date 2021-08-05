@@ -82,8 +82,8 @@ const PortfoliosPage = () =>{
                 {largestHoldings.map((holding, index) =>{
                     const {id, symbol} = holding.asset
                     return(index === 0 ?
-                        <MuiLink className={classes.holdingLink} component={Link} to={`/asset/${id}`}>{symbol}</MuiLink>:
-                        <MuiLink className={classes.holdingLink} component={Link} to={`/asset/${id}`}>,{symbol}</MuiLink>)
+                        <MuiLink key={holding.id} className={classes.holdingLink} component={Link} to={`/asset/${id}`}>{symbol}</MuiLink>:
+                        <MuiLink key={holding.id} className={classes.holdingLink} component={Link} to={`/asset/${id}`}>,{symbol}</MuiLink>)
                 })}
                 </Typography>
             </Typography>

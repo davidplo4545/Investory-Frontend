@@ -1,87 +1,121 @@
 import React,{useState} from 'react'
-import MaterialTable  from 'material-table';
+import { DataGrid } from '@material-ui/data-grid';
 import {makeStyles} from '@material-ui/core'
-const HoldingsTable = ({portfolio, holdings}) =>{
-    const columns = [
-        { title: 'Type', field: 'asset.type' },
-        { title: 'Symbol', field: 'asset.symbol' },
-        { title: 'Name', field: 'asset.name' },
-        { title: 'Cost Basis', field: 'cost_basis', render: rowData => `${rowData.cost_basis}$`  },
-        { title: 'Last Price', field: 'asset.last_price', render: rowData => `${rowData.asset.last_price}$`  },
-        { title: 'Cost', field: 'total_cost', render: rowData => `${rowData.total_cost}$`  },
-        { title: 'Value', field: 'total_value', render: rowData => `${rowData.total_value}$` },
-        { title: '% Gain', field: 'gainPercentage', render: rowData => `${rowData.gainPercentage}%` },
-        { title: '% of Portfolio', field: 'percentage', render: rowData => `${(rowData.percentage * 100).toFixed(0)}%` }
-      ];
 
-    const [selectedRow, setSelectedRow] = useState(null);
-
-    const handleRowClicked = (event, rowData) =>{
-        setSelectedRow(rowData.tableData.id)
+const useStyles =  makeStyles((theme) => ({
+  datagrid:{
+    color: theme.palette.text.main,
+    [theme.breakpoints.down('xs')]: {
+      fontSize: 11,
+      fontWeight:'bold',
+    },
+    [theme.breakpoints.up('xs')]: {
+      fontSize: 14,
+    },
+    '& .MuiDataGrid-columnsContainer':{
+      fontSize:11,
     }
-    const useStyles = makeStyles((theme) =>{
-    return{
-        root: {
-          backgroundColor: "blue",
-          color: "green",
-          '& .MuiDataGrid-main': {
-            color: theme.palette.common.black
-          }
-        },
-        toolbar: {
-          backgroundColor: "white"
-        },
-        caption: {
-          color: "red",
-          fontSize: "20px"
-        },
-        selectIcon: {
-          color: "green"
-        },
-        select: {
-          color: "green",
-          fontSize: "20px"
-        },
-        actions: {
-          color: "blue"
-        }
-      }});
+  }
+}));
+const HoldingsTable = ({holdings, setSelectedHolding, setActiveCellIndex}) =>{
 
+  const numberFormatter = new Intl.NumberFormat('en-US',  {style: 'currency', currency: 'USD'})
+
+  const columns = [   
+    {
+      field: 'id',
+      headerName: 'Id',
+      type: 'number',
+      hide:true,
+      editable: false,
+    }, 
+    {
+        field: 'asset.symbol',
+        headerName: 'Ticker',
+        editable: false,
+        valueFormatter: (params) => {
+          return `${params.row.asset.symbol}`
+        },
+    },
+    {
+        field: 'asset.name',
+        headerName: 'Name',
+        editable: false,
+        valueFormatter: (params) => {
+          return `${params.row.asset.name}`
+        },
+    },
+    {
+      field: 'cost_basis',
+      headerName: 'Cost Basis',
+      editable: false,
+      valueFormatter: (params) => {
+          return `${numberFormatter.format(params.value)}`
+        },
+    },
+    {
+        field: 'asset.last_price',
+        headerName: 'Price',
+        editable: false,
+        valueFormatter: (params) => {
+            return `${numberFormatter.format(params.row.asset.last_price)}`
+          },
+    },
+    {
+      field: 'total_cost',
+      headerName: 'Cost',
+      editable: false,
+      valueFormatter: (params) => {
+          return `${numberFormatter.format(params.value)}`
+        },
+    },
+    {
+      field: 'total_value',
+      headerName: 'Value',
+      editable: false,
+      valueFormatter: (params) => {
+          return `${numberFormatter.format(params.value)}`
+        },
+    },
+    {
+      field: 'gainPercentage',
+      headerName: '% Gain',
+      editable: false,
+      valueFormatter: (params) => {
+          return `${params.value.toFixed(3)}%`
+        },
+    },
+    {
+      field: 'percentage',
+      headerName: '% of Portfolio',
+      editable: false,
+      valueFormatter: (params) => {
+          return `${(params.value * 100).toFixed(0)}%`
+        },
+    },
+    ];
+
+
+
+    const classes = useStyles()
+
+    const handleRowClick = (param, event) => {
+      const holding = param.row
+      setSelectedHolding(holding)  
+      setActiveCellIndex(holdings.indexOf(holding))
+    };
     return(
 
-        <div className="holdings-table" 
-                style={{ maxWidth: '99%', width: '99%' }}>
-            
-            <MaterialTable columns={columns} 
-                data={holdings} 
-                // title='Hold Directory'
-                onRowClick={(evt, selectedRow) =>
-                    handleRowClicked(evt, selectedRow)
-                }
-                width={800}
-                classes={{
-                    root: useStyles.root,
-                    toolbar: useStyles.toolbar,
-                    caption: useStyles.caption,
-                    selectIcon: useStyles.selectIcon,
-                    select: useStyles.select,
-                    actions: useStyles.actions
-                  }}
-                options={{
-                // pageSize:10,
-                // pageSizeOptions:[10],
-                paging: false,
-                search:false,
-                showTitle: false,
-                minBodyHeight: "auto",
-                maxBodyHeight: "auto",
-                rowStyle: rowData => ({
-                backgroundColor:
-                    selectedRow === rowData.tableData.id ? '#67aeae' : '#FFF'
-                })
-        }} />
-            
-        </div>
+      <DataGrid 
+      disableColumnMenu
+        className={classes.datagrid}
+        pageSize={10} 
+        style={{minHeight:'700px'}}
+        autoHeight={true} 
+        columns={columns} 
+        onRowClick={handleRowClick}
+        rows={holdings}
+        rowsPerPageOptions={[]}/>
     )
 }
 

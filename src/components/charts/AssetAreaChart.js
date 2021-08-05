@@ -44,6 +44,7 @@ const AssetAreaChart = ({asset, records}) =>{
         }  
     }
 
+    const numberFormatter = new Intl.NumberFormat('en-US',  {style: 'currency', currency: 'USD'})
     useEffect(() =>{
         if (records && records.length)
         {
@@ -93,7 +94,7 @@ const AssetAreaChart = ({asset, records}) =>{
                     // Make width dynamic on screen size
                     width={80}
                     tickCount={8}
-                    tickFormatter={(number) => `$${formatNumber(number)}`}
+                    tickFormatter={(number) => `${numberFormatter.format(number)}`}
                     />
 
                     <Tooltip content={<CustomTooltip/>}/>
