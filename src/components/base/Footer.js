@@ -8,12 +8,7 @@ const Footer = ({isTheme, setIsTheme}) =>{
                     <Grid container spacing={5} color="textPrimary">
                         <Grid item xs={12} sm={4} >
                             <Box borderBottom={1}>Help</Box>
-                            <IconButton
-                                edge="end"
-                                color="inherit"
-                                aria-label="mode"
-                                onClick={() => setIsTheme(!isTheme)}
-                            >Click here</IconButton>
+                        
                         </Grid>
                         {/* <Grid item xs={12} sm={4}>
                             <Box borderBottom={1}>Help</Box>

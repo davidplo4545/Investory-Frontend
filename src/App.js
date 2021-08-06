@@ -42,15 +42,16 @@ const useStyles =  makeStyles((theme) => ({
     width: "100%",
     height: "auto",
     [theme.breakpoints.down('sm')]: {
-      padding:"10px",
+      padding:"0px",
+      paddingTop:'2rem',
       width: "100%",
     },
     [theme.breakpoints.up('md')]: {
-      padding:"15px",
+      padding:"1rem",
       width: "100%",
     },
     [theme.breakpoints.up('lg')]: {
-      padding:"20px",
+      padding:"1rem",
       width: "75%",
     },
   }
@@ -59,38 +60,109 @@ function App() {
 
   const [isTheme, setIsTheme] = useState(true);
 
+  const muiDarkTheme = createTheme({
+    palette:{
+      type:'dark',
+      primary:{
+        main:darkTheme.hoverBgColor,
+      },
+      secondary:{
+        main:darkTheme.secondaryColor,
+      },
+      text:{
+        primary:darkTheme.textColor,
+      }
+    },
+    overrides: {
+      MuiPickersCalendarHeader: {
+        switchHeader: {
+          color: '#424242',
+          textTransform: 'uppercase',
+        },
+        dayLabel: {
+          textTransform: 'uppercase',
+        },
+      },
+      MuiPickersDay: {
+        day: {
+          color: '#707070',
+        },
+        current: {
+          color: 'red',
+        },
+      },
+    },
+  
+  })
+  
+  const muiLightTheme = createTheme({
+    palette:{
+      type:'light',
+      primary:{
+        main:lightTheme.hoverBgColor,
+      },
+      secondary:{
+        main:lightTheme.secondaryColor,
+      },
+      text:{
+        primary:lightTheme.textColor
+      }
+    },
+    KeyboardDatePicker: {
+      color: "red",
+    },
+  })
+  const appliedTheme = createTheme(isTheme ? muiLightTheme : muiDarkTheme);
+  
   const GlobalStyle = createGlobalStyle`
   body {
     background-color: ${!isTheme ? darkTheme.backgroundColor : lightTheme.backgroundColor};
-    color:  ${!isTheme ? darkTheme.textColor : lightTheme.textColor};
+    color:  ${appliedTheme.palette.text.primary};
   }
 
   .navbar { 
-    background:  ${!isTheme ? darkTheme.backgroundColor : lightTheme.backgroundColor} !important;
+    background: transparent !important;
     color:  ${!isTheme ? darkTheme.textColor : lightTheme.textColor} !important; 
-    
     font-weight: bold;
+  }
+
+  .big{
+    border-bottom: 1px solid ${appliedTheme.palette.primary.dark};
+
+  }
+  .big-navbar{
+    background: linear-gradient(142deg,${appliedTheme.palette.primary.main} 46%, ${appliedTheme.palette.primary.main} 53%, ${appliedTheme.palette.primary.light} 60%) !important;
+    
+  }
+
+  
+  .small-navbar{
+    background:  ${appliedTheme.palette.primary.main}  !important;
   }
   .nav-link {
     font-size: 1rem;
-    color:  ${!isTheme ? darkTheme.textColor : lightTheme.textColor} !important;
+    color:  #fff !important;
     font-family: ${darkTheme.fontFamily};
   }
 
+  .navbar-secondary{
+    background: transparent !important;
+    color: #fff,
+  }
   .navbar-brand {
     font-size: 1.25rem;
-    color: ${!isTheme ? darkTheme.textColor : lightTheme.textColor} !important;
+    color: #fff !important;
   }
 
   .navbar-brand:hover {
-    color: ${!isTheme ? darkTheme.hoverBgColor : lightTheme.hoverBgColor} !important;
+    color: ${appliedTheme.palette.primary.dark} !important;
   }
 
   .nav-link:hover {
-    color: ${!isTheme ? darkTheme.hoverBgColor : lightTheme.hoverBgColor} !important;
+    color: ${appliedTheme.palette.primary.dark} !important;
   }
   .secondary .nav-link:hover {
-    background-color: ${!isTheme ? darkTheme.hoverBgColor : lightTheme.hoverBgColor} !important;
+    background-color: ${appliedTheme.palette.primary.dark};
     color: #fff !important;
     transition: all ease-in 0.3s;
   }
@@ -103,59 +175,6 @@ function App() {
     color:black !important;
   }
 `;
-const muiDarkTheme = createTheme({
-  palette:{
-    type:'dark',
-    primary:{
-      main:darkTheme.hoverBgColor,
-    },
-    secondary:{
-      main:darkTheme.secondaryColor,
-    },
-    text:{
-      primary:darkTheme.textColor,
-    }
-  },
-  overrides: {
-    MuiPickersCalendarHeader: {
-      switchHeader: {
-        color: '#424242',
-        textTransform: 'uppercase',
-      },
-      dayLabel: {
-        textTransform: 'uppercase',
-      },
-    },
-    MuiPickersDay: {
-      day: {
-        color: '#707070',
-      },
-      current: {
-        color: 'red',
-      },
-    },
-  },
-
-})
-
-const muiLightTheme = createTheme({
-  palette:{
-    type:'light',
-    primary:{
-      main:lightTheme.hoverBgColor,
-    },
-    secondary:{
-      main:lightTheme.secondaryColor,
-    },
-    text:{
-      primary:lightTheme.textColor
-    }
-  },
-  KeyboardDatePicker: {
-    color: "red",
-  },
-})
-const appliedTheme = createTheme(isTheme ? muiLightTheme : muiDarkTheme);
 
 
   const {token,setToken} = useToken();
@@ -174,7 +193,7 @@ const appliedTheme = createTheme(isTheme ? muiLightTheme : muiDarkTheme);
       <GlobalStyle/>
       <UserContext.Provider value={{token, user, setToken, setUser}}>
       <header className="App-header">
-            <NavbarMenu token={token}/>
+            <NavbarMenu token={token} isTheme={isTheme} setIsTheme={setIsTheme}/>
       </header>
       <main>
         <Box className={classes.paper}>

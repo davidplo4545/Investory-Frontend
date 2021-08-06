@@ -46,7 +46,7 @@ export const getPortfolio = async (userToken, portfolioId, setPortfolio) =>{
         let portfolio = res.data
         calculatePortfolioDetails(portfolio)
         setPortfolio(portfolio)
-        
+        console.log(portfolio)
     })
 }
 
@@ -94,7 +94,6 @@ export const postComparedAssetPortfolio = async (userToken, portfolioId, request
     let portfolio = res.data
     calculatePortfolioDetails(portfolio)
     setComparedAssetPortfolio(portfolio)
-    
 })
 .catch(error => console.log(error))
 }

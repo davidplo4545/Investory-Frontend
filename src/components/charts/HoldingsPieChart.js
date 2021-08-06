@@ -7,12 +7,11 @@ const RADIAN = Math.PI / 180;
 const LIGHTCOLORS = ['#AF7AC5','#9B59B6','#884EA0','#BB8FCE','#A569BD','#8E44AD','#7D3C98','#6C3483','#5B2C6F','#4A235A']
 const DARKCOLORS = ['#0E6251','#117864','#148F77','#17A589','#1ABC9C','#48C9B0','#76D7C4','#A3E4D7','#D0ECE7','#A3E4D7','#E8F8F5']
 
-
 const HoldingsPieChart = ({portfolio, isSingle, width, height, innerRadius, outerRadius, selectedHolding, setSelectedHolding, activeCellIndex, setActiveCellIndex}) =>{
     const theme = useTheme()
     const [holdings, setHoldings] = useState([])
     const [colors, setColors] = useState([])
-    
+
     useEffect(() =>{
         const tempColors = []
         for (var i=0; i < 10; i++) 
@@ -59,17 +58,30 @@ const HoldingsPieChart = ({portfolio, isSingle, width, height, innerRadius, oute
             {holdings && holdings.length &&
         <PieChart width={width} height={height}>
             {!isSingle && selectedHolding &&
-                <text x={width /2} y={height /2 -10} fill={theme.palette.primary.main} textAnchor="middle" dominantBaseline="central">
-                        {`${selectedHolding.asset.symbol}\n`}<br/>
+                <text x={width /2} y={height /2 -30} 
+                style={{fontWeight:'bold'}}
+                fill={theme.palette.text.primary}
+                fontSize={14}
+                textAnchor="middle" 
+                dominantBaseline="central">
+                        {`${selectedHolding.asset.name}\n`}<br/>
                 </text>
             }
             {!isSingle && selectedHolding &&
-                <text  style={{fill:theme.palette.primary.main, fontWeight:'bold'}} x={width/2} y={height/2 + 20} textAnchor="middle" dominantBaseline="middle">
+                <text  style={{fontWeight:'bold'}} x={width/2} y={height/2}
+                 textAnchor="middle" 
+                 dominantBaseline="middle"
+                 fill={theme.palette.text.primary}>
                     {(selectedHolding.percentage * 100).toFixed(2)}%
                 </text>
             }
             {!isSingle && selectedHolding &&
-                <text  style={{fill:theme.palette.primary.main, fontWeight:'bold'}} x={width/2} y={height/2 + 35} textAnchor="middle" dominantBaseline="middle">
+                <text  style={{fontWeight:'bold'}} 
+                    x={width/2} 
+                    y={height/2 + 20} 
+                    textAnchor="middle" 
+                    dominantBaseline="middle"
+                    fill={theme.palette.text.primary}>
                     {(selectedHolding.total_value).toFixed(2)}$
                 </text>
             }

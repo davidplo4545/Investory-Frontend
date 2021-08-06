@@ -4,8 +4,14 @@ import { Paper, Button, Typography } from '@material-ui/core';
 import { makeStyles, TextField } from '@material-ui/core'
 import { Autocomplete } from '@material-ui/lab';
 import DeleteIcon from "@material-ui/icons/Delete";
+import { parseISO } from 'date-fns';
 // import {actions} from './testing'
-
+import {
+    MuiPickersUtilsProvider,
+    KeyboardDatePicker,
+  } from '@material-ui/pickers';
+import DateFnsUtils from '@date-io/date-fns';
+  
 const useStyles = makeStyles((theme) =>{
     return({
         root:{
@@ -71,8 +77,38 @@ const ActionsDataGrid = ({isEdit, assets, rows, setRows}) =>{
         headerName: 'Date',
         type: 'date',
         editable:true,
-        valueFormatter: (params) => {
+        // renderCell: (params) =>{
+        //     // const [selectedDate, setSelectedDate] = useState(new Date(params.row.completed_at));
+        //     const handleDateChange = (date) =>{
+        //         console.log(date)
+        //         console.log(params)
+        //         const rowIndex = rows.findIndex(row => row.id === params.row.id)
+        //         rows[rowIndex].completed_at = date
+        //         setRows(rows)
+        //         // // console.log('changed')
+        //         // console.log(rows[rowIndex])
+        //     }
+
+        //     return (
+        //     <MuiPickersUtilsProvider utils={DateFnsUtils}>
+        //         <KeyboardDatePicker
+        //         disableToolbar
+        //         // shouldDisableDate={disableDates}
+        //         // variant="inline"
+        //         format="dd/MM/yyyy"
+        //         margin="normal"
+        //         disableFuture={true}
+        //         value={params.value}
+        //         onChange={(date) => handleDateChange(date)}
+        //         KeyboardButtonProps={{
+        //         'aria-label': 'change date',
+        //         }}
+        //         />
+        //     </MuiPickersUtilsProvider>
+        // )},
+        valueGetter: (params) => {
             const valueFormatted = new Date(params.value).toISOString().slice(0, 10);
+            console.log(`new DAte${valueFormatted}`)
             return valueFormatted
           },
         description: 'This column has a value getter and is not sortable.', 

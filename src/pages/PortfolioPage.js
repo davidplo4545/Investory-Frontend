@@ -5,11 +5,9 @@ import { getPortfolio } from '../api/portfolios'
 import AssetAreaChart from '../components/charts/AssetAreaChart'
 import HoldingsPieChart from '../components/charts/HoldingsPieChart'
 import HoldingsTable from '../components/tables/HoldingsTable'
-import { Button, Grid, Box, Typography, makeStyles, ButtonGroup, Accordion, AccordionSummary, useTheme } from '@material-ui/core'
+import { Button, Grid, Paper, Box, Typography, makeStyles, ButtonGroup, Accordion, AccordionSummary, useTheme } from '@material-ui/core'
 import AccordionDetails from '@material-ui/core/AccordionDetails';
-import axios from 'axios'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import './portfolios.css'
 
 const useStyles = makeStyles((theme) =>{
     return({
@@ -17,15 +15,56 @@ const useStyles = makeStyles((theme) =>{
             '& h4':{
                 fontWeight: 'bold',
                 fontFamily:'Quicksand',
+                [theme.breakpoints.down('md')]: {
+                    margin:'3rem',
+                },
             },
             '& p':{
                 fontWeight:'bold',
                 fontSize: '1.1rem'
             },
-            '& h6':{
-                fontWeight:'bold',
-                textDecoration:'underline'
+            // '& h6':{
+            //     fontWeight:'bold',
+            // }
+        },
+        title:{
+            marginTop:'1rem',
+            fontFamily:'Quicksand',
+
+            [theme.breakpoints.down('lg')]: {
+                marginTop:'3rem',
+                paddingLeft:'0.5rem',
+            },
+        },
+        pieChartPaper:{
+            padding:'3rem',
+            border:`1px solid ${theme.palette.primary.light}`,
+            [theme.breakpoints.down('md')]: {
+                padding:'1rem',
+            },
+            [theme.breakpoints.down('sm')]: {
+                padding:'0',
+                paddingBottom:'1rem',
+                border:'none',
+            },
+        },
+        returnsPaper:{
+            padding:'2rem',
+            height:'100%',
+            border:`1px solid ${theme.palette.primary.light}`,
+            [theme.breakpoints.down('sm')]: {
+                border:'none',
             }
+        },
+        holdingGrid:{
+            direction:'column',
+            [theme.breakpoints.down('xl')]: {
+                direction:'row'
+            },
+        },
+        resultTypo:{
+            fontWeight:'bold',
+            display:'inline-block',
         }
     })
 })
@@ -59,8 +98,7 @@ const PortfolioPage = ({match}) =>{
     }
 
     const handleChange = (panel) => (event, isExpanded) => {
-        setExpanded(isExpanded ? panel : false);
-        console.log(isExpanded)
+        setExpanded(isExpanded);
       };
     const classes = useStyles()
     const theme = useTheme()
@@ -71,29 +109,115 @@ const PortfolioPage = ({match}) =>{
         <Grid 
             container 
             direction="row"
-            justifyContent="space-around" >
-                <Grid item xl={4} className="holdings-pie-chart">
-                    <HoldingsPieChart className="holdings-pie-chart"
-                     selectedHolding={selectedHolding} 
-                     setSelectedHolding={setSelectedHolding} 
-                     portfolio={portfolio} 
-                     isSingle={false} 
-                     width={350} 
-                     height={350} 
-                     innerRadius={120} 
-                     outerRadius={160} 
-                     activeCellIndex={activeCellIndex} 
-                     setActiveCellIndex={setActiveCellIndex}/> 
-
-                    <ButtonGroup color="default" style={{marginTop:'1rem'}}>
-                        <Button onClick={navigateToPortfolioEdit}>Edit Actions</Button>
-                        <Button onClick={navigateToPortfolioCompare}>Compare</Button>
-                        <Button>Edit</Button>
-                    </ButtonGroup>
-                </Grid>  
+            justifyContent="space-around"
+            alignItems="flex-start" >
+                <Grid container xl={4} 
+                className={classes.holdingGrid}
+                justifyContent="center"
+                spacing={1}
+                alignItems="stretch" 
+                style={{ marginTop:'1rem', height:'auto'}}>
+                    <Grid item container md={6} lg={12} direction="column"
+                    justifyContent="center"
+                    >
+                        <Paper className={classes.pieChartPaper}>
+                            <Grid container 
+                            direction="column"
+                            justifyContent="center" 
+                             alignItems="center">
+                                <Grid item>
+                                    <HoldingsPieChart
+                                    selectedHolding={selectedHolding} 
+                                    setSelectedHolding={setSelectedHolding} 
+                                    portfolio={portfolio} 
+                                    isSingle={false} 
+                                    width={350} 
+                                    height={350} 
+                                    innerRadius={120} 
+                                    outerRadius={160} 
+                                    activeCellIndex={activeCellIndex} 
+                                    setActiveCellIndex={setActiveCellIndex}/> 
+                                </Grid>
+                                <Grid item>
+                                    <ButtonGroup color="default" style={{marginTop:'1rem'}}>
+                                        <Button onClick={navigateToPortfolioEdit}>Edit Actions</Button>
+                                        <Button onClick={navigateToPortfolioCompare}>Compare</Button>
+                                        <Button>Edit</Button>
+                                    </ButtonGroup>
+                                </Grid>
+                            </Grid>
+                        </Paper>
+                    </Grid> 
+                    <Grid item md={6} lg={12} style={{width: '100%', marginTop:'0'}}>
+                            <Paper className={classes.returnsPaper}>
+                                <Typography gutterBottom style={{color:theme.palette.primary.light, borderBottom: `1px solid ${theme.palette.primary.light}`}} 
+                                variant="h5">Portfolio Returns:</Typography>
+                                <Grid container>
+                                    <Grid item xs={6} style={{borderRight:`1px solid ${theme.palette.primary.light}`}}>
+                                        <Typography gutterBottom variant="body2">
+                                            1 Month:
+                                            <Typography variant="body2" className={classes.resultTypo}>
+                                                56%
+                                            </Typography>
+                                        </Typography>
+                                        <Typography gutterBottom variant="body2">
+                                            3 Month:
+                                            <Typography variant="body2" className={classes.resultTypo}>
+                                                56%
+                                            </Typography>
+                                            </Typography>
+                                        <Typography gutterBottom variant="body2">
+                                            6 Month:
+                                            <Typography variant="body2" className={classes.resultTypo}>
+                                                56%
+                                            </Typography>
+                                        </Typography>
+                                        <Typography gutterBottom variant="body2">
+                                            YTD:
+                                            <Typography variant="body2" className={classes.resultTypo}>
+                                                56%
+                                            </Typography>
+                                        </Typography>
+                                        <Typography gutterBottom variant="body2">
+                                            1 Year:
+                                            <Typography variant="body2" className={classes.resultTypo}>
+                                                56%
+                                            </Typography>
+                                        </Typography>
+                                        <Typography gutterBottom variant="body2">
+                                            3 Year: 
+                                            <Typography variant="body2" className={classes.resultTypo}>
+                                                56%
+                                            </Typography>
+                                        </Typography>
+                                    </Grid>
+                                    <Grid item xs={6} style={{paddingLeft:'1rem'}}>
+                                        <Typography gutterBottom variant="body2">
+                                            Realized Gain/Loss:
+                                            <Typography variant="body2" className={classes.resultTypo}>
+                                                {numberFormatter.format(portfolio.realized_gain)}
+                                            </Typography>
+                                        </Typography>
+                                        <Typography gutterBottom variant="body2">
+                                            Unrealized Gain/Loss:
+                                            <Typography variant="body2" className={classes.resultTypo}>
+                                                {numberFormatter.format(portfolio.gain)}
+                                            </Typography>
+                                        </Typography>
+                                        <Typography gutterBottom variant="body2">
+                                            Total Gain/Loss:
+                                            <Typography variant="body2" className={classes.resultTypo}>
+                                                {numberFormatter.format(portfolio.gain + portfolio.realized_gain)}
+                                            </Typography>
+                                        </Typography>
+                                    </Grid>
+                                </Grid>
+                            </Paper>
+                        </Grid> 
+                    </Grid>
                     <Grid item container direction="column" xl={7} md={12}>
                             <Grid item>
-                                <Typography gutterBottom variant="h4">{portfolio.name}</Typography>
+                                <Typography gutterBottom variant="h4" className={classes.title}>{portfolio.name}</Typography>
                             </Grid>
                 <Accordion style={{marginBottom: '1rem'}}
                             onChange={handleChange('panel1')}
@@ -101,12 +225,12 @@ const PortfolioPage = ({match}) =>{
                     <AccordionSummary
                         expandIcon={<ExpandMoreIcon />}
                         style={{borderBottom:`1px solid ${theme.palette.primary.light}`}}>
-                        <Typography variant="subtitle1">{expanded ? `Hide Portfolio Chart` : `Show Portfolio Chart`}</Typography>
+                        <Typography style={{fontWeight:'bold'}} variant="subtitle1">{expanded ? `Hide Portfolio Chart` : `Show Portfolio Chart`}</Typography>
                     </AccordionSummary>
                     <AccordionDetails>
                         <Grid item container direction="column">
-                            <Grid item container className={classes.root} item direction="row" justifyContent="space-between">
-                                <Grid item>
+                            <Grid item container className={classes.root} direction="row" justifyContent="space-between">
+                                <Grid item style={{marginBottom:'1rem'}}>
                                     <Typography variant="subtitle1">Value:</Typography>
                                     <Typography variant="body1">{numberFormatter.format(portfolio.total_value)}</Typography>                                    
                                 </Grid>

@@ -1,7 +1,6 @@
 import React, {useEffect, useContext, useState} from 'react'
 import { UserContext } from '../context/UserContext'
 import { getAllPortfolios, deletePortfolio } from '../api/portfolios'
-import './portfolios.css'
 import HoldingsPieChart from '../components/charts/HoldingsPieChart'
 import { Grid,Box, Card, Button, CardContent, Typography, Link as MuiLink,
      CardActions, makeStyles, CardMedia, useTheme, useMediaQuery,

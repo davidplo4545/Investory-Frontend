@@ -5,8 +5,9 @@ import { Link, Redirect } from "react-router-dom";
 import {userLogout} from '../../api/authentication.js'
 import {UserContext} from '../../context/UserContext'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import {Switch, Typography} from "@material-ui/core";
 
-export const BigNavbar = () =>{
+export const BigNavbar = ({setIsTheme, isTheme}) =>{
 
     const user = useContext(UserContext)
     const [secMenuItems, setSecMenuItems] = useState([])
@@ -20,7 +21,7 @@ export const BigNavbar = () =>{
     }
     return (
         <div className="big-navbar">   
-            <Navbar bg="light"  variant="light" expand="lg">
+            <Navbar className="big" bg="light"  variant="light" expand="lg">
                 <div className="navbar-center">
                     <div className="collapsed-center">
                         <Navbar.Brand href="/">
@@ -48,6 +49,9 @@ export const BigNavbar = () =>{
                                     })}  
                                 </Nav>
                                 <Nav>
+                                    {/* <Nav.Link disabled>
+                                        Dark</Nav.Link> */}
+                                    <Switch color="default" checked={isTheme} onChange={() => setIsTheme(!isTheme)}/>
                                     <Nav.Link onClick={onLogout}>Logout</Nav.Link>
                                 </Nav>
                             </Navbar.Collapse>

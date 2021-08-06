@@ -34,7 +34,7 @@ const HoldingsTable = ({holdings, setSelectedHolding, setActiveCellIndex}) =>{
         headerName: 'Ticker',
         editable: false,
         valueFormatter: (params) => {
-          return `${params.row.asset.symbol}`
+          return `${params.row.asset.symbol ? params.row.asset.symbol : ' '}`
         },
     },
     {
