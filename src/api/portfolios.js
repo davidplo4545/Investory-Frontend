@@ -3,6 +3,8 @@ import axios from 'axios'
 
 const domain = "http://localhost:8000/api"
 
+
+
 const calculatePortfolioDetails = (portfolio) =>{
     portfolio.gain = portfolio.total_value - portfolio.total_cost 
     portfolio.return = (portfolio.total_value / portfolio.total_cost - 1) * 100
@@ -50,7 +52,8 @@ export const getPortfolio = async (userToken, portfolioId, setPortfolio) =>{
     })
 }
 
-export const postPortfolio = async (userToken, requestData, history) =>{
+export const postPortfolio = async (userToken, requestData, history, setIsLoading, setErrors) =>{
+    setIsLoading(true)
     await axios.post(domain + `/portfolios/`,
         requestData,
         {headers:{
@@ -58,15 +61,17 @@ export const postPortfolio = async (userToken, requestData, history) =>{
         }}
     )
     .then((res) =>{
+        setIsLoading(false)
         history.push({
             pathname: `/portfolios/${res.data.id}`,
         })
         
     })
-    .catch(error => console.log(error))
+    .catch(error => setErrors([error]))
 }
 
-export const patchPortfolio = async (userToken,portfolioId, requestData, setPortfolio, history) =>{
+export const patchPortfolio = async (userToken,portfolioId, requestData, setPortfolio, history, setIsLoading, setErrors) =>{
+    setIsLoading(true)
     await axios.patch(domain + `/portfolios/${portfolioId}/`,
         requestData,
         {headers:{
@@ -75,12 +80,17 @@ export const patchPortfolio = async (userToken,portfolioId, requestData, setPort
     )
     .then((res) =>{
         setPortfolio(res.data)
+        setIsLoading(false)
         history.push({
             pathname: `/portfolios/${res.data.id}`,
         })
         
     })
-    .catch(error => console.log(error, userToken))
+    .catch((error) => {
+        if(error.response.status === 400)
+            setErrors(['Action changes made are not possible. (Negative Quantity)'])
+        setIsLoading(false)
+    })
 }
 
 export const postComparedAssetPortfolio = async (userToken, portfolioId, requestData, setComparedAssetPortfolio) =>{

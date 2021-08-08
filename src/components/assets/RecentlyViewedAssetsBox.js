@@ -28,7 +28,11 @@ const RecentlyViewedAssetsBox = ({asset}) =>{
     const [recentlyViewedAssets, setRecentlyViewedAssets] = useState([])
     const classes = useStyles()
 
-    const getRecentlyViewedAssets = () =>{
+    const generateKey = (pre) => {
+        return `${ pre }_${ new Date().getTime() }`;
+    }
+
+    useEffect(() =>{
         let recAssets = JSON.parse(localStorage.getItem('recentlyViewedAssets'))
         if(asset)
         {
@@ -49,14 +53,6 @@ const RecentlyViewedAssetsBox = ({asset}) =>{
             }
         }
         setRecentlyViewedAssets(recAssets)
-    }
-
-    const generateKey = (pre) => {
-        return `${ pre }_${ new Date().getTime() }`;
-    }
-
-    useEffect(() =>{
-        getRecentlyViewedAssets()
     }, [asset])
 
     return(

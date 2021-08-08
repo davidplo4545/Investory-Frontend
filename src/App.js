@@ -20,7 +20,6 @@ import ComparePortfolioPage from './pages/ComparePortfolioPage';
 import {darkTheme, lightTheme} from './themes'
 import { createTheme, ThemeProvider } from '@material-ui/core';
 import { createGlobalStyle } from 'styled-components';
-import IconButton from "@material-ui/core/IconButton";
 
 
 const useStyles =  makeStyles((theme) => ({

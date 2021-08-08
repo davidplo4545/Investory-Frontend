@@ -76,7 +76,7 @@ const PortfolioPage = ({match}) =>{
     const user = useContext(UserContext)
     const [portfolio, setPortfolio] = useState(null)
     const portfolioId = match.params.portfolioId
-    const [expanded, setExpanded] = useState(false)
+    const [expanded, setExpanded] = useState(true)
     const [selectedHolding , setSelectedHolding] = useState(null)
     const [activeCellIndex, setActiveCellIndex] = useState(null)
 
@@ -154,37 +154,37 @@ const PortfolioPage = ({match}) =>{
                                 variant="h5">Portfolio Returns:</Typography>
                                 <Grid container>
                                     <Grid item xs={6} style={{borderRight:`1px solid ${theme.palette.primary.light}`}}>
-                                        <Typography gutterBottom variant="body2">
+                                        <Typography gutterBottom variant="body2" component="h2">
                                             1 Month:
                                             <Typography variant="body2" className={classes.resultTypo}>
                                                 56%
                                             </Typography>
                                         </Typography>
-                                        <Typography gutterBottom variant="body2">
+                                        <Typography gutterBottom variant="body2" component="h2">
                                             3 Month:
                                             <Typography variant="body2" className={classes.resultTypo}>
                                                 56%
                                             </Typography>
                                             </Typography>
-                                        <Typography gutterBottom variant="body2">
+                                        <Typography gutterBottom variant="body2" component="h2">
                                             6 Month:
                                             <Typography variant="body2" className={classes.resultTypo}>
                                                 56%
                                             </Typography>
                                         </Typography>
-                                        <Typography gutterBottom variant="body2">
+                                        <Typography gutterBottom variant="body2" component="h2"> 
                                             YTD:
                                             <Typography variant="body2" className={classes.resultTypo}>
                                                 56%
                                             </Typography>
                                         </Typography>
-                                        <Typography gutterBottom variant="body2">
+                                        <Typography gutterBottom variant="body2" component="h2">
                                             1 Year:
                                             <Typography variant="body2" className={classes.resultTypo}>
                                                 56%
                                             </Typography>
                                         </Typography>
-                                        <Typography gutterBottom variant="body2">
+                                        <Typography gutterBottom variant="body2" component="h2">
                                             3 Year: 
                                             <Typography variant="body2" className={classes.resultTypo}>
                                                 56%
@@ -192,19 +192,19 @@ const PortfolioPage = ({match}) =>{
                                         </Typography>
                                     </Grid>
                                     <Grid item xs={6} style={{paddingLeft:'1rem'}}>
-                                        <Typography gutterBottom variant="body2">
+                                        <Typography gutterBottom variant="body2" component="h2">
                                             Realized Gain/Loss:
                                             <Typography variant="body2" className={classes.resultTypo}>
                                                 {numberFormatter.format(portfolio.realized_gain)}
                                             </Typography>
                                         </Typography>
-                                        <Typography gutterBottom variant="body2">
+                                        <Typography gutterBottom variant="body2" component="h2">
                                             Unrealized Gain/Loss:
                                             <Typography variant="body2" className={classes.resultTypo}>
                                                 {numberFormatter.format(portfolio.gain)}
                                             </Typography>
                                         </Typography>
-                                        <Typography gutterBottom variant="body2">
+                                        <Typography gutterBottom variant="body2" component="h2">
                                             Total Gain/Loss:
                                             <Typography variant="body2" className={classes.resultTypo}>
                                                 {numberFormatter.format(portfolio.gain + portfolio.realized_gain)}

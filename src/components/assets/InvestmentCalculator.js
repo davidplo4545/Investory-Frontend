@@ -5,24 +5,15 @@ import {
   KeyboardDatePicker,
 } from '@material-ui/pickers';
 import TextField from '@material-ui/core/TextField';
-import { Button, makeStyles } from '@material-ui/core';
-import { composeClasses } from '@material-ui/data-grid';
+import { Button } from '@material-ui/core';
 
-const useStyles = makeStyles((theme) =>{
-    console.log(theme)
-    return{
-    root:{
-        color:'red',
-    }
-}
-})
+
 const InvestmentCalculator = ({records}) =>{
     const [selectedDate, setSelectedDate] = useState(Date.parse(records[0].date));
     const [amount, setAmount] = useState(0)
     const [result, setResult] = useState(0)
     const [priceAtStartDate, setPriceAtStartDate] = useState(0)
     const [returnRate, setReturnRate] = useState(0)
-    const classes = useStyles()
     const handleDateChange = (date) => {
     setSelectedDate(date);
     };

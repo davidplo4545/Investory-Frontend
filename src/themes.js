@@ -5,6 +5,7 @@ export const lightTheme = {
     // textColor: "#fff",
     textColor: "#5d5c61",
     hoverBgColor: '#6b5b95',
+    // hoverBgColor: '#3c3280',
     secondaryColor: '#fc4445',
     // fontFamily:'Roboto',
     borderColor:'rgba(122, 122, 122, 0.5)',

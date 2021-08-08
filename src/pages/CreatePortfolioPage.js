@@ -2,19 +2,11 @@ import React, {useState, useContext, useEffect} from 'react'
 import { getAllAssets1 } from '../api/assets'
 import { patchPortfolio, postPortfolio } from '../api/portfolios'
 import { UserContext } from '../context/UserContext'
-import { TextField, Paper, Grid, Button } from '@material-ui/core'
-import { makeStyles } from '@material-ui/core'
+import { TextField, Paper,  Grid, Button, Typography } from '@material-ui/core'
+import { Autocomplete } from '@material-ui/lab';
 import ActionsDataGrid from '../components/tables/ActionsDataGrid'
 import { useHistory, useLocation } from 'react-router-dom'
 
-const actions = [
-    { id: 1,type:"BUY", name:"Facebook, Inc.", quantity: 20, share_price: 42, completed_at: new Date(2017,5,17) },
-    { id: 2,type:"SELL", name:"Facebook, Inc.", quantity: 20, share_price: 42, completed_at: new Date(2016,5,17) },
-    { id: 3,type:"BUY", name:"Facebook, Inc.", quantity: 20, share_price: 42, completed_at: new Date(2019,5,17) },
-    { id: 4,type:"SELL", name:"Facebook, Inc.", quantity: 20, share_price: 42, completed_at: new Date(2021,5,17) },
-    { id: 5,type:"BUY", name:"Facebook, Inc.", quantity: 20, share_price: 42, completed_at: new Date(2006,5,17) },
-    { id: 6,type:"SELL", name:"Facebook, Inc.", quantity: 20, share_price: 42, completed_at: new Date(2030,5,17) },
-  ];
 
 const CreatePortfolioPage = () =>{
     const user = useContext(UserContext)
@@ -23,9 +15,12 @@ const CreatePortfolioPage = () =>{
     const [rows, setRows] = useState([])
     const [portfolio, setPortfolio] = useState(null)
     const [isEdit, setIsEdit] = useState(false)
-    const [errors, setErros] = useState([])
+    const [errors, setErrors] = useState([])
     const location = useLocation()
     const history = useHistory()
+    const [newSymbol, setNewSymbol] = useState(null)
+    const [isActionsChanged, setIsActionsChanged] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
 
     useEffect(() => {
         if (location.state)
@@ -33,7 +28,8 @@ const CreatePortfolioPage = () =>{
             const {portfolio} = location.state
             if (portfolio)
             {
-                let actions = location.state.portfolio.actions
+                console.log(portfolio.actions)
+                let actions = portfolio.actions
                 actions.forEach((action, i) => {
                     action.id = i + 1
                     action.name = action.asset.name
@@ -55,6 +51,7 @@ const CreatePortfolioPage = () =>{
     }, [])
 
     const validateActions = () =>{
+        // Validate the request data and output errors
         const errorData = []
         if (name === '')
             errorData.push(`Portfolio name is empty.`)
@@ -70,58 +67,152 @@ const CreatePortfolioPage = () =>{
                     errorData.push(`${row.type} action ${row.name} date is empty.`)
             })
         }
-        setErros(errorData)
+        setErrors(errorData)
         if (errorData.length)
             return false
         return true
     }
-    const handlePortfolioCreate = () =>{
+
+    const handlePortfolioCreateOrUpdate = () =>{
         const isValid = validateActions()
         if (isValid)
         {
-            let requestData = {name:"", actions: []}
-            requestData.name = name
-            rows.forEach((row) =>{
-                let completed_at = row.completed_at
-                let asset_id = row.asset.id
-                if(typeof(completed_at) == 'object')
-                    completed_at = completed_at.toISOString().slice(0, 10)
-                if (typeof(asset_id) === 'undefined')
-                    asset_id = row.asset
-                let record = {
-                    type: row.type,
-                    asset_id: parseInt(asset_id),
-                    quantity: parseInt(row.quantity),
-                    share_price: parseInt(row.share_price),
-                    completed_at: completed_at,
-                }
-                requestData.actions.push(record)
-            })
-            
-            if(isEdit)
+            let requestData = {}
+            if (isEdit)
             {
-                patchPortfolio(user.token, portfolio.id, requestData, setPortfolio, history)
+                if(portfolio.name !== name)
+                    requestData.name = name
+                if(isActionsChanged){
+                    requestData.actions = []
+                    // format the request actions to match the
+                    // rest endpoint format
+                    rows.forEach((row) =>{
+                        let completed_at = row.completed_at
+                        let asset_id = row.asset.id
+                        if (typeof(asset_id) === 'undefined')
+                            asset_id = row.asset
+                        let action = {
+                            type: row.type,
+                            asset_id: parseInt(asset_id),
+                            quantity: parseInt(row.quantity),
+                            share_price: parseInt(row.share_price),
+                            completed_at: completed_at,
+                        }
+                        requestData.actions.push(action)
+                    })
+                }
             }
             else
-                postPortfolio(user.token, requestData, history)
+            {
+                requestData.name = name
+                requestData.actions = []
+                // format the request actions to match the
+                // rest endpoint format
+                rows.forEach((row) =>{
+                    let completed_at = row.completed_at
+                    let asset_id = row.asset.id
+                    if (typeof(asset_id) === 'undefined')
+                        asset_id = row.asset
+                    let action = {
+                        type: row.type,
+                        asset_id: parseInt(asset_id),
+                        quantity: parseInt(row.quantity),
+                        share_price: parseInt(row.share_price),
+                        completed_at: completed_at,
+                    }
+                    requestData.actions.push(action)
+                })
+            }
+            
+            
+            // check if there is any data for a request to be made
+            if(Object.keys(requestData).length > 0)
+            {
+                console.log(requestData)
+                if(isEdit)
+                {
+                    patchPortfolio(user.token, portfolio.id, requestData, setPortfolio, history, setIsLoading, setErrors)
+                }
+                else
+                    postPortfolio(user.token, requestData, history, setIsLoading, setErrors)
+            }
         }
     }
+
+    const handleAssetSelectionChanged = (e, values) =>{
+        if(values)
+            setNewSymbol(values)
+    }
+
+    const generateKey = (pre) => {
+        return `${ pre }_${ new Date().getTime() }`;
+    }
+
+    const handleFormSubmit = (e) =>{
+        e.preventDefault()
+        if (newSymbol)
+        {
+            const newAction = { 
+                id: generateKey(newSymbol.name),
+                asset: newSymbol.id,
+                type:"BUY", 
+                name:newSymbol.name, 
+                quantity: 0, 
+                share_price: 0, 
+                completed_at: new Date() }
+                setRows([
+                    newAction,
+                    ...rows
+                    ])
+        }
+    }
+
     return(
-        <Grid container spacing={3}>
-            <Grid item xl={3} md={12}>
-                <Paper elevation={10} >
-                    <h1>Create your new portfolio</h1>
-                    <TextField value={name} label="Portfolio Name" onChange={(e) =>setName(e.target.value)}/>
-                    {errors.map((error, index) => 
+        <Grid container spacing={1}>
+            <Grid item xl={3} md={12} xs={12}>
+                <Paper elevation={10} style={{padding:10}} >
+                    <Grid container direction="column" spacing={1}>
+                        <Grid item>
+                        <Typography gutterBottom variant="h5" color="primary">
+                            {isEdit ? `Edit Portfolio` : 'Create a new Portfolio'}
+                        </Typography>
+                        </Grid>
+                        <Grid item>
+                        <TextField style={{marginBottom: '1rem'}} value={name} label="Portfolio Name" onChange={(e) =>setName(e.target.value)}/>
+                        </Grid>
+                        <Grid item>
+                        <form onSubmit={handleFormSubmit}>
+                            <Autocomplete
+                            options={assets}
+                            getOptionLabel={(option) => option.name}
+                            getOptionSelected={(option, value) => option.id === value.id}
+                            onChange={handleAssetSelectionChanged}
+                            style={{ width: '100%' }}
+                            renderInput={(params) => <TextField {...params} label="Choose Asset" variant="outlined" />}
+                            />
+                            <Grid container justifyContent="space-between" style={{marginTop:'1rem'}}>
+
+                                <Button  variant="contained" color="primary" type="submit">Add symbol</Button>
+                                <Button variant="contained"
+                                  onClick={handlePortfolioCreateOrUpdate}>
+                                      {isEdit ? `Update` : `Create`}
+                                </Button>
+                            </Grid>
+                        </form>
+                        {errors.map((error, index) => 
                         <p key={index}>{error}</p>
-                    )}
+                        )}
+                        </Grid>
+                    </Grid>
                 </Paper>
             </Grid>
-            <Grid item xl={9} md={12}>
+            <Grid item xl={9} md={12} xs={12}>
                 {assets && assets.length &&
-                   <ActionsDataGrid isEdit={isEdit} assets={assets} rows={rows} setRows={setRows}/>
+                   <ActionsDataGrid rows={rows}
+                    setRows={setRows} 
+                    isLoading={isLoading}
+                    setIsActionsChanged={setIsActionsChanged}/>
                 }
-                <Button variant="contained" color="primary" onClick={handlePortfolioCreate}><h1>{isEdit ? `Update` : `Create`}</h1></Button>
             </Grid>
         </Grid>
     )
