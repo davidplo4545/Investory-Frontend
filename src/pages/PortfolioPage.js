@@ -140,9 +140,9 @@ const PortfolioPage = ({match}) =>{
                                 </Grid>
                                 <Grid item>
                                     <ButtonGroup color="default" style={{marginTop:'1rem'}}>
-                                        <Button onClick={navigateToPortfolioEdit}>Edit Actions</Button>
+                                        <Button onClick={navigateToPortfolioEdit}>Edit Portfolio</Button>
                                         <Button onClick={navigateToPortfolioCompare}>Compare</Button>
-                                        <Button>Edit</Button>
+                                        {/* <Button>Edit</Button> */}
                                     </ButtonGroup>
                                 </Grid>
                             </Grid>
@@ -236,11 +236,11 @@ const PortfolioPage = ({match}) =>{
                                 </Grid>
                                 <Grid item>
                                     <Typography variant="subtitle1">Gain:</Typography>
-                                    <Typography variant="body1" style={{color:portfolio.gain > 0 ? "#9dc88d" : "red"}}>{numberFormatter.format(portfolio.gain)}</Typography>                                    
+                                    <Typography variant="body1" style={{color:portfolio.gain > 0 ? "#9dc88d" : "#e27d60"}}>{numberFormatter.format(portfolio.gain)}</Typography>                                    
                                 </Grid>
                                 <Grid item>
                                     <Typography variant="subtitle1">Return:</Typography>
-                                    <Typography variant="body1" style={{color:portfolio.return > 0 ? "#9dc88d" : "red"}}>{portfolio.return.toFixed(2)}%</Typography>                                    
+                                    <Typography variant="body1" style={{color:portfolio.return > 0 ? "#9dc88d" : "#e27d60"}}>{portfolio.return.toFixed(2)}%</Typography>                                    
                                 </Grid>
 
                             </Grid>
@@ -253,7 +253,6 @@ const PortfolioPage = ({match}) =>{
                         <Grid item container direction="column">
                             <Grid item>
                                 <Box>
-                                    {/* <Typography variant="h4">Holdings:</Typography> */}
                                     <HoldingsTable setActiveCellIndex={setActiveCellIndex} setSelectedHolding={setSelectedHolding} holdings={portfolio.holdings}/>
                                 </Box>
                             </Grid>

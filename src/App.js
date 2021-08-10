@@ -144,6 +144,19 @@ function App() {
     font-family: ${darkTheme.fontFamily};
   }
 
+  .small-navbar .dropdown-menu, .dropdown-item{
+    font-size: 1rem;
+    color:  #fff !important;
+    background: ${appliedTheme.palette.primary.main};
+    font-family: ${darkTheme.fontFamily};
+  }
+
+  .small-navbar .show{
+    padding-bottom: 1rem;
+
+  }
+
+
   .navbar-secondary{
     background: transparent !important;
     color: #fff,
@@ -178,10 +191,17 @@ function App() {
 
   const {token,setToken} = useToken();
   const [user, setUser] = useState({})
-
   useEffect(() => {
     if (token)
       getMyUserDetails(token,setUser)
+    let currTheme = localStorage.getItem('theme')
+    if(currTheme){
+      setIsTheme(currTheme == "light")
+    }
+    else{
+      localStorage.setItem('theme','light')
+    }
+    
   }, [token]);
 
   const classes = useStyles()

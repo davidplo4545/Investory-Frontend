@@ -29,7 +29,7 @@ const AssetAreaChart = ({asset, records}) =>{
     const formatToolTipNumber = (payload) =>{
         try{
             let number = payload[0].payload.price
-            return formatNumber(number)
+            return numberFormatter.format(number)
         }
         catch{
             return ""
@@ -110,7 +110,7 @@ const AssetAreaChart = ({asset, records}) =>{
           return (
             <div className="tool-tip" style={{color:theme.palette.primary.main}}>
               <p>{formatTooltipDate(label)}</p>
-              <p>${formatToolTipNumber(payload)}</p>
+              <p>{formatToolTipNumber(payload)}</p>
             </div>
           );
         }

@@ -11,15 +11,15 @@ const calculatePortfolioDetails = (portfolio) =>{
     let portHoldings = portfolio.holdings
     portHoldings.forEach(holding => {
         const {total_value, total_cost, cost_basis} = holding
-        holding.percentage = parseFloat(((total_value / portfolio.total_value)).toFixed(2))
+        holding.percentage = parseFloat(((total_value / portfolio.total_value) * 100).toFixed(2))
         holding.fill = `${Math.floor(Math.random()*16777215).toString(16)}#`
+        holding.gain = parseFloat((total_value - total_cost).toFixed(2))
         holding.gainPercentage = parseFloat(((total_value / total_cost - 1) * 100).toFixed(2))
         holding.total_cost = parseFloat(total_cost.toFixed(2))
         holding.total_value = parseFloat(total_value.toFixed(2))
         holding.cost_basis = parseFloat(cost_basis.toFixed(2))
         holding.asset.last_price = holding.asset.last_price.toFixed(2)
         })
-    
     return portfolio
 }
 export const getAllPortfolios = (userToken, setPortfolios) =>{
@@ -48,7 +48,6 @@ export const getPortfolio = async (userToken, portfolioId, setPortfolio) =>{
         let portfolio = res.data
         calculatePortfolioDetails(portfolio)
         setPortfolio(portfolio)
-        console.log(portfolio)
     })
 }
 
@@ -79,7 +78,11 @@ export const patchPortfolio = async (userToken,portfolioId, requestData, setPort
         }}
     )
     .then((res) =>{
-        setPortfolio(res.data)
+        let portfolio = res.data
+        calculatePortfolioDetails(portfolio)
+        setPortfolio(portfolio)
+        console.log(portfolio)
+        
         setIsLoading(false)
         history.push({
             pathname: `/portfolios/${res.data.id}`,
@@ -117,7 +120,6 @@ export const deletePortfolio = async (userToken, portfolioId, portfolios, setPor
 .then((res) =>{
     const portfoliosTemp = [...portfolios].filter(p => p.id !== portfolioId)
     setPortfolios(portfoliosTemp)
-    console.log(res.data)
 })
 .catch(error => console.log(error))
 }

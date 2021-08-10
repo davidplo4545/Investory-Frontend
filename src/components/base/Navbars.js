@@ -4,8 +4,7 @@ import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
 import { Link, Redirect } from "react-router-dom";
 import {userLogout} from '../../api/authentication.js'
 import {UserContext} from '../../context/UserContext'
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import {Switch, Typography} from "@material-ui/core";
+import {Switch, useTheme} from "@material-ui/core";
 
 export const BigNavbar = ({setIsTheme, isTheme}) =>{
 
@@ -18,6 +17,11 @@ export const BigNavbar = ({setIsTheme, isTheme}) =>{
     const onLogout = () => {
         userLogout(user.token,user.setToken)
         return <Redirect to="/home" />;
+    }
+
+    const handleThemeChange = () =>{
+        localStorage.setItem('theme', isTheme ? 'dark' : 'light')
+        setIsTheme(!isTheme)
     }
     return (
         <div className="big-navbar">   
@@ -51,7 +55,7 @@ export const BigNavbar = ({setIsTheme, isTheme}) =>{
                                 <Nav>
                                     {/* <Nav.Link disabled>
                                         Dark</Nav.Link> */}
-                                    <Switch color="default" checked={isTheme} onChange={() => setIsTheme(!isTheme)}/>
+                                    <Switch color="default" checked={isTheme} onChange={handleThemeChange}/>
                                     <Nav.Link onClick={onLogout}>Logout</Nav.Link>
                                 </Nav>
                             </Navbar.Collapse>
@@ -83,6 +87,7 @@ export const BigNavbar = ({setIsTheme, isTheme}) =>{
 
 export const SmallNavbar = () =>{
     const user = useContext(UserContext)
+    const theme = useTheme()
 
     const onLogout = () => {
         userLogout(user.token,user.setToken)
@@ -112,8 +117,16 @@ export const SmallNavbar = () =>{
                                     <Nav className="mr-auto">
                                         {menuItems.map(item => {
                                         return (item.link !== null ?
-                                                <Nav.Link key={item.title}  as={Link} to={item.link}>{item.title}</Nav.Link> :
-                                                <NavDropdown key={item.title}  title={item.title} id="basic-nav-dropdown">
+                                                <Nav.Link key={item.title}
+                                                 as={Link} 
+                                                 to={item.link} 
+                                                 style={{borderBottom:`1px solid ${theme.palette.text.primary}`}}>
+                                                     {item.title}
+                                                </Nav.Link> :
+                                                <NavDropdown key={item.title}
+                                                  title={item.title}
+                                                  style={{borderBottom:`1px solid ${theme.palette.text.primary}`}}
+                                                   id="basic-nav-dropdown">
                                                     {item.secMenuItems.map(secItem => {
                                                         return <NavDropdown.Item as={Link} key={secItem.title}  to={secItem.link}>{secItem.title}</NavDropdown.Item>            
                                                     })}

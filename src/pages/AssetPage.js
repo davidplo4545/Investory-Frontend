@@ -72,6 +72,7 @@ const AssetPage = ({match}) =>{
                             <Box>
                                 <Typography variant="h6" style={{borderBottom: `1px solid ${theme.palette.primary.main}`}} gutterBottom>Info:</Typography>
                                 <Typography variant="body2" gutterBottom>Type: {asset.type}</Typography>
+                                <Typography variant="body2" gutterBottom>Location: {asset.type}</Typography>
                                 <Typography variant="body2" gutterBottom>Sector: {asset.sector}</Typography>
                                 <Typography variant="body2" gutterBottom>Industry: {asset.industry}</Typography>
                             </Box>

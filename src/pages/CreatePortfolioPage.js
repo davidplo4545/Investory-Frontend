@@ -28,7 +28,6 @@ const CreatePortfolioPage = () =>{
             const {portfolio} = location.state
             if (portfolio)
             {
-                console.log(portfolio.actions)
                 let actions = portfolio.actions
                 actions.forEach((action, i) => {
                     action.id = i + 1
@@ -128,7 +127,6 @@ const CreatePortfolioPage = () =>{
             // check if there is any data for a request to be made
             if(Object.keys(requestData).length > 0)
             {
-                console.log(requestData)
                 if(isEdit)
                 {
                     patchPortfolio(user.token, portfolio.id, requestData, setPortfolio, history, setIsLoading, setErrors)
@@ -181,6 +179,7 @@ const CreatePortfolioPage = () =>{
                         <TextField style={{marginBottom: '1rem'}} value={name} label="Portfolio Name" onChange={(e) =>setName(e.target.value)}/>
                         </Grid>
                         <Grid item>
+                        {assets &&
                         <form onSubmit={handleFormSubmit}>
                             <Autocomplete
                             options={assets}
@@ -190,7 +189,8 @@ const CreatePortfolioPage = () =>{
                             style={{ width: '100%' }}
                             renderInput={(params) => <TextField {...params} label="Choose Asset" variant="outlined" />}
                             />
-                            <Grid container justifyContent="space-between" style={{marginTop:'1rem'}}>
+                            <Grid container justifyContent="space-between"
+                             style={{marginTop:'1rem', marginBottom:'1rem'}}>
 
                                 <Button  variant="contained" color="primary" type="submit">Add symbol</Button>
                                 <Button variant="contained"
@@ -198,10 +198,11 @@ const CreatePortfolioPage = () =>{
                                       {isEdit ? `Update` : `Create`}
                                 </Button>
                             </Grid>
+                            {errors.map((error, index) => 
+                            <p key={index}>{error}</p>
+                            )}
                         </form>
-                        {errors.map((error, index) => 
-                        <p key={index}>{error}</p>
-                        )}
+                        }
                         </Grid>
                     </Grid>
                 </Paper>

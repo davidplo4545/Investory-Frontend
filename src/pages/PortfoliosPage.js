@@ -72,7 +72,7 @@ const PortfoliosPage = () =>{
     
 
     const LargetHoldingsList= ({portfolio}) =>{
-        const largestHoldings = portfolio.holdings.filter((holding) => holding.percentage > 0.2)
+        const largestHoldings = portfolio.holdings.filter((holding) => holding.percentage > 20)
 
         return (
             <Typography color="textPrimary" variant="body1" component="h2">
@@ -102,7 +102,7 @@ const PortfoliosPage = () =>{
         {portfolios.map((portfolio) =>{
             return(
             <Grid item key={portfolio.id}>
-                <Card elevation={2} style={{background:'transparent', width: "374px", height:"auto"}}>
+                <Card elevation={2} style={{background:'transparent', width: "100%", height:"auto"}}>
                     <CardMedia>
                         <HoldingsPieChart portfolio={portfolio} 
                         isSingle={true}

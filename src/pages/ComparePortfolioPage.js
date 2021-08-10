@@ -24,6 +24,9 @@ const ComparePortfolioPage = ({match}) =>{
     const [assets, setAssets] = useState([])
     const [selectedAsset, setSelectedAsset] = useState(null)
     const [comparedAssetPortfolio, setComparedAssetPortfolio] = useState(null)
+    const [selectedHolding , setSelectedHolding] = useState(null)
+    const [activeCellIndex, setActiveCellIndex] = useState(null)
+
     useEffect(() =>{
         if(location.state){
             setPortfolio(location.state.portfolio)
@@ -73,22 +76,39 @@ const ComparePortfolioPage = ({match}) =>{
         </Grid>
         <Paper className={classes.paper} elevation={7}>
         <Grid item xl={3} md={3}>
-            <HoldingsChart className="holdings-pie-chart" portfolio={portfolio} width={350} height={350} innerRadius={90} outerRadius={140}/> 
+            <HoldingsChart className="holdings-pie-chart"
+            portfolio={portfolio}
+            width={350}
+            height={350}
+            innerRadius={90} 
+            outerRadius={140}
+            isSingle={false}
+            selectedHolding={selectedHolding} 
+            setSelectedHolding={setSelectedHolding} 
+            activeCellIndex={activeCellIndex} 
+            setActiveCellIndex={setActiveCellIndex}/> 
         </Grid>
         </Paper>
         <Grid item xl={6} md={6} xs={12}>
         {comparedAssetPortfolio && portfolio &&
-            <CompareLineChart portfolio={portfolio} comparedAssetPortfolio={comparedAssetPortfolio}/>
+            <CompareLineChart portfolio={portfolio}
+             comparedAssetPortfolio={comparedAssetPortfolio}/>
         }
         </Grid>
-        <Paper className={classes.paper} xl={5} elevation={7}>
+        {/* <Paper className={classes.paper} xl={5} elevation={7}>
         <Grid item xl={3} md={3}>
         {comparedAssetPortfolio &&
-            <HoldingsChart className="holdings-pie-chart" portfolio={comparedAssetPortfolio} width={350} height={350} innerRadius={90} outerRadius={140}/> 
+            <HoldingsChart className="holdings-pie-chart"
+            portfolio={comparedAssetPortfolio}
+            width={350}
+            height={350} 
+            innerRadius={90} 
+            outerRadius={140}
+            isSingle={true}/> 
             // <h1> Compared Data</h1>
         }
         </Grid>
-    </Paper>
+    </Paper> */}
         {/* <h1>Portfolio Compare</h1> */}
     </Grid>
 }

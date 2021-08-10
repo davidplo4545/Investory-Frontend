@@ -90,7 +90,7 @@ const HoldingsTable = ({holdings, setSelectedHolding, setActiveCellIndex}) =>{
       headerName: '% of Portfolio',
       editable: false,
       valueFormatter: (params) => {
-          return `${(params.value * 100).toFixed(0)}%`
+          return `${(params.value).toFixed(2)}%`
         },
     },
     ];

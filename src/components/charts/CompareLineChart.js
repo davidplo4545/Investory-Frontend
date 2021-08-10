@@ -19,12 +19,17 @@ const CompareLineChart = ({portfolio, comparedAssetPortfolio}) =>{
           else if(daysDifference > 100)
               setInterval(30)
       }
-      for(let i=0; i<portfolio.records.length; i++){
-        tempData.push({
-          date:portfolioRecords[i].date,
-          price1: portfolioRecords[i].price,
-          price2: assetPortfolioRecords[i].price
-        })
+      for(let i=0; i<Math.min(portfolio.records.length, assetPortfolioRecords.length); i++){
+        try{
+          tempData.push({
+            date:portfolioRecords[i].date,
+            price1: portfolioRecords[i].price,
+            price2: assetPortfolioRecords[i].price
+          })
+        }
+        catch(e){
+          console.log(e)
+        }
       }
       setData(tempData)
     },[portfolio, comparedAssetPortfolio])
