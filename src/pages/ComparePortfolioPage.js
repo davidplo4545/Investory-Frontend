@@ -13,6 +13,7 @@ const useStyles = makeStyles({
     //   width: "100%",
     //   height: "100%",
       background: 'transparent',
+      padding:'3rem',
     }
   });
 
@@ -58,38 +59,41 @@ const ComparePortfolioPage = ({match}) =>{
 
 
     return(
-        <React.Fragment>
-                {portfolio &&
-    <Grid container style={{height: '100%'}}>
-        <Grid item xl={12}>
-            <form style={{display:'flex', flexDirection:'row'}} onSubmit={handleFormSubmit}>
-                <Autocomplete
-                    options={assets}
-                    getOptionLabel={(option) => option.name}
-                    getOptionSelected={(option, value) => option.id === value.id}
-                    onChange={handleAssetSelectionChanged}
-                    style={{ width: 300 }}
-                    renderInput={(params) => <TextField {...params} label="Choose Asset" variant="outlined" />}
-                    />
-                <Button type="submit">Compare</Button>
-            </form>
-        </Grid>
-        <Paper className={classes.paper} elevation={7}>
-        <Grid item xl={3} md={3}>
-            <HoldingsChart className="holdings-pie-chart"
-            portfolio={portfolio}
-            width={350}
-            height={350}
-            innerRadius={90} 
-            outerRadius={140}
-            isSingle={false}
-            selectedHolding={selectedHolding} 
-            setSelectedHolding={setSelectedHolding} 
-            activeCellIndex={activeCellIndex} 
-            setActiveCellIndex={setActiveCellIndex}/> 
-        </Grid>
-        </Paper>
-        <Grid item xl={6} md={6} xs={12}>
+    <React.Fragment>
+    {portfolio &&
+        <Grid container style={{height: '100%'}} 
+                    justifyContent="center">
+            <Grid item xl={12} xs={12}>
+                <form style={{display:'flex', flexDirection:'row'}} onSubmit={handleFormSubmit}>
+                    <Autocomplete
+                        options={assets}
+                        getOptionLabel={(option) => option.name}
+                        getOptionSelected={(option, value) => option.id === value.id}
+                        onChange={handleAssetSelectionChanged}
+                        style={{ width: 300 }}
+                        renderInput={(params) => <TextField {...params} label="Choose Asset" variant="outlined" />}
+                        />
+                    <Button variant="contained" color="primary" type="submit">Compare</Button>
+                </form>
+            </Grid>
+            <Grid item xl={3} md={3}>
+                <Paper className={classes.paper} elevation={7}>
+                    <Grid container direction="column">
+                        <HoldingsChart className="holdings-pie-chart"
+                        portfolio={portfolio}
+                        width={350} 
+                        height={350} 
+                        innerRadius={120} 
+                        outerRadius={160} 
+                        isSingle={false}
+                        selectedHolding={selectedHolding} 
+                        setSelectedHolding={setSelectedHolding} 
+                        activeCellIndex={activeCellIndex} 
+                        setActiveCellIndex={setActiveCellIndex}/> 
+                    </Grid>
+                </Paper>
+            </Grid>
+        <Grid item xl={9} md={9} xs={12}>
         {comparedAssetPortfolio && portfolio &&
             <CompareLineChart portfolio={portfolio}
              comparedAssetPortfolio={comparedAssetPortfolio}/>
