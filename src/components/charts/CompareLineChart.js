@@ -7,6 +7,7 @@ const CompareLineChart = ({portfolio, comparedAssetPortfolio}) =>{
   const [interval, setInterval] = useState(365)
   const theme = useTheme()
   const numberFormatter = new Intl.NumberFormat('en-US',  {style: 'currency', currency: 'USD'})
+  const numberFormatter1 = new Intl.NumberFormat('en-US',  {style: 'currency', currency: 'USD', maximumFractionDigits:0})
 
   useEffect(() =>{
     const portfolioRecords = portfolio.records
@@ -27,8 +28,8 @@ const CompareLineChart = ({portfolio, comparedAssetPortfolio}) =>{
       try{
         tempData.push({
           date:portfolioRecords[i].date,
-          price1: portfolioRecords[i].price,
-          price2: assetPortfolioRecords[i].price
+          Portfolio: portfolioRecords[i].price,
+          Asset: assetPortfolioRecords[i].price
         })
       }
       catch(e){
@@ -58,7 +59,7 @@ const CompareLineChart = ({portfolio, comparedAssetPortfolio}) =>{
 
 
   return(
-  <ResponsiveContainer width="100%" height="100%">
+  <ResponsiveContainer width="99%" height="99%">
       <LineChart
         data={data}
         width={500}
@@ -86,18 +87,20 @@ const CompareLineChart = ({portfolio, comparedAssetPortfolio}) =>{
                     }
                 }}
             />
-          <YAxis  axisLine={false}
-                  tickLine={false}/>
+        <YAxis  axisLine={false} 
+                tickLine={false}
+                tickFormatter={(number) => `${numberFormatter1.format(number)}`}
+                            />
         <Tooltip content={<CustomTooltip/>}/>
         <Legend />
         <Line isAnimationActive={true}
         type="monotone" 
-        dataKey="price1"
+        dataKey="Portfolio"
         stroke="#8884d8"
         dot={false}/>
         <Line isAnimationActive={true}
         type="monotone" 
-        dataKey="price2" 
+        dataKey="Asset" 
         stroke="#82ca9d" 
         dot={false}/>
       </LineChart>
@@ -109,8 +112,8 @@ const CompareLineChart = ({portfolio, comparedAssetPortfolio}) =>{
       return (
         <div className="tool-tip" style={{color:theme.palette.primary.main}}>
           <p>{formatTooltipDate(label)}</p>
-          <p>Price1: {formatToolTipNumber(payload, "price1")}</p>
-          <p>Price2: {formatToolTipNumber(payload, "price2")}</p>
+          <p>Portfolio: {formatToolTipNumber(payload, "Portfolio")}</p>
+          <p>Asset: {formatToolTipNumber(payload, "Asset")}</p>
         </div>
       );
     }

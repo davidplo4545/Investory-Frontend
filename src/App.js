@@ -53,6 +53,11 @@ const useStyles =  makeStyles((theme) => ({
       padding:"1rem",
       width: "75%",
     },
+  },
+  main:{
+    [theme.breakpoints.down('xs')]: {
+      position:'absolute',
+    },
   }
 }));
 function App() {
@@ -208,7 +213,7 @@ function App() {
   return (
   <ThemeProvider theme={appliedTheme}>
 
-    <div className="App">
+    <div className={`App ${classes.main}`}>
       <GlobalStyle/>
       <UserContext.Provider value={{token, user, setToken, setUser}}>
       <header className="App-header">
