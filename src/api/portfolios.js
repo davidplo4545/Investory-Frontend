@@ -81,8 +81,6 @@ export const patchPortfolio = async (userToken,portfolioId, requestData, setPort
         let portfolio = res.data
         calculatePortfolioDetails(portfolio)
         setPortfolio(portfolio)
-        console.log(portfolio)
-        
         setIsLoading(false)
         history.push({
             pathname: `/portfolios/${res.data.id}`,
@@ -96,7 +94,8 @@ export const patchPortfolio = async (userToken,portfolioId, requestData, setPort
     })
 }
 
-export const postComparedAssetPortfolio = async (userToken, portfolioId, requestData, setComparedAssetPortfolio) =>{
+export const postComparedAssetPortfolio = async (userToken, portfolioId, requestData,setComparedAsset, setComparedAssetPortfolio, setIsLoading) =>{
+    setIsLoading(true)
     await axios.post(domain + `/portfolios/${portfolioId}/compare/`,
     requestData,
     {headers:{
@@ -107,6 +106,8 @@ export const postComparedAssetPortfolio = async (userToken, portfolioId, request
     let portfolio = res.data
     calculatePortfolioDetails(portfolio)
     setComparedAssetPortfolio(portfolio)
+    setComparedAsset(portfolio.holdings[0].asset)
+    setIsLoading(false)
 })
 .catch(error => console.log(error))
 }

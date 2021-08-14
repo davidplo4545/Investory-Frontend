@@ -1,17 +1,20 @@
 import React, {useEffect, useContext, useState} from 'react'
 import { Autocomplete } from '@material-ui/lab';
 import { useLocation } from 'react-router';
-import { Paper, Grid, Button, TextField, makeStyles, Box, Typography, useTheme } from '@material-ui/core';
+import { Paper, Grid, Button, TextField, makeStyles, Box, Typography, Link as MuiLink, useTheme, CircularProgress } from '@material-ui/core';
 import { UserContext } from '../context/UserContext';
 import { getPortfolio, postComparedAssetPortfolio } from '../api/portfolios';
 import { getAllAssets1 } from '../api/assets';
 import HoldingsChart from '../components/charts/HoldingsPieChart';
 import CompareLineChart from '../components/charts/CompareLineChart'
+import {Link} from 'react-router-dom';
+import ComparisonDataBox from '../components/portfolios/ComparisonDataBox';
 
 const useStyles = makeStyles((theme) =>{
     return({
         portfolioPaper: {
             background: 'transparent',
+            marginTop:'1rem',
             padding:'3rem',
             [theme.breakpoints.down('xs')]: {
                  padding:'0.7rem',
@@ -31,7 +34,7 @@ const useStyles = makeStyles((theme) =>{
                 }
                 
            },
-        }
+        },
     })
 })
 
@@ -43,8 +46,11 @@ const ComparePortfolioPage = ({match}) =>{
     const [assets, setAssets] = useState([])
     const [selectedAsset, setSelectedAsset] = useState(null)
     const [comparedAssetPortfolio, setComparedAssetPortfolio] = useState(null)
+    const [comparedAsset, setComparedAsset] = useState(null)
     const [selectedHolding , setSelectedHolding] = useState(null)
     const [activeCellIndex, setActiveCellIndex] = useState(null)
+    const [isLoading, setIsLoading] = useState(false)
+
     const theme = useTheme()
     useEffect(() =>{
         if(location.state){
@@ -70,7 +76,12 @@ const ComparePortfolioPage = ({match}) =>{
     const comparePortfolioToAsset = (e) =>{
         if(selectedAsset){
             const requestData = {asset: selectedAsset.id}
-            postComparedAssetPortfolio(user.token, portfolioId, requestData, setComparedAssetPortfolio)
+            postComparedAssetPortfolio(user.token,
+                portfolioId,
+                requestData,
+                setComparedAsset, 
+                setComparedAssetPortfolio, 
+                setIsLoading)
         }
     }
 
@@ -122,24 +133,60 @@ const ComparePortfolioPage = ({match}) =>{
                 </Paper>
             </Grid>
             <Grid item xl={8} xs={12} md={12}>
-                <Box elevation={8} style={{paddingTop:10, paddingLeft:10, marginBottom:'3rem', minHeight:'500px', height:'500px'}}>
-                    {portfolio &&
-                        <React.Fragment>
-                        {comparedAssetPortfolio ?
-                            <React.Fragment>
-                                <Typography gutterBottom variant="h4" style={{borderBottom:`1px solid ${theme.palette.primary.main}`}}>{portfolio.name} Vs {comparedAssetPortfolio.holdings[0].asset.name}</Typography>
-                                <CompareLineChart portfolio={portfolio}
-                                comparedAssetPortfolio={comparedAssetPortfolio}/>
-                            </React.Fragment>:
-                            <Box>
-                                <Typography gutterBottom variant="h4" style={{borderBottom:`1px solid ${theme.palette.primary.main}`}}>{portfolio.name}</Typography>
-                                <Typography variant="h4">Waiting for you to choose an asset...</Typography>
-                            </Box>
+                {portfolio &&
+                    <Grid container direction="column">
+                        <Grid item style={{minHeight:'500px', height:'500px'}}>
+                            {comparedAssetPortfolio && comparedAsset ?
+                                <React.Fragment>
+                                    <Box style={{borderBottom:`1px solid ${theme.palette.primary.main}`,marginLeft:'1rem', marginTop:'1rem', paddingBottom:'0.5rem'}}>
+                                        {isLoading &&
+                                            <CircularProgress size={32} style={{marginRight:'1rem'}} color="primary"/>
+                                        }
+                                        <MuiLink component={Link} to={`/portfolios/${portfolio.id}`}>
+                                            <Typography variant="h4" style={{display:'inline-block', color: portfolio.total_value > comparedAssetPortfolio.total_value ? "#9dc88d" : "#e27d60"}}>
+                                                {`${portfolio.name} `}
+                                            </Typography> 
+                                        </MuiLink>
+                                        <Typography variant="h4" style={{display:'inline-block', marginRight:'0.7rem', marginLeft:'0.7rem'}}> 
+                                        {`Vs`}
+                                        </Typography> 
+                                        <MuiLink component={Link} to={`/asset/${comparedAsset.id}`}>
+                                            <Typography variant="h4" style={{display:'inline-block', color: portfolio.total_value < comparedAssetPortfolio.total_value ? "#9dc88d" : "#e27d60"}}>
+                                                {comparedAsset.name }
+                                            </Typography> 
+                                        </MuiLink>
+                                        
+                                    </Box>
 
+                                    <CompareLineChart portfolio={portfolio}
+                                    comparedAssetPortfolio={comparedAssetPortfolio}/>
+                                </React.Fragment>:
+                                <Box>
+                                    {isLoading &&
+                                        <CircularProgress size={32} style={{marginRight:'1rem'}} color="primary"/>
+                                    }
+                                    <Typography gutterBottom variant="h4" 
+                                    style={{borderBottom:`1px solid ${theme.palette.primary.main}`, 
+                                    paddingBottom:'0.5rem', 
+                                    marginTop:'1rem',
+                                    display:'inline-block'}}>
+                                        {portfolio.name}
+                                    </Typography>
+                                    <Typography style={{marginLeft:'0.5rem'}} variant="h5">
+                                        Choose an asset and click Compare to get started!
+                                    </Typography>
+                                </Box>
+                            }
+                        </Grid>
+                        <Grid item style={{marginTop:'6rem'}}>
+                            {portfolio && comparedAsset &&
+                            <ComparisonDataBox portfolio={portfolio}
+                            comparedAsset={comparedAsset}
+                            comparedAssetPortfolio={comparedAssetPortfolio}/>
                         }
-                        </React.Fragment>
-                    }
-                </Box>
+                        </Grid>
+                    </Grid>
+                }
             </Grid>
     </Grid>
     )}

@@ -11,7 +11,7 @@ import {
   } from "recharts";
 
 import { format, parseISO } from "date-fns";
-import { useTheme } from '@material-ui/core';
+import { Typography, useTheme } from '@material-ui/core';
   
 const AssetAreaChart = ({asset, records}) =>{
     const theme = useTheme()
@@ -108,9 +108,9 @@ const AssetAreaChart = ({asset, records}) =>{
     function CustomTooltip({ active, payload, label }) {
         if (active) {
           return (
-            <div className="tool-tip" style={{color:theme.palette.primary.main}}>
-              <p>{formatTooltipDate(label)}</p>
-              <p>{formatToolTipNumber(payload)}</p>
+            <div className="tool-tip" style={{background:theme.palette.type === 'light' ? '#fff' : '#424242'}}>
+              <Typography variant="body2" style={{color:theme.palette.type === 'light' ? '#424242' : '#fff'}}>{formatTooltipDate(label)}</Typography>
+              <Typography variant="body2" style={{color:theme.palette.primary.main}}>{formatToolTipNumber(payload)}</Typography>
             </div>
           );
         }

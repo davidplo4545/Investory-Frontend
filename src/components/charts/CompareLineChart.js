@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import { LineChart, ResponsiveContainer, CartesianGrid, Tooltip, Legend, YAxis, XAxis, Line } from 'recharts';
+import { Typography } from '@material-ui/core';
 import { format, parseISO } from "date-fns";
 import { useTheme } from '@material-ui/core';
 const CompareLineChart = ({portfolio, comparedAssetPortfolio}) =>{
@@ -110,10 +111,10 @@ const CompareLineChart = ({portfolio, comparedAssetPortfolio}) =>{
   function CustomTooltip({ active, payload, label }) {
     if (active) {
       return (
-        <div className="tool-tip" style={{color:theme.palette.primary.main}}>
-          <p>{formatTooltipDate(label)}</p>
-          <p>Portfolio: {formatToolTipNumber(payload, "Portfolio")}</p>
-          <p>Asset: {formatToolTipNumber(payload, "Asset")}</p>
+        <div className="tool-tip" style={{background:theme.palette.type === 'light' ? '#fff' : '#424242'}}>
+          <Typography variant="body2" style={{color:theme.palette.type === 'light' ? '#424242' : '#fff'}}>{formatTooltipDate(label)}</Typography>
+          <Typography variant="body2" style={{color:"#8884d8"}}>Portfolio: {formatToolTipNumber(payload, "Portfolio")}</Typography>
+          <Typography variant="body2" style={{color:"#82ca9d"}}>Asset: {formatToolTipNumber(payload, "Asset")}</Typography>
         </div>
       );
     }
