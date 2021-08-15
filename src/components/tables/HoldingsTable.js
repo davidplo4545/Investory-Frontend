@@ -1,16 +1,22 @@
 import React,{useState} from 'react'
 import { DataGrid } from '@material-ui/data-grid';
-import {makeStyles} from '@material-ui/core'
+import {makeStyles, Box, Typography} from '@material-ui/core'
 
 const useStyles =  makeStyles((theme) => ({
   datagrid:{
     color: theme.palette.text.main,
     [theme.breakpoints.down('xs')]: {
-      fontSize: 11,
+      fontSize: 8,
+      '& p, .MuiDataGrid-cell, .MuiDataGrid-columnHeaderTitle':{
+      fontSize: 10,
+      },
       fontWeight:'bold',
     },
     [theme.breakpoints.up('xs')]: {
       fontSize: 14,
+      '& p, .MuiDataGrid-cell, .MuiDataGrid-columnHeaderTitle':{
+        fontSize: 12,
+        },
     },
     '& .MuiDataGrid-columnsContainer':{
       fontSize:11,
@@ -30,41 +36,33 @@ const HoldingsTable = ({holdings, setSelectedHolding, setActiveCellIndex}) =>{
       editable: false,
     }, 
     {
-        field: 'asset.symbol',
-        headerName: 'Ticker',
-        editable: false,
-        valueFormatter: (params) => {
-          return `${params.row.asset.symbol ? params.row.asset.symbol : ' '}`
-        },
-    },
-    {
         field: 'asset.name',
         headerName: 'Name',
         editable: false,
-        valueFormatter: (params) => {
-          return `${params.row.asset.name}`
-        },
-    },
-    {
-      field: 'cost_basis',
-      headerName: 'Cost Basis',
-      editable: false,
-      valueFormatter: (params) => {
-          return `${numberFormatter.format(params.value)}`
-        },
-    },
-    {
-        field: 'asset.last_price',
-        headerName: 'Price',
-        editable: false,
-        valueFormatter: (params) => {
-            return `${numberFormatter.format(params.row.asset.last_price)}`
-          },
+        flex:1,
+        renderCell: (params) => (
+          <Box style={{paddingTop:'1rem', paddingBottom:'1rem'}}>
+            <Typography variant="body2">
+              {params.row.asset.name}
+            </Typography>
+            <Typography variant="body2">
+              <b>{params.row.asset.symbol}</b>
+            </Typography>
+          </Box> 
+        ),
     },
     {
       field: 'total_cost',
-      headerName: 'Cost',
+      headerName: 'Cost Basis',
+      renderHeader: (params) => (
+        <strong>
+          <Typography variant="body2">Total</Typography>
+          <Typography variant="body2">Cost</Typography>
+        </strong>
+      ),
       editable: false,
+      flex:0.5,
+      minWidth: 100,
       valueFormatter: (params) => {
           return `${numberFormatter.format(params.value)}`
         },
@@ -72,6 +70,8 @@ const HoldingsTable = ({holdings, setSelectedHolding, setActiveCellIndex}) =>{
     {
       field: 'total_value',
       headerName: 'Value',
+      minWidth: 90,
+      flex:0.5,
       editable: false,
       valueFormatter: (params) => {
           return `${numberFormatter.format(params.value)}`
@@ -79,19 +79,26 @@ const HoldingsTable = ({holdings, setSelectedHolding, setActiveCellIndex}) =>{
     },
     {
       field: 'gainPercentage',
-      headerName: '% Gain',
+      renderHeader: (params) => (
+        <strong>
+          <Typography variant="body2">Gain</Typography>
+          <Typography variant="body2">(Return)</Typography>
+        </strong>
+      ),
+      flex:0.5,
+      minWidth:60,
       editable: false,
-      valueFormatter: (params) => {
-          return `${params.value.toFixed(3)}%`
-        },
-    },
-    {
-      field: 'percentage',
-      headerName: '% of Portfolio',
-      editable: false,
-      valueFormatter: (params) => {
-          return `${(params.value).toFixed(2)}%`
-        },
+      renderCell: (params) => (
+          <Box>
+            <Typography variant="body2">
+              {numberFormatter.format(params.row.gain)}
+            </Typography>
+            <Typography variant="body2"
+            style={{color:params.value >=  0 ? "#9dc88d" : "#e27d60"}}>
+              <b>({params.value.toFixed(2)}%)</b>
+            </Typography>
+          </Box>
+      ),
     },
     ];
 

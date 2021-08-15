@@ -19,10 +19,6 @@ main {
   flex: 1;
 }
 
-.assets-table {
-  width: 100%;
-}
-
 .footer {
   background-color: red;
   padding: 10px;

@@ -1,8 +1,8 @@
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useContext} from 'react';
 import './App.css';
 import NavbarMenu from './components/base/NavbarMenu.js';
 import Footer from './components/base/Footer.js';
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 import './components/base/navbar.css';
 import HomePage from './pages/HomePage'
 import SignInPage from './pages/SignInPage'
@@ -232,17 +232,17 @@ function App() {
               <Route exact path="/signin">
                 <SignInPage/>
               </Route>
-              <Route path="/assets/:assetType" component={AssetsPage}/>
-              <Route path="/asset/:assetId" component={AssetPage}/>
-              <Route exact path="/portfolios" component={PortfoliosPage}/>
-              <Route exact path="/portfolios/:portfolioId" component={PortfolioPage}/>
-              <Route exact path="/portfolios/:portfolioId/edit" component={CreatePortfolioPage}/>
-              <Route exact path="/portfolio-create" component={CreatePortfolioPage}/>
-              <Route exact path="/portfolios/:portfolioId/compare" component={ComparePortfolioPage}/>
-              <Route exact path="/profile">
+              <PrivateRoute path="/assets/:assetType" component={AssetsPage}/>
+              <PrivateRoute path="/asset/:assetId" component={AssetPage}/>
+              <PrivateRoute exact path="/portfolios" component={PortfoliosPage}/>
+              <PrivateRoute exact path="/portfolios/:portfolioId" component={PortfolioPage}/>
+              <PrivateRoute exact path="/portfolios/:portfolioId/edit" component={CreatePortfolioPage}/>
+              <PrivateRoute exact path="/portfolio-create" component={CreatePortfolioPage}/>
+              <PrivateRoute exact path="/portfolios/:portfolioId/compare" component={ComparePortfolioPage}/>
+              <PrivateRoute exact path="/profile">
                 {/* <ProfilePage/> */}
                 <div>Profile Page</div>
-              </Route>
+              </PrivateRoute>
             </Switch> 
           </Grid>
         </Box>
@@ -254,5 +254,15 @@ function App() {
     </ThemeProvider>
   );
 }
+
+const PrivateRoute = ({ component: Component, ...rest }) => {
+  const user = useContext(UserContext)
+  return <Route {...rest} render={(props) => (
+    user.token
+      ? <Component {...props} />
+      : <Redirect to='/signin' />
+  )} />
+  
+  }
 
 export default App;

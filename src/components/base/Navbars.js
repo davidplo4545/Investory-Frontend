@@ -1,22 +1,27 @@
 import React, {useState, useContext} from 'react'
 import {menuItems} from './constants'
 import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
-import { Link, Redirect } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import {userLogout} from '../../api/authentication.js'
 import {UserContext} from '../../context/UserContext'
 import {Switch, useTheme} from "@material-ui/core";
+import LoginDialogForm from '../forms/LoginDialogForm';
 
 export const BigNavbar = ({setIsTheme, isTheme}) =>{
 
     const user = useContext(UserContext)
     const [secMenuItems, setSecMenuItems] = useState([])
+    const history = useHistory()
+    const [isLoginDialog, setIsLoginDialog] = React.useState(false);
     const handleMenuItemClick = (item) =>{
         setSecMenuItems(item.secMenuItems)
     }
 
     const onLogout = () => {
         userLogout(user.token,user.setToken)
-        return <Redirect to="/home" />;
+        history.push({
+            pathname:`/`,
+        });
     }
 
     const handleThemeChange = () =>{
@@ -25,6 +30,8 @@ export const BigNavbar = ({setIsTheme, isTheme}) =>{
     }
     return (
         <div className="big-navbar">   
+            <LoginDialogForm isLoginDialog={isLoginDialog}
+            setIsLoginDialog={setIsLoginDialog}/>
             <Navbar className="big" bg="light"  variant="light" expand="lg">
                 <div className="navbar-center">
                     <div className="collapsed-center">
@@ -37,7 +44,9 @@ export const BigNavbar = ({setIsTheme, isTheme}) =>{
                         {user.token == null ?
                             <Navbar.Collapse id="basic-navbar-nav"> 
                                 <Nav className="ml-auto">
-                                    <Nav.Link as={Link} to='/signin'>Sign In</Nav.Link>
+                                    <Switch color="default" checked={isTheme} onChange={handleThemeChange}/>
+
+                                    <Nav.Link onClick={() => setIsLoginDialog(!isLoginDialog)}>Sign In</Nav.Link>
                                     <Nav.Link as={Link} to='/register'>Get Started</Nav.Link>
                                 </Nav>
                             </Navbar.Collapse>
@@ -88,10 +97,14 @@ export const BigNavbar = ({setIsTheme, isTheme}) =>{
 export const SmallNavbar = () =>{
     const user = useContext(UserContext)
     const theme = useTheme()
+    const history = useHistory()
+
 
     const onLogout = () => {
         userLogout(user.token,user.setToken)
-        return <Redirect to="/home" />;
+        history.push({
+            pathname:`/`,
+        });
     }
     return (
         <div className="small-navbar">

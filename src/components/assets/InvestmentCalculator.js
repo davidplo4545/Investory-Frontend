@@ -5,7 +5,7 @@ import {
   KeyboardDatePicker,
 } from '@material-ui/pickers';
 import TextField from '@material-ui/core/TextField';
-import { Button } from '@material-ui/core';
+import { Button, Typography, Box } from '@material-ui/core';
 
 
 const InvestmentCalculator = ({records}) =>{
@@ -47,9 +47,10 @@ const InvestmentCalculator = ({records}) =>{
 
     return(
         <React.Fragment>
-            <h4>Investment Calculator</h4>
+            <Typography variant="h5" style={{borderBottom:'1px solid gray', paddingBottom:'0.5rem'}}>Investment Calculator</Typography>
             <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                <form className="investment-calculator-form" onSubmit={handleSubmit}>
+                <form style={{display:'flex', flexDirection:'column'}}
+                onSubmit={handleSubmit}>
                     <KeyboardDatePicker
                         disableToolbar
                         shouldDisableDate={disableDates}
@@ -74,11 +75,11 @@ const InvestmentCalculator = ({records}) =>{
                         onChange={handleAmountChange}
                         InputProps={{ inputProps: { min: 0, max:100 } }}/>
                     {result !== 0 &&
-                        <React.Fragment>
-                            <p>Price per share at start: {priceAtStartDate.toFixed(3)}$</p>
-                            <p>Investment value today: {result.toFixed(3)}$</p>
-                            <p>Rate of return: {returnRate.toFixed(0)}%</p>
-                        </React.Fragment>
+                        <Box style={{marginTop:'1rem', marginBottom:'1rem'}}>
+                            <Typography variant="body2">Price per share at start: {priceAtStartDate.toFixed(3)}$</Typography>
+                            <Typography  variant="body2">Investment value today: {result.toFixed(3)}$</Typography>
+                            <Typography  variant="body2">Rate of return: {returnRate.toFixed(0)}%</Typography>
+                        </Box>
                     }
                     <Button color='primary' variant="contained" type="submit" value="Submit">Calculate</Button>
                 </form>

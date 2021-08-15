@@ -9,6 +9,7 @@ import HoldingsChart from '../components/charts/HoldingsPieChart';
 import CompareLineChart from '../components/charts/CompareLineChart'
 import {Link} from 'react-router-dom';
 import ComparisonDataBox from '../components/portfolios/ComparisonDataBox';
+import CompareIcon from '@material-ui/icons/Compare';
 
 const useStyles = makeStyles((theme) =>{
     return({
@@ -24,7 +25,7 @@ const useStyles = makeStyles((theme) =>{
             flexDirection:'row',
             alignItems:"stretch", 
             justifyContent:"space-between",
-            marginTop:'1rem',
+            marginTop:'2rem',
             [theme.breakpoints.down('md')]: {
                 flexDirection:'column',
                 alignItems:"center", 
@@ -114,9 +115,10 @@ const ComparePortfolioPage = ({match}) =>{
                             }
                         </Grid>
                         <Grid item container 
-                        spacing={2}
+                        spacing={3}
                         className={classes.chooseAssetForm}>
                             <Autocomplete
+                            size={"small"} 
                                 options={assets}
                                 getOptionLabel={(option) => option.name}
                                 getOptionSelected={(option, value) => option.id === value.id}
@@ -127,6 +129,7 @@ const ComparePortfolioPage = ({match}) =>{
                             <Button variant="contained" 
                             color="primary" 
                             onClick={comparePortfolioToAsset}
+                            endIcon={<CompareIcon/>}
                             type="submit">Compare</Button>
                         </Grid>
                     </Grid>
@@ -143,16 +146,23 @@ const ComparePortfolioPage = ({match}) =>{
                                             <CircularProgress size={32} style={{marginRight:'1rem'}} color="primary"/>
                                         }
                                         <MuiLink component={Link} to={`/portfolios/${portfolio.id}`}>
-                                            <Typography variant="h4" style={{display:'inline-block', color: portfolio.total_value > comparedAssetPortfolio.total_value ? "#9dc88d" : "#e27d60"}}>
-                                                {`${portfolio.name} `}
+                                            <Typography variant="h4" 
+                                            style={{display:'inline-block',
+                                             color: portfolio.total_gain > 
+                                             comparedAssetPortfolio.total_gain ? "#9dc88d" : "#e27d60",
+                                             fontFamily:'Quicksand'}}>
+                                                <b>{`${portfolio.name} `}</b>
                                             </Typography> 
                                         </MuiLink>
                                         <Typography variant="h4" style={{display:'inline-block', marginRight:'0.7rem', marginLeft:'0.7rem'}}> 
                                         {`Vs`}
                                         </Typography> 
                                         <MuiLink component={Link} to={`/asset/${comparedAsset.id}`}>
-                                            <Typography variant="h4" style={{display:'inline-block', color: portfolio.total_value < comparedAssetPortfolio.total_value ? "#9dc88d" : "#e27d60"}}>
-                                                {comparedAsset.name }
+                                            <Typography variant="h4" 
+                                            style={{display:'inline-block', 
+                                            color: portfolio.total_gain < comparedAssetPortfolio.total_gain ? "#9dc88d" : "#e27d60",
+                                            fontFamily:'Quicksand'}}>
+                                                <b>{comparedAsset.name }</b>
                                             </Typography> 
                                         </MuiLink>
                                         
@@ -168,12 +178,14 @@ const ComparePortfolioPage = ({match}) =>{
                                     <Typography gutterBottom variant="h4" 
                                     style={{borderBottom:`1px solid ${theme.palette.primary.main}`, 
                                     paddingBottom:'0.5rem', 
+                                    width:'100%',
                                     marginTop:'1rem',
+                                    fontFamily:'Quicksand',
                                     display:'inline-block'}}>
-                                        {portfolio.name}
+                                        <b>{portfolio.name}</b>
                                     </Typography>
                                     <Typography style={{marginLeft:'0.5rem'}} variant="h5">
-                                        Choose an asset and click Compare to get started!
+                                        Choose an asset and click <b>Compare</b> to get started!
                                     </Typography>
                                 </Box>
                             }

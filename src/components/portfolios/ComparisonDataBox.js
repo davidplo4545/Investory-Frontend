@@ -90,11 +90,11 @@ const ComparisonDataBox = ({portfolio, comparedAsset, comparedAssetPortfolio}) =
             </Grid>
             <Grid item xs={12} md={4}>
                 <Box>
-                {portfolio.total_value > comparedAssetPortfolio.total_value ?
+                {portfolio.total_gain > comparedAssetPortfolio.total_gain ?
                     <Typography gutterBottom variant="subtitle1" component="h2">You Won!</Typography>:
                     <Typography gutterBottom variant="subtitle1" component="h2">You Lost!</Typography>
                 }
-                    {portfolio.total_value > comparedAssetPortfolio.total_value ?
+                    {portfolio.total_gain > comparedAssetPortfolio.total_gain ?
                         <Typography variant="body2">
                             <b>Congragulations!</b> <br/>Your portfolio has beaten: <br/> <b>{comparedAsset.name}</b>.
                         </Typography>:

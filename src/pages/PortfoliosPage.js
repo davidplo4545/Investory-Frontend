@@ -34,10 +34,9 @@ const PortfoliosPage = () =>{
     const user = useContext(UserContext)
     let history = useHistory()
     const [portfolios, setPortfolios] = useState([])
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
     const [selectedPortfolio, setSelectedPortfolio] = useState(null)
     const theme = useTheme();
-    const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
     useEffect(() => {
         getAllPortfolios(user.token, setPortfolios)
     },[])
@@ -114,7 +113,10 @@ const PortfoliosPage = () =>{
                         cy={'50%'}/>
                     </CardMedia>
                     <CardContent>
-                        <Typography gutterBottom color="textPrimary" style={{fontWeight: 700}} variant="h6" component="h2">
+                        <Typography gutterBottom color="textPrimary"
+                         style={{fontWeight: 700, fontFamily:'Quicksand'}} 
+                         variant="h6"
+                          component="h2">
                                 {portfolio.name}
                             </Typography>
                         <Typography  color="textPrimary" style={{display:'inline-block', fontWeight:600}} variant="body1" component="h2">
@@ -153,7 +155,6 @@ const PortfoliosPage = () =>{
             </Grid>
         </Grid>
         <Dialog
-            fullScreen={fullScreen}
             open={open}
             onClose={() => handleDialogShow(null)}
             aria-labelledby="responsive-dialog-title">

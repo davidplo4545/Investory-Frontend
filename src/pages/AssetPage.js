@@ -3,7 +3,6 @@ import {UserContext} from '../context/UserContext'
 import AssetAreaChart from '../components/charts/AssetAreaChart'
 import axios from 'axios'
 import RightSidebarData from '../components/assets/RightSidebarData'
-import './assetPage.css'
 import {Box, Grid, makeStyles, Typography, useTheme} from '@material-ui/core'
 
 const useStyles = makeStyles((theme) =>{
@@ -14,6 +13,7 @@ const useStyles = makeStyles((theme) =>{
             borderRadius: '15px',
             [theme.breakpoints.down('md')]: {
                 marginTop:theme.spacing(1),
+                margin:'1rem',
               },
         },
     }

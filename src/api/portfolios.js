@@ -8,6 +8,7 @@ const domain = "http://localhost:8000/api"
 const calculatePortfolioDetails = (portfolio) =>{
     portfolio.gain = portfolio.total_value - portfolio.total_cost 
     portfolio.return = (portfolio.total_value / portfolio.total_cost - 1) * 100
+    portfolio.total_gain = portfolio.gain + portfolio.realized_gain
     let portHoldings = portfolio.holdings
     portHoldings.forEach(holding => {
         const {total_value, total_cost, cost_basis} = holding

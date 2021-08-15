@@ -1,19 +1,21 @@
 import axios from 'axios'
 
 const domain = "http://localhost:8000/api"
-export const userLogin = (userCredentials, setToken, setError) => {
+export const userLogin = (userCredentials, setToken, setError, history, setIsLoginDialog) => {
     axios.post(domain + '/login/',{
         'email':userCredentials['email'],
         'password':userCredentials['password'],
     })
     .then((res) => {
         setToken(res['data']['key']);
+        setIsLoginDialog(false)
+        history.push({
+            pathname:`/portfolios`,
+        })
     })
     .catch((error) =>
     {
         setError(`Username or password are incorrect.`)
-        // setError(`${error.message}`)
-
     })
     
 }
