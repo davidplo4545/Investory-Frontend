@@ -1,6 +1,6 @@
 import React, {useState, useContext} from 'react'
 import { Link } from "react-router-dom";
-import {userLogin} from '../../api/authentication.js'
+// import {userLogin} from '../../api/authentication.js'
 import {UserContext} from '../../context/UserContext'
 
 const LoginForm = () =>{
@@ -11,10 +11,10 @@ const LoginForm = () =>{
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        userLogin({
-            'email': email,
-            'password': password
-        }, setToken, setError);
+        // userLogin({
+        //     'email': email,
+        //     'password': password
+        // }, setToken, setError);
 
     }
 

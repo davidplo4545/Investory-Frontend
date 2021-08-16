@@ -5,6 +5,7 @@ import {Dialog, DialogContent,
 import { LockOutlined } from '@material-ui/icons'
 import { useHistory } from 'react-router'
 import axios from 'axios'
+import GoogleLoginAuth from '../base/GoogleLoginAuth'
 
 const useStyles = makeStyles((theme) =>{
     return({
@@ -14,8 +15,16 @@ const useStyles = makeStyles((theme) =>{
             // background:'#fff',
             padding: theme.spacing(2),
         },
-        loginForm:{
-
+        signInBtn:{
+            backgroundColor:'rgb(255,255,255)',
+            color:'rgb(0,0,0,0.54)',
+            borderRadius:'2px',
+            fontWeight:500,
+            padding:10,
+            fontSize:'14px',
+            '&:hover':{
+                opacity:0.9,
+            }
         }
     })
 })
@@ -40,10 +49,7 @@ const LoginDialogForm = ({isLoginDialog, setIsLoginDialog}) =>{
         })
         .then((res) => {
             setToken(res['data']['key']);
-            setIsLoginDialog(false)
-            setError("")
-            setEmail("")
-            setPassword("")
+            closeFormDialog()
             history.push({
                 pathname:`/portfolios`,
             })
@@ -53,6 +59,16 @@ const LoginDialogForm = ({isLoginDialog, setIsLoginDialog}) =>{
             setError(`Username or password are incorrect.`)
         })
     }
+
+    const closeFormDialog = () =>{
+        setError("")
+        setEmail("")
+        setPassword("")
+        setIsLoginDialog(false)
+    }
+
+
+
 
     return(
         <Dialog
@@ -66,11 +82,16 @@ const LoginDialogForm = ({isLoginDialog, setIsLoginDialog}) =>{
                  color="primary">
                      <LockOutlined />
                 </Avatar>
-                <Typography gutterBottom color="primary" variant="h5">
+                <Typography gutterBottom color="primary" variant="h5"
+                    style={{borderBottom:`0.5px solid ${theme.palette.primary.main}`, width:'100%',
+                    display:'flex', justifyContent:'center', paddingBottom:'1rem'}}>
                     <b>Sign In</b>
                 </Typography>
             <DialogContent>
-                <form style={{display:'flex', flexDirection:'column', justifyContent:'space-between'}}
+                <form style={{display:'flex',
+                 flexDirection:'column',
+                  justifyContent:'space-between',
+                marginBottom:'1rem'}}
                 onSubmit={handleSubmit}>
                     <TextField label="Email"
                     type="email"
@@ -79,18 +100,20 @@ const LoginDialogForm = ({isLoginDialog, setIsLoginDialog}) =>{
                     value={email} 
                     onChange={(e) => setEmail(e.target.value)} required />
                     <TextField label="Password"
-                    style={{marginBottom:'1.5rem'}}
+                    style={{marginBottom:'2rem'}}
                     type="password"
                      placeholder="Enter password"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)} required  />
                     <Typography variant="body2" gutterBottom>{error}</Typography>
-                    <Button variant="contained" type="submit" fullWidth>Sign In</Button>
+                    <Button variant="contained" className={classes.signInBtn}
+                     type="submit" fullWidth>
+                         Sign In
+                        </Button>
                 </form>
-                <Button variant="contained"
-                style={{marginTop:'1rem'}}
-                 type="submit"
-                  fullWidth>Sign in With Gmail</Button>
+                 <GoogleLoginAuth setToken={setToken}
+                 setError={setError}
+                 closeFormDialog={closeFormDialog}/>
             </DialogContent>
             </Grid>
         </Dialog>

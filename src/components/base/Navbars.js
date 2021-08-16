@@ -7,12 +7,11 @@ import {UserContext} from '../../context/UserContext'
 import {Switch, useTheme} from "@material-ui/core";
 import LoginDialogForm from '../forms/LoginDialogForm';
 
-export const BigNavbar = ({setIsTheme, isTheme}) =>{
+export const BigNavbar = ({setIsTheme, isTheme, isLoginDialog, setIsLoginDialog}) =>{
 
     const user = useContext(UserContext)
     const [secMenuItems, setSecMenuItems] = useState([])
     const history = useHistory()
-    const [isLoginDialog, setIsLoginDialog] = React.useState(false);
     const handleMenuItemClick = (item) =>{
         setSecMenuItems(item.secMenuItems)
     }
@@ -35,7 +34,7 @@ export const BigNavbar = ({setIsTheme, isTheme}) =>{
             <Navbar className="big" bg="light"  variant="light" expand="lg">
                 <div className="navbar-center">
                     <div className="collapsed-center">
-                        <Navbar.Brand href="/">
+                        <Navbar.Brand href="/get-started">
                             Long-Term
                         </Navbar.Brand>
                         <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -47,7 +46,7 @@ export const BigNavbar = ({setIsTheme, isTheme}) =>{
                                     <Switch color="default" checked={isTheme} onChange={handleThemeChange}/>
 
                                     <Nav.Link onClick={() => setIsLoginDialog(!isLoginDialog)}>Sign In</Nav.Link>
-                                    <Nav.Link as={Link} to='/register'>Get Started</Nav.Link>
+                                    <Nav.Link as={Link} to='/get-started'>Get Started</Nav.Link>
                                 </Nav>
                             </Navbar.Collapse>
                         :
@@ -94,7 +93,7 @@ export const BigNavbar = ({setIsTheme, isTheme}) =>{
     )
 }
 
-export const SmallNavbar = () =>{
+export const SmallNavbar = ({setIsTheme, isTheme, isLoginDialog, setIsLoginDialog}) =>{
     const user = useContext(UserContext)
     const theme = useTheme()
     const history = useHistory()
@@ -111,8 +110,7 @@ export const SmallNavbar = () =>{
             <Navbar bg="light"  variant="light" expand="lg">
                     <div className="navbar-center">
                         <div className="collapsed-center">
-                            <Navbar.Brand href="/">
-                                {/* <Nav.Link as={Link} to='/'>Long-Term</Nav.Link> */}
+                            <Navbar.Brand href="/get-started">
                                 Long-Term
                             </Navbar.Brand>
                             <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -121,8 +119,8 @@ export const SmallNavbar = () =>{
                             {user.token == null ?
                                 <Navbar.Collapse id="basic-navbar-nav"> 
                                     <Nav className="ml-auto">
-                                        <Nav.Link as={Link} to='signin'>Sign In</Nav.Link>
-                                        <Nav.Link as={Link} to='register'>Get Started</Nav.Link>
+                                        <Nav.Link onClick={() => setIsLoginDialog(!isLoginDialog)}>Sign In</Nav.Link>
+                                        <Nav.Link as={Link} to='get-started'>Get Started</Nav.Link>
                                     </Nav>
                                 </Navbar.Collapse>
                             :

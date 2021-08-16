@@ -1,8 +1,34 @@
+import { Typography, Button, TextField, makeStyles, Box } from '@material-ui/core';
 import React, {useState, useContext} from 'react'
 import { Link } from "react-router-dom";
 import {userRegister} from '../../api/authentication.js'
 import {UserContext} from '../../context/UserContext'
+import GoogleLoginAuth from '../base/GoogleLoginAuth.js';
 
+
+const useStyles = makeStyles((theme) =>{
+    return({
+        box:{
+            display:'flex',
+            flexDirection:'column',
+            alignItems:'center',
+            justifyContent:'center',
+            padding: theme.spacing(4),
+            // paddingTop:theme.spacing(2),
+            // paddingBottom:theme.spacing(3),
+
+        },
+        registerForm:{
+            display:'flex',
+            flexDirection:'column',
+            alignItems:'center',
+            marginBottom:'1rem',
+            width:'100%'
+            
+            
+        }
+    })
+})
 const RegisterForm = () =>{
 
     const [email, setEmail] = useState("")
@@ -11,7 +37,7 @@ const RegisterForm = () =>{
     const [password, setPassword] = useState("")
     const {setToken} = useContext(UserContext)
     const [error, setError] = useState("")
-
+    const classes = useStyles()
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -25,38 +51,58 @@ const RegisterForm = () =>{
 
     }
 
-
     return(
-        <form onSubmit={handleSubmit}>
+        <Box className={classes.box}>
+        <form onSubmit={handleSubmit} className={classes.registerForm}>
         
-            <h3>Sign Up</h3>
+            <Typography variant="h5" gutterBottom>Get Started</Typography>
 
-            <div className="form-group">
-                <label>Email address</label>
-                <input required type="email" className="form-control" name="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="Enter email" />
-            </div>
+            <TextField label="Email"
+                type="email"
+                style={{marginBottom:'0.7rem'}}
+                placeholder="Enter email"
+                value={email} 
+                fullWidth
+                onChange={(e) => setEmail(e.target.value)} required />
 
-            <div className="form-group">
-                <label>First Name</label>
-                <input required type="text" className="form-control" name="password" value={firstName} onChange={e => setFirstName(e.target.value)} placeholder="Enter First Name" />
-            </div>
+            <TextField label="First Name"
+                type="text"
+                style={{marginBottom:'0.7rem'}}
+                placeholder="Enter first name"
+                fullWidth
+                value={firstName} 
+                onChange={(e) => setFirstName(e.target.value)} required />
 
-            <div className="form-group">
-                <label>Last Name</label>
-                <input required type="text" className="form-control" name="password" placeholder="Enter Last Name" value={lastName} onChange={e => setLastName(e.target.value)}/>
-            </div>
+            <TextField label="Last Name"
+                type="text"
+                fullWidth
+                style={{marginBottom:'0.7rem'}}
+                placeholder="Enter last name"
+                value={lastName} 
+                onChange={(e) => setLastName(e.target.value)} required />
 
+            <TextField label="Password"
+                type="password"
+                fullWidth
+                style={{marginBottom:'0.7rem'}}
+                placeholder="Enter password"
+                value={email} 
+                onChange={(e) => setPassword(e.target.value)} required />
 
-            <div className="form-group">
-                <label>Password</label>
-                <input required type="password" className="form-control" name="password" placeholder="Enter password" value={password} onChange={e => setPassword(e.target.value)}/>
-            </div>
-            {error}
-            <button type="submit" className="btn btn-primary btn-block">Sign Up</button>
-            <p className="forgot-password text-right">
-                Already registered <Link to="login">sign in?</Link>
-            </p>
+            <Typography variant="body2">
+                {error}
+            </Typography>
+            <Button type="submit"
+            fullWidth
+             variant="contained"
+             style={{marginTop:'2rem'}}>
+                 Sign Up
+            </Button>
         </form>
+        <GoogleLoginAuth setToken={setToken}
+            setError={setError}/>
+        </Box>
+
     );
 }
 

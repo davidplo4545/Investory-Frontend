@@ -5,7 +5,6 @@ import Footer from './components/base/Footer.js';
 import { Route, Switch, Redirect } from "react-router-dom";
 import './components/base/navbar.css';
 import HomePage from './pages/HomePage'
-import SignInPage from './pages/SignInPage'
 import GetStartedPage from './pages/GetStartedPage'
 import AssetsPage from './pages/AssetsPage'
 import AssetPage from './pages/AssetPage'
@@ -56,7 +55,7 @@ const useStyles =  makeStyles((theme) => ({
   },
   main:{
     [theme.breakpoints.down('xs')]: {
-      position:'absolute',
+      // position:'absolute',
     },
   }
 }));
@@ -196,6 +195,8 @@ function App() {
 
   const {token,setToken} = useToken();
   const [user, setUser] = useState({})
+  const [isLoginDialog, setIsLoginDialog] = useState(false);
+
   useEffect(() => {
     if (token)
       getMyUserDetails(token,setUser)
@@ -217,21 +218,20 @@ function App() {
       <GlobalStyle/>
       <UserContext.Provider value={{token, user, setToken, setUser}}>
       <header className="App-header">
-            <NavbarMenu token={token} isTheme={isTheme} setIsTheme={setIsTheme}/>
+            <NavbarMenu token={token} 
+            isTheme={isTheme} 
+            setIsTheme={setIsTheme}
+            isLoginDialog={isLoginDialog}
+            setIsLoginDialog={setIsLoginDialog}/>
       </header>
       <main>
         <Box className={classes.paper}>
           <Grid container>
             <Switch>
-              <Route exact path="/">
-                <HomePage />
-              </Route>
-              <Route exact path="/register">
+              <Route exact path="/get-started">
                 <GetStartedPage/>
               </Route>
-              <Route exact path="/signin">
-                <SignInPage/>
-              </Route>
+
               <PrivateRoute path="/assets/:assetType" component={AssetsPage}/>
               <PrivateRoute path="/asset/:assetId" component={AssetPage}/>
               <PrivateRoute exact path="/portfolios" component={PortfoliosPage}/>
