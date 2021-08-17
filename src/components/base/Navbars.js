@@ -35,7 +35,7 @@ export const BigNavbar = ({setIsTheme, isTheme, isLoginDialog, setIsLoginDialog}
                 <div className="navbar-center">
                     <div className="collapsed-center">
                         <Navbar.Brand href="/get-started">
-                            Long-Term
+                            Investory
                         </Navbar.Brand>
                         <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     </div>
@@ -45,8 +45,8 @@ export const BigNavbar = ({setIsTheme, isTheme, isLoginDialog, setIsLoginDialog}
                                 <Nav className="ml-auto">
                                     <Switch color="default" checked={isTheme} onChange={handleThemeChange}/>
 
-                                    <Nav.Link onClick={() => setIsLoginDialog(!isLoginDialog)}>Sign In</Nav.Link>
-                                    <Nav.Link as={Link} to='/get-started'>Get Started</Nav.Link>
+                                    {/* <Nav.Link onClick={() => setIsLoginDialog(!isLoginDialog)}>Sign In</Nav.Link>
+                                    <Nav.Link as={Link} to='/get-started'>Get Started</Nav.Link> */}
                                 </Nav>
                             </Navbar.Collapse>
                         :

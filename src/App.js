@@ -134,8 +134,8 @@ function App() {
 
   }
   .big-navbar{
-    background: linear-gradient(142deg,${appliedTheme.palette.primary.main} 46%, ${appliedTheme.palette.primary.main} 53%, ${appliedTheme.palette.primary.light} 60%) !important;
     
+    background: linear-gradient(142deg,${appliedTheme.palette.primary.main} 46%, ${appliedTheme.palette.primary.main} 53%, ${appliedTheme.palette.primary.light} 60%) !important;
   }
 
   
