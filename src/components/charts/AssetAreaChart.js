@@ -16,7 +16,9 @@ import { Typography, useTheme, useMediaQuery, makeStyles } from '@material-ui/co
 const useStyles = makeStyles((theme) =>{
     return({
         areaChart:{
-
+            '& text':{
+                color: 'red !imporant',
+            }
         }
     })
 })
@@ -74,12 +76,12 @@ const AssetAreaChart = ({asset, records}) =>{
                 <AreaChart data={records} className={classes.areaChart}>
                     <defs>
                     <linearGradient id="color" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stopColor={theme.palette.primary.main} stopOpacity={0.4} />
-                        <stop offset="90%" stopColor={theme.palette.primary.main} stopOpacity={0.05} />
+                        <stop offset="0%" stopColor={theme.palette.text.secondary}  stopOpacity={0.4} />
+                        <stop offset="90%" stopColor={theme.palette.text.secondary} stopOpacity={0.05} />
                     </linearGradient>
                     </defs>
 
-                    <Area dataKey="price" stroke={theme.palette.primary.main} fill="url(#color)" />
+                    <Area dataKey="price" stroke={theme.palette.text.secondary} fill="url(#color)" />
 
                     <XAxis
                     dataKey="date"

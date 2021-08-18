@@ -12,6 +12,8 @@ export const BigNavbar = ({setIsTheme, isTheme, isLoginDialog, setIsLoginDialog}
     const user = useContext(UserContext)
     const [secMenuItems, setSecMenuItems] = useState([])
     const history = useHistory()
+    const theme = useTheme()
+
     const handleMenuItemClick = (item) =>{
         setSecMenuItems(item.secMenuItems)
     }
@@ -34,7 +36,7 @@ export const BigNavbar = ({setIsTheme, isTheme, isLoginDialog, setIsLoginDialog}
             <Navbar className="big" bg="light"  variant="light" expand="lg">
                 <div className="navbar-center">
                     <div className="collapsed-center">
-                        <Navbar.Brand href="/get-started">
+                        <Navbar.Brand href="/">
                             Investory
                         </Navbar.Brand>
                         <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -45,8 +47,8 @@ export const BigNavbar = ({setIsTheme, isTheme, isLoginDialog, setIsLoginDialog}
                                 <Nav className="ml-auto">
                                     <Switch color="default" checked={isTheme} onChange={handleThemeChange}/>
 
-                                    {/* <Nav.Link onClick={() => setIsLoginDialog(!isLoginDialog)}>Sign In</Nav.Link>
-                                    <Nav.Link as={Link} to='/get-started'>Get Started</Nav.Link> */}
+                                    <Nav.Link onClick={() => setIsLoginDialog(!isLoginDialog)}>Sign In</Nav.Link>
+                                    {/* <Nav.Link as={Link} to='/'>Get Started</Nav.Link> */}
                                 </Nav>
                             </Navbar.Collapse>
                         :
@@ -55,7 +57,13 @@ export const BigNavbar = ({setIsTheme, isTheme, isLoginDialog, setIsLoginDialog}
 
                                     {menuItems.map((item) => {
                                         return (item.link === null ?
-                                            <Nav.Link key={item.title} onClick={() => handleMenuItemClick(item)}>{item.title}</Nav.Link> :
+                                            <NavDropdown key={item.title}
+                                                  title={item.title}
+                                                   id="basic-nav-dropdown">
+                                                    {item.secMenuItems.map(secItem => {
+                                                        return <NavDropdown.Item as={Link} key={secItem.title}  to={secItem.link}>{secItem.title}</NavDropdown.Item>            
+                                                    })}
+                                            </NavDropdown>:
                                             <Nav.Link key={item.title} onClick={() => handleMenuItemClick(item)} as={Link} to={item.link}>{item.title}</Nav.Link> 
                                         )
                                     })}  
@@ -71,7 +79,7 @@ export const BigNavbar = ({setIsTheme, isTheme, isLoginDialog, setIsLoginDialog}
                     
                 </div>
             </Navbar>
-            {user.token !== null &&
+            {/* {user.token !== null &&
                 <div className="navbar-secondary">
                     <Navbar className="secondary" bg="light"  variant="light" expand="lg">
                             <div className="collapsed-center">
@@ -88,7 +96,7 @@ export const BigNavbar = ({setIsTheme, isTheme, isLoginDialog, setIsLoginDialog}
                             
                     </Navbar>
                 </div>
-            }
+            } */}
         </div>
     )
 }
@@ -110,7 +118,7 @@ export const SmallNavbar = ({setIsTheme, isTheme, isLoginDialog, setIsLoginDialo
             <Navbar bg="light"  variant="light" expand="lg">
                     <div className="navbar-center">
                         <div className="collapsed-center">
-                            <Navbar.Brand href="/get-started">
+                            <Navbar.Brand href="/">
                                 Long-Term
                             </Navbar.Brand>
                             <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -120,7 +128,7 @@ export const SmallNavbar = ({setIsTheme, isTheme, isLoginDialog, setIsLoginDialo
                                 <Navbar.Collapse id="basic-navbar-nav"> 
                                     <Nav className="ml-auto">
                                         <Nav.Link onClick={() => setIsLoginDialog(!isLoginDialog)}>Sign In</Nav.Link>
-                                        <Nav.Link as={Link} to='get-started'>Get Started</Nav.Link>
+                                        <Nav.Link as={Link} to='/'>Get Started</Nav.Link>
                                     </Nav>
                                 </Navbar.Collapse>
                             :
@@ -139,7 +147,7 @@ export const SmallNavbar = ({setIsTheme, isTheme, isLoginDialog, setIsLoginDialo
                                                   style={{borderBottom:`1px solid ${theme.palette.text.primary}`}}
                                                    id="basic-nav-dropdown">
                                                     {item.secMenuItems.map(secItem => {
-                                                        return <NavDropdown.Item as={Link} key={secItem.title}  to={secItem.link}>{secItem.title}</NavDropdown.Item>            
+                                                        return <NavDropdown.Item className='small-dropdown' as={Link} key={secItem.title}  to={secItem.link}>{secItem.title}</NavDropdown.Item>            
                                                     })}
                                                 </NavDropdown>        
                                             

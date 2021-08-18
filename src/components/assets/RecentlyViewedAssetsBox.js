@@ -9,16 +9,15 @@ const useStyles = makeStyles((theme) =>{
             borderBottomWidth: 1,
             borderBottomStyle: 'solid',
             paddingBottom: theme.spacing(0.5),
-            // fontFamily: 'Helvetica',
             '&:hover':{
-                color: theme.palette.primary.main,
+                color: theme.palette.secondary.dark,
             }
         },
         link:{
             color:theme.palette.text.primary,
             '&:hover':{
                 textDecoration:'none',
-                color: theme.palette.primary.main,
+                color: theme.palette.secondary.dark,
                 background:'white',
             }
         }
@@ -61,14 +60,14 @@ const RecentlyViewedAssetsBox = ({asset}) =>{
             style={{marginTop:'1rem'}}
             direction="column"
             alignItems="flex-start">
-        <Typography variant="h6">Recently viewed tickers:</Typography>
+        <Typography variant="h6" color="textPrimary">Recently viewed tickers:</Typography>
         {recentlyViewedAssets &&
         <React.Fragment>
         {recentlyViewedAssets.map((asset) => {
             return <Grid item  className={classes.gridItem} key={generateKey(asset.name)} xl={12} style={{width:'100%'}}>
                         <MuiLink className={classes.link}  component={Link} key={asset.link} to={asset.link}>
-                            <Typography fontSize={16}  variant="subtitle1">{asset.symbol}</Typography>
-                            <Typography fontWeight="fontWeightBold" variant="body1" style={{fontSize:'0.7rem'}}>{asset.name}</Typography>
+                            <Typography fontSize={16} color="textSecondary"  variant="subtitle1">{asset.symbol}</Typography>
+                            <Typography fontWeight="fontWeightBold" color="textSecondary" variant="body1" style={{fontSize:'0.7rem'}}>{asset.name}</Typography>
                         </MuiLink>
                     </Grid>
         })

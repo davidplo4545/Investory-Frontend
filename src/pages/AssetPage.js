@@ -8,7 +8,7 @@ import {Box, Grid, makeStyles, Typography, useTheme} from '@material-ui/core'
 const useStyles = makeStyles((theme) =>{
     return{
         gridItem:{
-            border: `1px solid ${theme.palette.primary.main}`,
+            border: `1px solid ${theme.palette.text.secondary}`,
             padding: theme.spacing(2),
             borderRadius: '15px',
             [theme.breakpoints.down('md')]: {
@@ -55,7 +55,7 @@ const AssetPage = ({match}) =>{
                 <Grid container item lg={8} md={8} sm={12} direction="column" spacing={3}>
                     <Grid item>
                             <Typography gutterBottom style={{fontWeight:'bold'}} variant="h4">{asset.symbol} - {asset.name}</Typography>
-                            <Typography variant="h5" style={{fontWeight:'bold'}}>{numberFormatter.format(asset.last_price)}</Typography>
+                            <Typography color="textSecondary" variant="h5" style={{fontWeight:'bold'}}>{numberFormatter.format(asset.last_price)}</Typography>
                             {/* {asset.last_price !== undefined && asset.last_price > 10 &&
                             }
 
@@ -70,28 +70,28 @@ const AssetPage = ({match}) =>{
                          alignItems={'stretch'}>
                         <Grid item xs={12} md={12} lg={4} className={classes.gridItem}>
                             <Box>
-                                <Typography variant="h6" style={{borderBottom: `1px solid ${theme.palette.primary.main}`}} gutterBottom>Info:</Typography>
-                                <Typography variant="body2" gutterBottom>Type: {asset.type}</Typography>
-                                <Typography variant="body2" gutterBottom>Location: {asset.type}</Typography>
-                                <Typography variant="body2" gutterBottom>Sector: {asset.sector}</Typography>
-                                <Typography variant="body2" gutterBottom>Industry: {asset.industry}</Typography>
+                                <Typography variant="h6" color="textPrimary" style={{borderBottom: `1px solid ${theme.palette.text.primary}`}} gutterBottom>Info:</Typography>
+                                <Typography variant="body2" color="textSecondary" gutterBottom>Type: {asset.type}</Typography>
+                                <Typography variant="body2" color="textSecondary" gutterBottom>Location: {asset.type}</Typography>
+                                <Typography variant="body2" color="textSecondary" gutterBottom>Sector: {asset.sector}</Typography>
+                                <Typography variant="body2" color="textSecondary" gutterBottom>Industry: {asset.industry}</Typography>
                             </Box>
                         </Grid>
                         <Grid item xs={12} md={12} lg={4} className={classes.gridItem}>
                             <Box>
-                                <Typography variant="h6" style={{borderBottom: `1px solid ${theme.palette.primary.main}`}} gutterBottom>Description:</Typography>
-                                <Typography variant="body2" gutterBottom>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dapibus tellus ut neque convallis pretium. Pellentesque tincidunt tellus diam, lobortis condimentum magna placerat vitae. Fusce sagittis lacus quis lorem dapibus, a eleifend neque feugiat. Vivamus eget mi dui. Aenean dolor nulla, congue sit amet pellentesque a, elementum pretium massa. Suspendisse ut ipsum sed velit blandit pretium quis id ipsum. Etiam fermentum ligula eu nunc condimentum feugiat. In non ligula eleifend, ulhiCras lacus magna, egestas id nisl luctus, facilisis consectetur erat. Aenean a elit bibendum, posuere ipsum eu, consectetur nisl.</Typography>
+                                <Typography variant="h6" color="textPrimary" style={{borderBottom: `1px solid ${theme.palette.text.primary}`}} gutterBottom>Description:</Typography>
+                                <Typography variant="body2" color="textSecondary" gutterBottom>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dapibus tellus ut neque convallis pretium. Pellentesque tincidunt tellus diam, lobortis condimentum magna placerat vitae. Fusce sagittis lacus quis lorem dapibus, a eleifend neque feugiat. Vivamus eget mi dui. Aenean dolor nulla, congue sit amet pellentesque a, elementum pretium massa. Suspendisse ut ipsum sed velit blandit pretium quis id ipsum. Etiam fermentum ligula eu nunc condimentum feugiat. In non ligula eleifend, ulhiCras lacus magna, egestas id nisl luctus, facilisis consectetur erat. Aenean a elit bibendum, posuere ipsum eu, consectetur nisl.</Typography>
                             </Box>
                         </Grid>
                         <Grid item xs={12} md={12} lg={3} className={classes.gridItem}>
                             <Box>
-                            <Typography variant="h6" style={{borderBottom: `1px solid ${theme.palette.primary.main}`}} gutterBottom>Returns:</Typography>
-                            <Typography variant="body2" gutterBottom>YTD: 5%</Typography>
-                            <Typography variant="body2" gutterBottom>1 Month: 9%</Typography>
-                            <Typography variant="body2" gutterBottom>6 Month: 9%</Typography>
-                            <Typography variant="body2" gutterBottom>1 Year: 9%</Typography>
-                            <Typography variant="body2" gutterBottom>3 Year: -5%</Typography>
-                            <Typography variant="body2" gutterBottom>5 Year: 50%</Typography>
+                            <Typography variant="h6" color="textPrimary" style={{borderBottom: `1px solid ${theme.palette.text.primary}`}} gutterBottom>Returns:</Typography>
+                            <Typography variant="body2" color="textSecondary" gutterBottom>YTD: 5%</Typography>
+                            <Typography variant="body2" color="textSecondary" gutterBottom>1 Month: 9%</Typography>
+                            <Typography variant="body2" color="textSecondary" gutterBottom>6 Month: 9%</Typography>
+                            <Typography variant="body2" color="textSecondary" color="textSecondary" gutterBottom>1 Year: 9%</Typography>
+                            <Typography variant="body2" color="textSecondary" gutterBottom>3 Year: -5%</Typography>
+                            <Typography variant="body2" color="textSecondary" gutterBottom>5 Year: 50%</Typography>
                             </Box>
                         </Grid>
                     </Grid>

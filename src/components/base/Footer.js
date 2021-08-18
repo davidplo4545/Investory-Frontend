@@ -3,7 +3,7 @@ import { Container, Grid,Box, Link, IconButton } from '@material-ui/core'
 const Footer = ({isTheme, setIsTheme}) =>{
     return(
         <footer>
-            <Box bgcolor="primary.light" color="common.black" style={{marginTop:'3rem', width:'100%'}}>
+            <Box bgcolor="secondary.light" color="common.black" style={{marginTop:'3rem', width:'100%'}}>
                 <Container maxWidth="lg" >
                     <Grid container color="textPrimary">
                         <Grid item xs={12} sm={4} >

@@ -39,6 +39,7 @@ const useStyles =  makeStyles((theme) => ({
     background:'transparent',
     width: "100%",
     height: "auto",
+    marginTop:'1rem',
     [theme.breakpoints.down('sm')]: {
       padding:"0px",
       paddingTop:'2rem',
@@ -67,13 +68,14 @@ function App() {
     palette:{
       type:'dark',
       primary:{
-        main:darkTheme.hoverBgColor,
+        main:darkTheme.primary.main,
       },
       secondary:{
-        main:darkTheme.secondaryColor,
+        main:darkTheme.secondary.main,
       },
       text:{
-        primary:darkTheme.textColor,
+        primary:darkTheme.text.primary,
+        secondary:darkTheme.text.secondary,
       }
     },
     overrides: {
@@ -102,13 +104,14 @@ function App() {
     palette:{
       type:'light',
       primary:{
-        main:lightTheme.hoverBgColor,
+        main:lightTheme.primary.main,
       },
       secondary:{
-        main:lightTheme.secondaryColor,
+        main:lightTheme.secondary.main,
       },
       text:{
-        primary:lightTheme.textColor
+        primary:lightTheme.text.primary,
+        secondary:lightTheme.text.secondary,
       }
     },
     KeyboardDatePicker: {
@@ -125,34 +128,30 @@ function App() {
 
   .navbar { 
     background: transparent !important;
-    color:  ${!isTheme ? darkTheme.textColor : lightTheme.textColor} !important; 
+    color:  ${appliedTheme.palette.text.primary} !important; 
     font-weight: bold;
   }
 
   .big{
-    border-bottom: 1px solid ${appliedTheme.palette.primary.dark};
+    border-bottom: 1px solid ${appliedTheme.palette.secondary.main};
 
   }
   .big-navbar{
     
-    background: linear-gradient(142deg,${appliedTheme.palette.primary.main} 46%, ${appliedTheme.palette.primary.main} 53%, ${appliedTheme.palette.primary.light} 60%) !important;
   }
 
   
   .small-navbar{
     background:  ${appliedTheme.palette.primary.main}  !important;
   }
-  .nav-link {
-    font-size: 1rem;
-    color:  #fff !important;
-    font-family: ${darkTheme.fontFamily};
-  }
 
-  .small-navbar .dropdown-menu, .dropdown-item{
+
+  .small-navbar .dropdown-menu, .small-dropdown{
     font-size: 1rem;
-    color:  #fff !important;
+    color:  ${appliedTheme.palette.text.primary} !important;
     background: ${appliedTheme.palette.primary.main};
     font-family: ${darkTheme.fontFamily};
+    
   }
 
   .small-navbar .show{
@@ -163,25 +162,37 @@ function App() {
 
   .navbar-secondary{
     background: transparent !important;
-    color: #fff,
+    color: ${appliedTheme.palette.text.secondary} !primary;
   }
   .navbar-brand {
-    font-size: 1.25rem;
-    color: #fff !important;
+    font-size: 1.5rem;
+    color: ${appliedTheme.palette.text.primary} !important;
+    transition: all ease-in 0.3s;
+    margin-bottom: 0.5rem;
   }
 
   .navbar-brand:hover {
-    color: ${appliedTheme.palette.primary.dark} !important;
+    opacity:0.8;
   }
 
-  .nav-link:hover {
-    color: ${appliedTheme.palette.primary.dark} !important;
+  .nav-link {
+    font-size: 1rem;
+    color:  ${appliedTheme.palette.text.primary} !important;
+    font-family: ${darkTheme.fontFamily};
+    transition: all ease-in 0.3s;
   }
+  
   .secondary .nav-link:hover {
-    background-color: ${appliedTheme.palette.primary.dark};
+    background-color: ${appliedTheme.palette.text.primary};
     color: #fff !important;
     transition: all ease-in 0.3s;
   }
+
+  .small-navbar a .nav-link{
+    border-bottom: 1px solid ${appliedTheme.palette.primary.dark};
+  }
+
+
 
   .portfolio-actions button{
     color: white !important;
@@ -228,7 +239,7 @@ function App() {
         <Box className={classes.paper}>
           <Grid container>
             <Switch>
-              <Route exact path="/get-started">
+              <Route exact path="/">
                 <GetStartedPage/>
               </Route>
 

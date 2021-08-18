@@ -97,24 +97,24 @@ const GetStartedPage = (props) => {
             <img src={logo}/>
           </Grid>
           <Grid item md={7} sm={12} xs={12}>
-            <Typography gutterBottom variant="h2"
+            <Typography gutterBottom variant="h2" color="textPrimary"
              component="h2">
               <b>Invest,</b>
             </Typography>
-            <Typography gutterBottom variant="h2"
+            <Typography gutterBottom variant="h2" color="textPrimary"
              component="h2">
               Track
             </Typography>
-            <Typography gutterBottom variant="h2"
+            <Typography gutterBottom variant="h2" color="textPrimary"
              component="h2">
               & Compare
             </Typography>
-            <Typography gutterBottom variant="body1">
+            <Typography gutterBottom variant="body1" color="textSecondary">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed molestie ornare ex in ornare. Vivamus feugiat, justo et placerat volutpat, magna sapien vulputate erat, ut vestibulum velit dolor porttitor eros. Curabitur et ex nec lorem congue vestibulum. Mauris ultrices, velit at venenatis porttitor, quam ex molestie lorem, vulputate posuere est nulla in tellus. Pellentesque tortor massa, malesuada at lacus in, iaculis congue massa. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam posuere et nulla vitae congue.
             Lorem ipsum dolor sit amet, consectetur adipiscing elit.
             Lorem ipsum dolor sit amet, consectetur adipiscing elit.
             </Typography>
-            <Button variant="contained" style={{marginTop:'1rem'}}>
+            <Button variant="contained" style={{marginTop:'1rem'}} color="primary">
               Get Started
             </Button>
           </Grid>
@@ -127,7 +127,7 @@ const GetStartedPage = (props) => {
             <Card className={classes.card}>
               <CardContent>
                 
-                <Typography gutterBottom component="h5" variant="h5">
+                <Typography gutterBottom component="h5" variant="h5" color="textPrimary">
                   Invest <TrendingUpIcon/>
                 </Typography>
                 <Typography variant="subtitle1" color="textSecondary">
@@ -143,7 +143,7 @@ const GetStartedPage = (props) => {
           <Grid item md={4} xs={12}>
             <Card className={classes.card}>
               <CardContent>
-                <Typography gutterBottom component="h5" variant="h5">
+                <Typography gutterBottom component="h5" variant="h5" color="textPrimary">
                   Track <AssessmentIcon/>
                 </Typography>
                 <Typography variant="subtitle1" color="textSecondary">
@@ -159,7 +159,7 @@ const GetStartedPage = (props) => {
           <Grid item md={4} xs={12}>
             <Card className={classes.card}>
                 <CardContent>
-                  <Typography gutterBottom component="h5" variant="h5">
+                  <Typography gutterBottom component="h5" variant="h5" color="textPrimary">
                     Compare <CompareArrowsIcon/>
                   </Typography>
                   <Typography variant="subtitle1" color="textSecondary">
@@ -168,7 +168,9 @@ const GetStartedPage = (props) => {
                   </Typography>
                 </CardContent>
                 <CardActions style={{justifyContent:'flex-end', padding:'1rem'}}>
-                  <Button variant="contained" color="primary">Read More</Button>
+                  <Button variant="contained" color="primary">
+                    Read More
+                  </Button>
                 </CardActions>
             </Card>
           </Grid>

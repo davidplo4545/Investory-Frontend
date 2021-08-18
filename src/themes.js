@@ -1,25 +1,37 @@
 export const lightTheme = {
     // backgroundColor: "#2c3531",
     type:'light',
-    backgroundColor:'#fff',
-    // textColor: "#fff",
-    textColor: "#5d5c61",
-    hoverBgColor: '#6b5b95',
-    // hoverBgColor: '#3c3280',
-    secondaryColor: '#fc4445',
-    // fontFamily:'Roboto',
+    backgroundColor:'#fefefe',
+    text:{
+      primary: "#424242",
+      secondary: "#293132",
+    },
+    primary:{
+      main:"#474044",
+    },
+    secondary:{
+      main: "#d8c3a5",
+    },
     borderColor:'rgba(122, 122, 122, 0.5)',
     fontWeight: 'bold',
-    // primary: "#77ccdd"
   }
   
   export const darkTheme = {
     type:'dark',
     backgroundColor: "#424242",
-    textColor: "#fefefe",
-    fontFamily:'Quicksand',
-    secondaryColor: '#fc4445',
+    text:{
+      primary: "#d8c3a5",
+      secondary:  "#c5ccd6",
+    },
+    primary:{
+      main: "#14a098",
+    },
+    secondary:{
+      main: "#d8c3a5",
+
+    },
     hoverBgColor: '#379683',
+    fontFamily:'Quicksand',
   }
   
   export const partyTheme = {

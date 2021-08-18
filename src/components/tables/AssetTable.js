@@ -7,7 +7,7 @@ import PageviewIcon from '@material-ui/icons/Pageview';
 
 const useStyles =  makeStyles((theme) => ({
   datagrid:{
-    color: theme.palette.text.main,
+    color: theme.palette.text.secondary,
     [theme.breakpoints.down('xs')]: {
       fontSize: 11,
       fontWeight:'bold',
@@ -41,11 +41,11 @@ const AssetTable = ({assets}) =>{
           <div>
             <Button
               variant="contained"
-              color="primary"
+              color="secondary"
               size="small"
               endIcon={<PageviewIcon />}
             >
-              <p className={classes.datagrid}>VIEW</p>
+              <p className={classes.datagrid} style={{color:'#424242'}}>VIEW</p>
             </Button>
           </div>
         ),

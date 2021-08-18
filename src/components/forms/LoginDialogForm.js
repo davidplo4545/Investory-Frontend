@@ -16,14 +16,13 @@ const useStyles = makeStyles((theme) =>{
             padding: theme.spacing(2),
         },
         signInBtn:{
-            backgroundColor:'rgb(255,255,255)',
-            color:'rgb(0,0,0,0.54)',
+            color:'#fff',
             borderRadius:'2px',
             fontWeight:500,
             padding:10,
             fontSize:'14px',
             '&:hover':{
-                opacity:0.9,
+                background: theme.palette.primary.light,
             }
         }
     })
@@ -107,7 +106,7 @@ const LoginDialogForm = ({isLoginDialog, setIsLoginDialog}) =>{
                       onChange={(e) => setPassword(e.target.value)} required  />
                     <Typography variant="body2" gutterBottom>{error}</Typography>
                     <Button variant="contained" className={classes.signInBtn}
-                     type="submit" fullWidth>
+                     type="submit" fullWidth color="primary">
                          Sign In
                         </Button>
                 </form>
