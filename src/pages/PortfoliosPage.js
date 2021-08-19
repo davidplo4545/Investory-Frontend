@@ -114,7 +114,7 @@ const PortfoliosPage = () =>{
                     </CardMedia>
                     <CardContent>
                         <Typography gutterBottom color="textPrimary"
-                         style={{fontWeight: 700, fontFamily:'Quicksand'}} 
+                         style={{fontWeight: 700, fontFamily:'Cabin Sketch, cursive'}} 
                          variant="h6"
                           component="h2">
                                 {portfolio.name}

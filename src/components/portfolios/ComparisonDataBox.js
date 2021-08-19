@@ -15,11 +15,14 @@ const useStyles = makeStyles((theme) =>{
             '& h2':{
                 textDecoration:'none',
                 fontWeight:'bold',
-                color: theme.palette.primary.light,
-                borderBottom: `1px solid ${theme.palette.primary.main}`,
+                color: theme.palette.text.primary,
+                borderBottom: `1px solid ${theme.palette.text.secondary}`,
                 '&:hover':{
-                    color:theme.palette.primary.main,
+                    color:theme.palette.text.secondary,
                 }
+            },
+            '& p':{
+                color: theme.palette.text.secondary,
             }
         }
     })
@@ -41,7 +44,8 @@ const ComparisonDataBox = ({portfolio, comparedAsset, comparedAssetPortfolio}) =
             <Grid item xs={12} md={4}>
                 <Box>
                     <MuiLink component={Link} to={`/portfolios/${portfolio.id}`}>
-                        <Typography variant="subtitle1" component="h2">
+                        <Typography variant="subtitle1" 
+                        component="h2">
                             {portfolio.name}
                         </Typography>
                     </MuiLink>

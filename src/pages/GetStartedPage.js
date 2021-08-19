@@ -3,7 +3,7 @@ import RegisterForm from '../components/forms/RegisterForm'
 import {UserContext} from '../context/UserContext'
 import { Grid, makeStyles, useTheme, Typography, Box, Card, CardContent, 
   CardActions, CardMedia, Button } from '@material-ui/core'
-import logo from '../images/logo.png'
+import logo from '../images/logo1.jpg'
 import TrendingUpIcon from '@material-ui/icons/TrendingUp';
 import AssessmentIcon from '@material-ui/icons/Assessment';
 import CompareArrowsIcon from '@material-ui/icons/CompareArrows';
@@ -13,17 +13,32 @@ const useStyles = makeStyles((theme) => {
       topGrid:{
         padding:theme.spacing(2),
         direction:'row',
-        marginTop:'3rem',
+        marginTop:'1rem',
         alignItems:'center',
         borderBottom:`1px solid ${theme.palette.text.secondary}`,
-        paddingBottom:'2rem',
+        paddingBottom:'3rem',
         '& img':{
           height:'500px',
-          width:'500px',
+          width:'650px',
+          background: theme.palette.text.secondary,
+          borderRadius: '15px',
+          padding: '0.3rem',
+          [theme.breakpoints.down('lg')]:{
+            height:'400px',
+            width:'430px',
+          },
+          [theme.breakpoints.between('xs', 'sm')]: {
+            
+              height:'300px',
+              width:'350px',
+              border: 'none',
+              padding:'0.2rem',
+            
+          },
         },
         '& h2':{
           fontSize:'4rem',
-          fontFamily: 'Trocchi'
+          fontFamily: 'Cabin Sketch'
         },
         '& h2:nth-child(2)':{
           marginLeft:'5rem',
@@ -34,14 +49,13 @@ const useStyles = makeStyles((theme) => {
         [theme.breakpoints.up('md')]: {
           spacing:theme.spacing(2),
         },
-        [theme.breakpoints.down('lg')]: {
-          '& img':{
-            height:'400px',
-            width:'350px',
-          },
+        [theme.breakpoints.down('md')]: {
           direction:'column',
           marginTop:'2rem',
           marginBottom:0,
+          '& .site-description':{
+            marginTop:'2rem',
+          }, 
           '& h2':{
             fontSize:'3rem',
             display:'inline-block',
@@ -93,10 +107,10 @@ const GetStartedPage = (props) => {
     return (
       <Grid container direction="colmun">
         <Grid container className={classes.topGrid}>
-          <Grid item md={5} sm={12} xs={12}>
+          <Grid item md={6} sm={12} xs={12}>
             <img src={logo}/>
           </Grid>
-          <Grid item md={7} sm={12} xs={12}>
+          <Grid className="site-description" item md={6} sm={12} xs={12}>
             <Typography gutterBottom variant="h2" color="textPrimary"
              component="h2">
               <b>Invest,</b>

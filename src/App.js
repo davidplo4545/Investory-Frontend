@@ -3,7 +3,6 @@ import './App.css';
 import NavbarMenu from './components/base/NavbarMenu.js';
 import Footer from './components/base/Footer.js';
 import { Route, Switch, Redirect } from "react-router-dom";
-import './components/base/navbar.css';
 import HomePage from './pages/HomePage'
 import GetStartedPage from './pages/GetStartedPage'
 import AssetsPage from './pages/AssetsPage'
@@ -124,83 +123,7 @@ function App() {
   body {
     background-color: ${!isTheme ? darkTheme.backgroundColor : lightTheme.backgroundColor};
     color:  ${appliedTheme.palette.text.primary};
-  }
-
-  .navbar { 
-    background: transparent !important;
-    color:  ${appliedTheme.palette.text.primary} !important; 
-    font-weight: bold;
-  }
-
-  .big{
-    border-bottom: 1px solid ${appliedTheme.palette.secondary.main};
-
-  }
-  .big-navbar{
-    
-  }
-
-  
-  .small-navbar{
-    background:  ${appliedTheme.palette.primary.main}  !important;
-  }
-
-
-  .small-navbar .dropdown-menu, .small-dropdown{
-    font-size: 1rem;
-    color:  ${appliedTheme.palette.text.primary} !important;
-    background: ${appliedTheme.palette.primary.main};
-    font-family: ${darkTheme.fontFamily};
-    
-  }
-
-  .small-navbar .show{
-    padding-bottom: 1rem;
-
-  }
-
-
-  .navbar-secondary{
-    background: transparent !important;
-    color: ${appliedTheme.palette.text.secondary} !primary;
-  }
-  .navbar-brand {
-    font-size: 1.5rem;
-    color: ${appliedTheme.palette.text.primary} !important;
-    transition: all ease-in 0.3s;
-    margin-bottom: 0.5rem;
-  }
-
-  .navbar-brand:hover {
-    opacity:0.8;
-  }
-
-  .nav-link {
-    font-size: 1rem;
-    color:  ${appliedTheme.palette.text.primary} !important;
-    font-family: ${darkTheme.fontFamily};
-    transition: all ease-in 0.3s;
-  }
-  
-  .secondary .nav-link:hover {
-    background-color: ${appliedTheme.palette.text.primary};
-    color: #fff !important;
-    transition: all ease-in 0.3s;
-  }
-
-  .small-navbar a .nav-link{
-    border-bottom: 1px solid ${appliedTheme.palette.primary.dark};
-  }
-
-
-
-  .portfolio-actions button{
-    color: white !important;
-  }
-  .portfolio-actions button:hover{
-    background: white !important;
-    color:black !important;
-  }
+  }  
 `;
 
 

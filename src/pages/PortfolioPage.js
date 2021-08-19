@@ -14,7 +14,6 @@ const useStyles = makeStyles((theme) =>{
         root:{
             '& h4':{
                 fontWeight: 'bold',
-                fontFamily:'Quicksand',
                 [theme.breakpoints.down('md')]: {
                     margin:'3rem',
                 },
@@ -29,7 +28,7 @@ const useStyles = makeStyles((theme) =>{
         },
         title:{
             marginTop:'1rem',
-            fontFamily:'Quicksand',
+            fontFamily:'Cabin Sketch, cursive',
 
             [theme.breakpoints.down('lg')]: {
                 marginTop:'3rem',

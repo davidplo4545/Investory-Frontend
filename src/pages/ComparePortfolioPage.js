@@ -127,7 +127,7 @@ const ComparePortfolioPage = ({match}) =>{
                                 renderInput={(params) => <TextField {...params} label="Choose Asset" variant="outlined" />}
                                 />
                             <Button variant="contained" 
-                            color="primary" 
+                            color="secondary" 
                             onClick={comparePortfolioToAsset}
                             endIcon={<CompareIcon/>}
                             type="submit">Compare</Button>
@@ -141,16 +141,16 @@ const ComparePortfolioPage = ({match}) =>{
                         <Grid item style={{minHeight:'500px', height:'500px'}}>
                             {comparedAssetPortfolio && comparedAsset ?
                                 <React.Fragment>
-                                    <Box style={{borderBottom:`1px solid ${theme.palette.primary.main}`,marginLeft:'1rem', marginTop:'1rem', paddingBottom:'0.5rem'}}>
+                                    <Box style={{borderBottom:`1px solid ${theme.palette.text.primary}`,marginLeft:'1rem', marginTop:'1rem', paddingBottom:'0.5rem'}}>
                                         {isLoading &&
-                                            <CircularProgress size={32} style={{marginRight:'1rem'}} color="primary"/>
+                                            <CircularProgress color="secondary" size={32} style={{marginRight:'1rem'}}/>
                                         }
                                         <MuiLink component={Link} to={`/portfolios/${portfolio.id}`}>
                                             <Typography variant="h4" 
                                             style={{display:'inline-block',
                                              color: portfolio.total_gain > 
                                              comparedAssetPortfolio.total_gain ? "#9dc88d" : "#e27d60",
-                                             fontFamily:'Quicksand'}}>
+                                             fontFamily:'Cabin Sketch'}}>
                                                 <b>{`${portfolio.name} `}</b>
                                             </Typography> 
                                         </MuiLink>
@@ -161,7 +161,7 @@ const ComparePortfolioPage = ({match}) =>{
                                             <Typography variant="h4" 
                                             style={{display:'inline-block', 
                                             color: portfolio.total_gain < comparedAssetPortfolio.total_gain ? "#9dc88d" : "#e27d60",
-                                            fontFamily:'Quicksand'}}>
+                                            fontFamily:'Cabin Sketch'}}>
                                                 <b>{comparedAsset.name }</b>
                                             </Typography> 
                                         </MuiLink>
@@ -180,7 +180,7 @@ const ComparePortfolioPage = ({match}) =>{
                                     paddingBottom:'0.5rem', 
                                     width:'100%',
                                     marginTop:'1rem',
-                                    fontFamily:'Quicksand',
+                                    fontFamily:'Cabin Sketch',
                                     display:'inline-block'}}>
                                         <b>{portfolio.name}</b>
                                     </Typography>
