@@ -27,6 +27,21 @@ const useStyles = makeStyles((theme) =>{
                 color: theme.palette.primary.main,
                 fontWeight:'bold',
             }
+        },
+        portfolioLink:{
+            transition: 'all ease-in 0.3s',
+            '&:hover':{
+                textDecoration:'none',
+                color: theme.palette.type === 'light' ? theme.palette.primary.light:
+                theme.palette.secondary.light,
+            }
+        },
+        deleteBtn:{
+            color:'#fff',
+            background: theme.palette.error.main,
+            '&:hover':{
+                background: theme.palette.error.dark,
+            }
         }
     })
 })
@@ -74,7 +89,7 @@ const PortfoliosPage = () =>{
         const largestHoldings = portfolio.holdings.filter((holding) => holding.percentage > 20)
 
         return (
-            <Typography color="textPrimary" variant="body1" component="h2">
+            <Typography color="textSecondary" variant="body1" component="h2">
             Largest Holdings:
                 <Typography variant="body1" style={{display:'inline-block'}}>
                 {largestHoldings.map((holding, index) =>{
@@ -97,7 +112,7 @@ const PortfoliosPage = () =>{
     const numberFormatter = new Intl.NumberFormat('en-US',  {style: 'currency', currency: 'USD'})
     const classes = useStyles()
     return (
-    <Grid container spacing={3} justifyContent="center">
+    <Grid container spacing={3} justifyContent="center" style={{marginTop:'0.5rem'}}>
         {portfolios.map((portfolio) =>{
             return(
             <Grid item key={portfolio.id}>
@@ -113,13 +128,15 @@ const PortfoliosPage = () =>{
                         cy={'50%'}/>
                     </CardMedia>
                     <CardContent>
-                        <Typography gutterBottom color="textPrimary"
-                         style={{fontWeight: 700, fontFamily:'Cabin Sketch, cursive'}} 
-                         variant="h6"
-                          component="h2">
+                        <MuiLink className={classes.portfolioLink} color="textPrimary" component={Link} to={`/portfolios/${portfolio.id}`}>
+                            <Typography gutterBottom className={classes.portfolioLink}
+                            style={{fontWeight: 700, fontFamily:'Cabin Sketch, cursive'}} 
+                            variant="h6"
+                            component="h2">
                                 {portfolio.name}
                             </Typography>
-                        <Typography  color="textPrimary" style={{display:'inline-block', fontWeight:600}} variant="body1" component="h2">
+                        </MuiLink>
+                        <Typography  color="textSecondary" style={{display:'inline-block', fontWeight:600}} variant="body1" component="h2">
                             Value: {`${numberFormatter.format(portfolio.total_value)}`} 
                         </Typography>
                         <Typography variant="body1" style={{display:'inline-block', marginLeft:'0.3rem', color: portfolio.return < 0 ? '#E27D60' : '#379683'}}>
@@ -135,7 +152,8 @@ const PortfoliosPage = () =>{
                         <Button variant="contained" className={classes.actionBtn} onClick={() => navigateToPortfolioCompare(portfolio.id)}>
                             Compare
                         </Button>
-                        <Button variant="contained" color="secondary" onClick={() => handleDialogShow(portfolio)}>
+                        <Button variant="contained" className={classes.deleteBtn}
+                         onClick={() => handleDialogShow(portfolio)}>
                             Delete
                         </Button>
                     </CardActions>
@@ -165,10 +183,10 @@ const PortfoliosPage = () =>{
             </DialogContentText>
             </DialogContent>
             <DialogActions>
-            <Button autoFocus onClick={handlePortfolioDelete} color="secondary">
+            <Button autoFocus onClick={handlePortfolioDelete} className={classes.deleteBtn}>
                 Delete
             </Button>
-            <Button onClick={() => setOpen(!open)} color="primary" autoFocus>
+            <Button onClick={() => setOpen(!open)} variant="contained" color="primary" autoFocus style={{background:theme.palette.primary.text}}>
                 Go Back
             </Button>
             </DialogActions>

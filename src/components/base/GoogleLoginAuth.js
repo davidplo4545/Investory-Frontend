@@ -22,7 +22,7 @@ const GoogleLoginAuth = ({setToken, setError, closeFormDialog}) =>{
     }
 
     const onGoogleLoginFailure = (response) =>{
-        setError('There was an error during your Google login.1')
+        setError("")
     }
 
     return(

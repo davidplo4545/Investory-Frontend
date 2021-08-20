@@ -51,19 +51,13 @@ const AssetPage = ({match}) =>{
         
         <React.Fragment>
             {asset ?
-            <Grid container alignItems="stretch" justifyContent="center" spacing={3}>
+            <Grid container alignItems="stretch" justifyContent="center" spacing={3} style={{marginTop:'0.5rem'}}>
                 <Grid container item lg={8} md={8} sm={12} direction="column" spacing={3}>
-                    <Grid item>
+                    <Grid item style={{marginLeft:'1rem'}}>
                             <Typography gutterBottom style={{fontWeight:'bold'}} variant="h4">{asset.symbol} - {asset.name}</Typography>
                             <Typography color="textSecondary" variant="h5" style={{fontWeight:'bold'}}>{numberFormatter.format(asset.last_price)}</Typography>
-                            {/* {asset.last_price !== undefined && asset.last_price > 10 &&
-                            }
-
-                            {asset.last_price !== undefined && asset.last_price < 10 &&
-                                <Typography variant="h5">${asset.last_price.toFixed(4)}</Typography>
-                            } */}
                     </Grid>
-                    <Grid item style={{padding:0}}>
+                    <Grid item>
                         <AssetAreaChart asset={asset} records={asset.records}/>
                     </Grid>
                     <Grid container item justifyContent="space-between"

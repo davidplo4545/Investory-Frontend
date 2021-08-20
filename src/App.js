@@ -3,7 +3,7 @@ import './App.css';
 import NavbarMenu from './components/base/NavbarMenu.js';
 import Footer from './components/base/Footer.js';
 import { Route, Switch, Redirect } from "react-router-dom";
-import HomePage from './pages/HomePage'
+import InstructionsPage from './pages/InstructionsPage'
 import GetStartedPage from './pages/GetStartedPage'
 import AssetsPage from './pages/AssetsPage'
 import AssetPage from './pages/AssetPage'
@@ -38,10 +38,9 @@ const useStyles =  makeStyles((theme) => ({
     background:'transparent',
     width: "100%",
     height: "auto",
-    marginTop:'1rem',
     [theme.breakpoints.down('sm')]: {
-      padding:"0px",
-      paddingTop:'2rem',
+      padding:0,
+      margin:0,
       width: "100%",
     },
     [theme.breakpoints.up('md')]: {
@@ -123,6 +122,7 @@ function App() {
   body {
     background-color: ${!isTheme ? darkTheme.backgroundColor : lightTheme.backgroundColor};
     color:  ${appliedTheme.palette.text.primary};
+    overflow-x: hidden;
   }  
 `;
 
@@ -145,6 +145,7 @@ function App() {
   }, [token]);
 
   const classes = useStyles()
+
   return (
   <ThemeProvider theme={appliedTheme}>
 
@@ -162,10 +163,7 @@ function App() {
         <Box className={classes.paper}>
           <Grid container>
             <Switch>
-              <Route exact path="/">
-                <GetStartedPage/>
-              </Route>
-
+              <DisallowedForAuthRoute exact path="/" component={GetStartedPage}/>
               <PrivateRoute path="/assets/:assetType" component={AssetsPage}/>
               <PrivateRoute path="/asset/:assetId" component={AssetPage}/>
               <PrivateRoute exact path="/portfolios" component={PortfoliosPage}/>
@@ -173,16 +171,12 @@ function App() {
               <PrivateRoute exact path="/portfolios/:portfolioId/edit" component={CreatePortfolioPage}/>
               <PrivateRoute exact path="/portfolio-create" component={CreatePortfolioPage}/>
               <PrivateRoute exact path="/portfolios/:portfolioId/compare" component={ComparePortfolioPage}/>
-              <PrivateRoute exact path="/profile">
-                {/* <ProfilePage/> */}
-                <div>Profile Page</div>
-              </PrivateRoute>
+              <PrivateRoute exact path="/instructions" component={InstructionsPage}/>
             </Switch> 
           </Grid>
         </Box>
       </main>
       <Footer isTheme={isTheme} setIsTheme={setIsTheme}/>
-        {/* <footer className="footer">Footer</footer> */}
       </UserContext.Provider>
     </div>
     </ThemeProvider>
@@ -194,9 +188,21 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
   return <Route {...rest} render={(props) => (
     user.token
       ? <Component {...props} />
-      : <Redirect to='/signin' />
+      : <Redirect to='/' />
   )} />
   
   }
+
+const DisallowedForAuthRoute = ({ component: Component, ...rest }) => {
+  const user = useContext(UserContext)
+  return <Route {...rest} render={(props) => (
+    user.token
+      ? <Redirect to='/portfolios' />
+      : <Component {...props} />
+  )} />
+  
+  }
+
+
 
 export default App;

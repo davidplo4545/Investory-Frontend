@@ -1,9 +1,9 @@
-import React, { useContext } from 'react'
-import RegisterForm from '../components/forms/RegisterForm'
+import React, { useContext, useState } from 'react'
+import RegisterDialogForm from '../components/forms/RegisterDialogForm'
 import {UserContext} from '../context/UserContext'
-import { Grid, makeStyles, useTheme, Typography, Box, Card, CardContent, 
-  CardActions, CardMedia, Button } from '@material-ui/core'
-import logo from '../images/logo1.jpg'
+import { Grid, makeStyles, useTheme, Typography,  Card, CardContent, 
+  CardActions,  Button } from '@material-ui/core'
+import mainImg from '../images/mainImg.jpg'
 import TrendingUpIcon from '@material-ui/icons/TrendingUp';
 import AssessmentIcon from '@material-ui/icons/Assessment';
 import CompareArrowsIcon from '@material-ui/icons/CompareArrows';
@@ -100,15 +100,22 @@ const useStyles = makeStyles((theme) => {
     },
   })
 })
-const GetStartedPage = (props) => {
+const GetStartedPage = () => {
     const {token} = useContext(UserContext)
     const theme = useTheme()
     const classes = useStyles()
+    const [isRegisterDialog, setIsRegisterDialog] = useState(false);
+  
+    const showRegisterDialog = () =>{
+      setIsRegisterDialog(!isRegisterDialog)
+    }
     return (
       <Grid container direction="colmun">
+        <RegisterDialogForm isRegisterDialog={isRegisterDialog}
+        setIsRegisterDialog={setIsRegisterDialog}/>
         <Grid container className={classes.topGrid}>
           <Grid item md={6} sm={12} xs={12}>
-            <img src={logo}/>
+            <img src={mainImg}/>
           </Grid>
           <Grid className="site-description" item md={6} sm={12} xs={12}>
             <Typography gutterBottom variant="h2" color="textPrimary"
@@ -128,14 +135,17 @@ const GetStartedPage = (props) => {
             Lorem ipsum dolor sit amet, consectetur adipiscing elit.
             Lorem ipsum dolor sit amet, consectetur adipiscing elit.
             </Typography>
-            <Button variant="contained" style={{marginTop:'1rem'}} color="primary">
+            <Button variant="contained" 
+            style={{marginTop:'1rem'}} 
+            color="primary"
+            onClick={() => setIsRegisterDialog(!isRegisterDialog)}>
               Get Started
             </Button>
           </Grid>
         </Grid>
         <Grid item container direction="row"
         justifyContent="space-around"
-        style={{marginTop:'1rem'}}
+        style={{marginTop:'0.3rem'}}
         spacing={5}>
           <Grid item md={4} xs={12}>
             <Card className={classes.card}>
@@ -189,9 +199,6 @@ const GetStartedPage = (props) => {
             </Card>
           </Grid>
         </Grid>
-        {/* <Grid item className={classes.formGridItem} sm={3}>
-          <RegisterForm/>
-        </Grid> */}
       </Grid>
     )
   }

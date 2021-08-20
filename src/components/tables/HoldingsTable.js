@@ -4,7 +4,7 @@ import {makeStyles, Box, Typography} from '@material-ui/core'
 
 const useStyles =  makeStyles((theme) => ({
   datagrid:{
-    color: theme.palette.text.main,
+    color: theme.palette.text.secondary,
     [theme.breakpoints.down('xs')]: {
       fontSize: 8,
       '& p, .MuiDataGrid-cell, .MuiDataGrid-columnHeaderTitle':{
@@ -117,7 +117,7 @@ const HoldingsTable = ({holdings, setSelectedHolding, setActiveCellIndex}) =>{
       disableColumnMenu
         className={classes.datagrid}
         pageSize={10} 
-        style={{minHeight:'700px'}}
+        style={{minHeight:'650px'}}
         autoHeight={true} 
         columns={columns} 
         onRowClick={handleRowClick}

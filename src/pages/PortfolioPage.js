@@ -22,9 +22,6 @@ const useStyles = makeStyles((theme) =>{
                 fontWeight:'bold',
                 fontSize: '1.1rem'
             },
-            // '& h6':{
-            //     fontWeight:'bold',
-            // }
         },
         title:{
             marginTop:'1rem',
@@ -37,7 +34,7 @@ const useStyles = makeStyles((theme) =>{
         },
         pieChartPaper:{
             padding:'3rem',
-            border:`1px solid ${theme.palette.primary.light}`,
+            // border:`1px solid ${theme.palette.secondary.light}`,
             [theme.breakpoints.down('md')]: {
                 padding:'1rem',
             },
@@ -50,7 +47,7 @@ const useStyles = makeStyles((theme) =>{
         returnsPaper:{
             padding:'2rem',
             height:'100%',
-            border:`1px solid ${theme.palette.primary.light}`,
+            // border:`1px solid ${theme.palette.secondary.light}`,
             [theme.breakpoints.down('sm')]: {
                 border:'none',
             }
@@ -64,6 +61,7 @@ const useStyles = makeStyles((theme) =>{
         resultTypo:{
             fontWeight:'bold',
             display:'inline-block',
+            color:theme.palette.text.secondary,
         }
     })
 })
@@ -139,8 +137,14 @@ const PortfolioPage = ({match}) =>{
                                 </Grid>
                                 <Grid item>
                                     <ButtonGroup color="default" style={{marginTop:'1rem'}}>
-                                        <Button onClick={navigateToPortfolioEdit}>Edit Portfolio</Button>
-                                        <Button onClick={navigateToPortfolioCompare}>Compare</Button>
+                                        <Button onClick={navigateToPortfolioEdit}
+                                        color="default">
+                                            Edit Portfolio
+                                        </Button>
+                                        <Button onClick={navigateToPortfolioCompare}
+                                        color="default">
+                                            Compare
+                                        </Button>
                                         {/* <Button>Edit</Button> */}
                                     </ButtonGroup>
                                 </Grid>
@@ -149,17 +153,18 @@ const PortfolioPage = ({match}) =>{
                     </Grid> 
                     <Grid item md={6} lg={12} style={{width: '100%', marginTop:'0'}}>
                             <Paper className={classes.returnsPaper}>
-                                <Typography gutterBottom style={{color:theme.palette.primary.light, borderBottom: `1px solid ${theme.palette.primary.light}`}} 
-                                variant="h5">Portfolio Returns:</Typography>
+                                <Typography gutterBottom style={{
+                                 borderBottom: `1px solid ${theme.palette.secondary.light}`}} 
+                                variant="h5" color="textSecondary">Portfolio Returns:</Typography>
                                 <Grid container>
-                                    <Grid item xs={6} style={{borderRight:`1px solid ${theme.palette.primary.light}`}}>
+                                    <Grid item xs={6} style={{borderRight:`1px solid ${theme.palette.secondary.dark}`}}>
                                         <Typography gutterBottom variant="body2" component="h2">
                                             1 Month:
                                             <Typography variant="body2" className={classes.resultTypo}>
                                                 56%
                                             </Typography>
                                         </Typography>
-                                        <Typography gutterBottom variant="body2" component="h2">
+                                        <Typography gutterBottom variant="body2" component="h2" >
                                             3 Month:
                                             <Typography variant="body2" className={classes.resultTypo}>
                                                 56%
@@ -223,15 +228,17 @@ const PortfolioPage = ({match}) =>{
                             expanded={expanded}> 
                     <AccordionSummary
                         expandIcon={<ExpandMoreIcon />}
-                        style={{borderBottom:`1px solid ${theme.palette.primary.light}`}}>
-                        <Typography style={{fontWeight:'bold'}} variant="subtitle1">{expanded ? `Hide Portfolio Chart` : `Show Portfolio Chart`}</Typography>
+                        style={{borderBottom:`1px solid ${theme.palette.text.secondary}`}}>
+                        <Typography variant="subtitle1" style={{color:theme.palette.text.secondary, fontWeight:'bold'}}>
+                            {expanded ? `Hide Portfolio Chart` : `Show Portfolio Chart`}
+                        </Typography>
                     </AccordionSummary>
                     <AccordionDetails>
                         <Grid item container direction="column">
                             <Grid item container className={classes.root} direction="row" justifyContent="space-between">
                                 <Grid item style={{marginBottom:'1rem'}}>
-                                    <Typography variant="subtitle1">Value:</Typography>
-                                    <Typography variant="body1">{numberFormatter.format(portfolio.total_value)}</Typography>                                    
+                                    <Typography variant="subtitle1" color="textPrimary">Value:</Typography>
+                                    <Typography variant="body1" color="textSecondary">{numberFormatter.format(portfolio.total_value)}</Typography>                                    
                                 </Grid>
                                 <Grid item>
                                     <Typography variant="subtitle1">Gain:</Typography>

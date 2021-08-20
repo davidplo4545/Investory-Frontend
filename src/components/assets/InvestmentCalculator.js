@@ -45,6 +45,7 @@ const InvestmentCalculator = ({records}) =>{
         setReturnRate((lastPrice / startPrice -1)* 100)
     }
 
+    const numberFormatter = new Intl.NumberFormat('en-US',  {style: 'currency', currency: 'USD', maximumFractionDigits:2})
     return(
         <React.Fragment>
             <Typography variant="h5" style={{borderBottom:'1px solid gray', paddingBottom:'0.5rem'}}>Investment Calculator</Typography>
@@ -73,15 +74,19 @@ const InvestmentCalculator = ({records}) =>{
                         id="standard-basic" 
                         label="Value $"
                         onChange={handleAmountChange}
-                        InputProps={{ inputProps: { min: 0, max:100 } }}/>
+                        InputProps={{ inputProps: { min: 0, max:1000 } }}/>
                     {result !== 0 &&
-                        <Box style={{marginTop:'1rem', marginBottom:'1rem'}}>
-                            <Typography variant="body2">Price per share at start: {priceAtStartDate.toFixed(3)}$</Typography>
-                            <Typography  variant="body2">Investment value today: {result.toFixed(3)}$</Typography>
+                        <Box style={{marginTop:'1rem', marginBottom:'0.5rem'}}>
+                            <Typography variant="body2">Price per share at start: {numberFormatter.format(priceAtStartDate)}</Typography>
+                            <Typography  variant="body2">Investment value today: {numberFormatter.format(result)}</Typography>
                             <Typography  variant="body2">Rate of return: {returnRate.toFixed(0)}%</Typography>
                         </Box>
                     }
-                    <Button color='primary' variant="contained" type="submit" value="Submit">Calculate</Button>
+                    <Button color='primary' 
+                    variant="contained"
+                     type="submit" 
+                     value="Submit"
+                     style={{marginTop:'1rem'}}>Calculate</Button>
                 </form>
             </MuiPickersUtilsProvider>
         </React.Fragment>

@@ -88,7 +88,7 @@ const ComparePortfolioPage = ({match}) =>{
 
 
     return(
-        <Grid container style={{height: '100%'}}
+        <Grid container style={{height: '100%', marginBottom:'10rem'}}
                     direction="row" 
                     justifyContent="center"
                     spacing={1}>
@@ -145,10 +145,10 @@ const ComparePortfolioPage = ({match}) =>{
                                         {isLoading &&
                                             <CircularProgress color="secondary" size={32} style={{marginRight:'1rem'}}/>
                                         }
-                                        <MuiLink component={Link} to={`/portfolios/${portfolio.id}`}>
+                                        <MuiLink component={Link} to={`/portfolios/${portfolio.id}`}
+                                        style={{display:'inline-block'}}>
                                             <Typography variant="h4" 
-                                            style={{display:'inline-block',
-                                             color: portfolio.total_gain > 
+                                            style={{color: portfolio.total_gain > 
                                              comparedAssetPortfolio.total_gain ? "#9dc88d" : "#e27d60",
                                              fontFamily:'Cabin Sketch'}}>
                                                 <b>{`${portfolio.name} `}</b>

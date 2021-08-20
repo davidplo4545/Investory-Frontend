@@ -1,4 +1,4 @@
-import { Grid, Typography } from '@material-ui/core';
+import { Grid, Typography, useTheme } from '@material-ui/core';
 import React, {useEffect, useState} from 'react'
 import { Link } from "react-router-dom";
 import {Link as MuiLink, makeStyles}  from '@material-ui/core';
@@ -23,9 +23,10 @@ const useStyles = makeStyles((theme) =>{
         }
     })
 })
-const RecentlyViewedAssetsBox = ({asset}) =>{
+const RecentlyViewedAssetsList = ({asset}) =>{
     const [recentlyViewedAssets, setRecentlyViewedAssets] = useState([])
     const classes = useStyles()
+    const theme = useTheme()
 
     const generateKey = (pre) => {
         return `${ pre }_${ new Date().getTime() }`;
@@ -60,7 +61,11 @@ const RecentlyViewedAssetsBox = ({asset}) =>{
             style={{marginTop:'1rem'}}
             direction="column"
             alignItems="flex-start">
-        <Typography variant="h6" color="textPrimary">Recently viewed tickers:</Typography>
+        <Typography variant="h6" color="textPrimary" gutterBottom
+        style={{borderBottom:`1px solid ${theme.palette.text.primary}`,
+        width:'100%'}}>
+            Recently viewed:
+        </Typography>
         {recentlyViewedAssets &&
         <React.Fragment>
         {recentlyViewedAssets.map((asset) => {
@@ -78,4 +83,4 @@ const RecentlyViewedAssetsBox = ({asset}) =>{
     )
 }
 
-export default RecentlyViewedAssetsBox
+export default RecentlyViewedAssetsList

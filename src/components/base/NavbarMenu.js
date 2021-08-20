@@ -6,6 +6,8 @@ import {userLogout} from '../../api/authentication.js'
 import {UserContext} from '../../context/UserContext'
 import {Switch, useTheme, makeStyles} from "@material-ui/core";
 import LoginDialogForm from '../forms/LoginDialogForm';
+import lightThemeLogo from '../../images/light_logo.png'
+import darkThemeLogo from '../../images/dark_logo.png'
 
 const useStyles = makeStyles((theme) =>{
     return({
@@ -27,14 +29,14 @@ const useStyles = makeStyles((theme) =>{
             '& .collapsed-center':{
                 display:'flex',
                 justifyContent:'space-between',
-                marginBottom:'1rem',
+                
             },
             '& .navbar-brand':{
                 fontSize: '1.7rem',
                 fontFamily: 'Cabin Sketch',
                 color: `${theme.palette.text.primary} !important`,
                 transition: 'all ease-in 0.3s',
-                // marginBottom: '0.5rem',
+                marginBottom: '0.5rem',
                 '&:hover':{
                     opacity:0.8,
                 }
@@ -43,7 +45,18 @@ const useStyles = makeStyles((theme) =>{
                 fontSize: '1rem',
                 color:  `${theme.palette.text.primary} !important`,
                 fontFamily: theme.palette.text.fontFamily,
-                transition: 'all ease-in 0.3s',
+                transition: 'all ease-in 0.2s',
+                '&:hover':{
+                    color:`${theme.palette.secondary.light} !important`,
+                },
+            },
+            '& .dropdown-menu':{
+                background: theme.palette.type === 'light' ? '#fff' : theme.palette.secondary.main,
+                '& .dropdown-item':{
+                    color: theme.palette.common.black,
+                    transition:'all ease-in 0.3s'
+
+                }
             },
             [theme.breakpoints.down('sm')]: {
                 '& .navbar-center':{
@@ -53,6 +66,7 @@ const useStyles = makeStyles((theme) =>{
                 },
                 '& .collapsed-center':{
                     width: '100%',
+                    marginBottom:'0.2rem',
                 },
                 '& .navbar-collapse':{
                     width: '95%',
@@ -91,6 +105,10 @@ export const NavbarMenu = ({setIsTheme, isTheme, isLoginDialog, setIsLoginDialog
                 <div className="navbar-center">
                     <div className="collapsed-center">
                         <Navbar.Brand href="/">
+                            {theme.palette.type === 'light'?
+                            <img src={lightThemeLogo} style={{height:'40px', width:'40px', marginRight:'0.4rem'}}/>:
+                            <img src={darkThemeLogo} style={{height:'40px', width:'40px', marginRight:'0.4rem'}}/>
+                            }
                             Investory
                         </Navbar.Brand>
                         <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -102,7 +120,6 @@ export const NavbarMenu = ({setIsTheme, isTheme, isLoginDialog, setIsLoginDialog
                                     <Switch color="default" checked={isTheme} onChange={handleThemeChange}/>
 
                                     <Nav.Link onClick={() => setIsLoginDialog(!isLoginDialog)}>Sign In</Nav.Link>
-                                    {/* <Nav.Link as={Link} to='/'>Get Started</Nav.Link> */}
                                 </Nav>
                             </Navbar.Collapse>
                         :

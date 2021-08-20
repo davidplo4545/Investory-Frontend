@@ -1,5 +1,5 @@
 import React from 'react'
-import RecentlyViewedAssetsBox from './RecentlyViewedAssetsBox'
+import RecentlyViewedAssetsList from './RecentlyViewedAssetsList'
 import InvestmentCalculator from './InvestmentCalculator'
 import {  Grid, makeStyles } from '@material-ui/core'
 
@@ -56,7 +56,7 @@ const RightSidebarData = ({isSingleAsset, asset}) =>{
                 </React.Fragment>
             }
             <Grid item style={{width:'100%'}}>
-                <RecentlyViewedAssetsBox asset={asset}/>
+                <RecentlyViewedAssetsList asset={asset}/>
             </Grid>
         </Grid>
     )

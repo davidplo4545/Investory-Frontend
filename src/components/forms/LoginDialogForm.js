@@ -77,12 +77,14 @@ const LoginDialogForm = ({isLoginDialog, setIsLoginDialog}) =>{
             <Grid container direction="column" 
             alignItems="center" 
             className={classes.loginGrid}>
-                <Avatar style={{marginBottom:'1rem', background:theme.palette.primary.light}}
+                <Avatar style={{marginBottom:'1rem',
+                 background:theme.palette.text.secondary}}
                  color="primary">
                      <LockOutlined />
                 </Avatar>
-                <Typography gutterBottom color="primary" variant="h5"
-                    style={{borderBottom:`0.5px solid ${theme.palette.primary.main}`, width:'100%',
+                <Typography gutterBottom variant="h5"
+                color="textSecondary"
+                    style={{borderBottom:`0.5px solid ${theme.palette.secondary.main}`, width:'100%',
                     display:'flex', justifyContent:'center', paddingBottom:'1rem'}}>
                     <b>Sign In</b>
                 </Typography>
@@ -104,7 +106,7 @@ const LoginDialogForm = ({isLoginDialog, setIsLoginDialog}) =>{
                      placeholder="Enter password"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)} required  />
-                    <Typography variant="body2" gutterBottom>{error}</Typography>
+                    <Typography variant="body2" style={{marginBottom:'0.3rem'}}>{error}</Typography>
                     <Button variant="contained" className={classes.signInBtn}
                      type="submit" fullWidth color="primary">
                          Sign In
