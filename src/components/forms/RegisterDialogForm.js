@@ -1,10 +1,9 @@
 import { Typography, Button, TextField, makeStyles, Dialog,
 DialogContent, Avatar, Grid, useTheme } from '@material-ui/core';
 import React, {useState, useContext} from 'react'
-import { Link } from "react-router-dom";
 import {userRegister} from '../../api/authentication.js'
 import {UserContext} from '../../context/UserContext'
-import GoogleLoginAuth from '../base/GoogleLoginAuth.js';
+import GoogleLoginAuth from '../../auth/GoogleLoginAuth.js';
 import CreateIcon from '@material-ui/icons/Create';
 
 

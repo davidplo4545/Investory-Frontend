@@ -1,7 +1,7 @@
-import React,{useState} from 'react'
+import React from 'react'
 import { DataGrid } from '@material-ui/data-grid';
 import {makeStyles, Box, Typography} from '@material-ui/core'
-
+import { formatNumber } from '../base/helpers';
 const useStyles =  makeStyles((theme) => ({
   datagrid:{
     color: theme.palette.text.secondary,
@@ -24,8 +24,6 @@ const useStyles =  makeStyles((theme) => ({
   }
 }));
 const HoldingsTable = ({holdings, setSelectedHolding, setActiveCellIndex}) =>{
-
-  const numberFormatter = new Intl.NumberFormat('en-US',  {style: 'currency', currency: 'USD'})
 
   const columns = [   
     {
@@ -64,7 +62,7 @@ const HoldingsTable = ({holdings, setSelectedHolding, setActiveCellIndex}) =>{
       flex:0.5,
       minWidth: 100,
       valueFormatter: (params) => {
-          return `${numberFormatter.format(params.value)}`
+          return `${formatNumber(params.value, params.row.asset.currency)}`
         },
     },
     {
@@ -74,7 +72,7 @@ const HoldingsTable = ({holdings, setSelectedHolding, setActiveCellIndex}) =>{
       flex:0.5,
       editable: false,
       valueFormatter: (params) => {
-          return `${numberFormatter.format(params.value)}`
+          return `${formatNumber(params.value, params.row.asset.currency)}`
         },
     },
     {
@@ -91,7 +89,7 @@ const HoldingsTable = ({holdings, setSelectedHolding, setActiveCellIndex}) =>{
       renderCell: (params) => (
           <Box>
             <Typography variant="body2">
-              {numberFormatter.format(params.row.gain)}
+              {formatNumber(params.row.gain, params.row.asset.currency)}
             </Typography>
             <Typography variant="body2"
             style={{color:params.value >=  0 ? "#9dc88d" : "#e27d60"}}>

@@ -23,31 +23,31 @@ const CreatePortfolioPage = () =>{
     const [isLoading, setIsLoading] = useState(false)
 
     useEffect(() => {
-        if (location.state)
+        let receivedPortfolio 
+        if(location.state)
         {
-            const {portfolio} = location.state
-            if (portfolio)
+            receivedPortfolio = location.state.portfolio
+            if (receivedPortfolio)
             {
-                let actions = portfolio.actions
+                let actions = receivedPortfolio.actions
                 actions.forEach((action, i) => {
                     action.id = i + 1
                     action.name = action.asset.name
+                    action.currency = action.asset.currency
                 })
                 setIsEdit(true)
-                setName(portfolio.name)
-                setPortfolio(portfolio)
+                setName(receivedPortfolio.name)
+                setPortfolio(receivedPortfolio)
                 setRows(actions)
             }
             else
                 setIsEdit(false)
         }
-        else if(portfolio !== null)
-        {
+        else
             setIsEdit(true)
-        }
         getAllAssets1(user.token, '', setAssets)
 
-    }, [])
+    }, [location.state, user.token])
 
     const validateActions = () =>{
         // Validate the request data and output errors
@@ -148,16 +148,29 @@ const CreatePortfolioPage = () =>{
 
     const handleFormSubmit = (e) =>{
         e.preventDefault()
+        
         if (newSymbol)
         {
+            // Adjust completed_at field to same format
+            // as given from api to the new action added
+            let completed_at = new Date()
+            const date = new Date();
+            let day = date.getDate()
+            day = day < 10 ? `0${day}` : day
+            let month = date.getMonth() + 1
+            month = month < 10 ? `0${month}` : month
+            let year = date.getFullYear()
+            completed_at = [year,month ,day].join('-')
+
             const newAction = { 
                 id: generateKey(newSymbol.name),
                 asset: newSymbol.id,
                 type:"BUY", 
+                currency: newSymbol.currency,
                 name:newSymbol.name, 
                 quantity: 0, 
                 share_price: 0, 
-                completed_at: new Date() }
+                completed_at: completed_at }
                 setRows([
                     newAction,
                     ...rows

@@ -1,12 +1,11 @@
 import React from 'react'
 import {Link} from 'react-router-dom';
-import {  Grid, makeStyles, Box, Typography, Link as MuiLink, useTheme } from '@material-ui/core';
-
+import {  Grid, makeStyles, Box, Typography, Link as MuiLink } from '@material-ui/core';
+import { formatNumber } from '../base/helpers';
 const useStyles = makeStyles((theme) =>{
     return({
         resultsGrid:{
             '& .MuiBox-root':{
-                // border: `1px solid ${theme.palette.primary.main}`,
                 padding: '1rem',
             },
             '& a:hover':{
@@ -29,12 +28,7 @@ const useStyles = makeStyles((theme) =>{
 })
 const ComparisonDataBox = ({portfolio, comparedAsset, comparedAssetPortfolio}) =>{
     const classes = useStyles()
-    const theme = useTheme()
 
-    const formatNumber = (number) => {
-        const numberFormatter = new Intl.NumberFormat('en-US',  {style: 'currency', currency: 'USD'})
-        return numberFormatter.format(number)
-    }
     return(
     <Box>
         <Grid container 

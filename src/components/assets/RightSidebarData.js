@@ -42,7 +42,8 @@ const RightSidebarData = ({isSingleAsset, asset}) =>{
             <React.Fragment>
                 <Grid item style={{padding:'1rem', border:'1px solid gray'}}>
                     {asset.records.length > 0 ?
-                        <InvestmentCalculator records={asset.records}/>
+                        <InvestmentCalculator asset={asset}
+                         records={asset.records}/>
                             : 
                             <div/>
                     }

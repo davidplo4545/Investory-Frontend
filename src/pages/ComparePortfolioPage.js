@@ -50,6 +50,7 @@ const ComparePortfolioPage = ({match}) =>{
     const [comparedAsset, setComparedAsset] = useState(null)
     const [selectedHolding , setSelectedHolding] = useState(null)
     const [activeCellIndex, setActiveCellIndex] = useState(null)
+    const [error ,setError] = useState()
     const [isLoading, setIsLoading] = useState(false)
 
     const theme = useTheme()
@@ -63,7 +64,7 @@ const ComparePortfolioPage = ({match}) =>{
 
         getAllAssets1(user.token, '', setAssets)
         
-    },[])
+    },[user.token, location.state, portfolioId])
 
     const handleAssetSelectionChanged = (e, values) =>{
         if(values !== selectedAsset)
@@ -75,6 +76,7 @@ const ComparePortfolioPage = ({match}) =>{
     const classes = useStyles()
 
     const comparePortfolioToAsset = (e) =>{
+        setError("")
         if(selectedAsset){
             const requestData = {asset: selectedAsset.id}
             postComparedAssetPortfolio(user.token,
@@ -82,7 +84,8 @@ const ComparePortfolioPage = ({match}) =>{
                 requestData,
                 setComparedAsset, 
                 setComparedAssetPortfolio, 
-                setIsLoading)
+                setIsLoading,
+                setError)
         }
     }
 
@@ -132,6 +135,9 @@ const ComparePortfolioPage = ({match}) =>{
                             endIcon={<CompareIcon/>}
                             type="submit">Compare</Button>
                         </Grid>
+                        <Typography variant="body1" color="textSecondary" style={{marginTop:'1rem'}}>
+                            {error}
+                        </Typography>
                     </Grid>
                 </Paper>
             </Grid>
@@ -143,7 +149,7 @@ const ComparePortfolioPage = ({match}) =>{
                                 <React.Fragment>
                                     <Box style={{borderBottom:`1px solid ${theme.palette.text.primary}`,marginLeft:'1rem', marginTop:'1rem', paddingBottom:'0.5rem'}}>
                                         {isLoading &&
-                                            <CircularProgress color="secondary" size={32} style={{marginRight:'1rem'}}/>
+                                            <CircularProgress size={32} style={{marginRight:'1rem', color:theme.palette.text.secondary}}/>
                                         }
                                         <MuiLink component={Link} to={`/portfolios/${portfolio.id}`}
                                         style={{display:'inline-block'}}>
@@ -172,19 +178,20 @@ const ComparePortfolioPage = ({match}) =>{
                                     comparedAssetPortfolio={comparedAssetPortfolio}/>
                                 </React.Fragment>:
                                 <Box>
-                                    {isLoading &&
-                                        <CircularProgress size={32} style={{marginRight:'1rem'}} color="primary"/>
-                                    }
-                                    <Typography gutterBottom variant="h4" 
-                                    style={{borderBottom:`1px solid ${theme.palette.primary.main}`, 
-                                    paddingBottom:'0.5rem', 
-                                    width:'100%',
-                                    marginTop:'1rem',
-                                    fontFamily:'Cabin Sketch',
-                                    display:'inline-block'}}>
-                                        <b>{portfolio.name}</b>
-                                    </Typography>
-                                    <Typography style={{marginLeft:'0.5rem'}} variant="h5">
+                                        
+                                        <Typography gutterBottom variant="h4" 
+                                        style={{borderBottom:`1px solid ${theme.palette.text.secondary}`, 
+                                        display:'flex',
+                                        paddingBottom:'0.5rem', 
+                                        width:'100%',
+                                        marginTop:'1rem',
+                                        fontFamily:'Cabin Sketch'}}>
+                                            {isLoading &&
+                                            <CircularProgress size={32} style={{marginRight:'1rem',marginBottom:'0.5rem', color:theme.palette.text.secondary}}/>
+                                        }
+                                            <b>{portfolio.name}</b>
+                                        </Typography>
+                                    <Typography style={{marginLeft:'0.5rem'}} variant="h5" color="textSecondary">
                                         Choose an asset and click <b>Compare</b> to get started!
                                     </Typography>
                                 </Box>

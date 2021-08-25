@@ -6,9 +6,9 @@ import {
 } from '@material-ui/pickers';
 import TextField from '@material-ui/core/TextField';
 import { Button, Typography, Box } from '@material-ui/core';
+import { formatNumber } from '../base/helpers';
 
-
-const InvestmentCalculator = ({records}) =>{
+const InvestmentCalculator = ({asset, records}) =>{
     const [selectedDate, setSelectedDate] = useState(Date.parse(records[0].date));
     const [amount, setAmount] = useState(0)
     const [result, setResult] = useState(0)
@@ -27,7 +27,6 @@ const InvestmentCalculator = ({records}) =>{
         {
             setAmount(0)
         }
-        // console.log(e.target.value)
         setAmount(e.target.value)
     }
 
@@ -45,7 +44,6 @@ const InvestmentCalculator = ({records}) =>{
         setReturnRate((lastPrice / startPrice -1)* 100)
     }
 
-    const numberFormatter = new Intl.NumberFormat('en-US',  {style: 'currency', currency: 'USD', maximumFractionDigits:2})
     return(
         <React.Fragment>
             <Typography variant="h5" style={{borderBottom:'1px solid gray', paddingBottom:'0.5rem'}}>Investment Calculator</Typography>
@@ -72,13 +70,13 @@ const InvestmentCalculator = ({records}) =>{
                         value={amount}
                         type="number" 
                         id="standard-basic" 
-                        label="Value $"
+                        label="Value"
                         onChange={handleAmountChange}
                         InputProps={{ inputProps: { min: 0, max:1000 } }}/>
                     {result !== 0 &&
                         <Box style={{marginTop:'1rem', marginBottom:'0.5rem'}}>
-                            <Typography variant="body2">Price per share at start: {numberFormatter.format(priceAtStartDate)}</Typography>
-                            <Typography  variant="body2">Investment value today: {numberFormatter.format(result)}</Typography>
+                            <Typography variant="body2">Price per share at start: {formatNumber(priceAtStartDate, asset.currency)}</Typography>
+                            <Typography  variant="body2">Investment value today: {formatNumber(result, asset.currency)}</Typography>
                             <Typography  variant="body2">Rate of return: {returnRate.toFixed(0)}%</Typography>
                         </Box>
                     }

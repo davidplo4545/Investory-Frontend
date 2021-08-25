@@ -90,12 +90,12 @@ export const patchPortfolio = async (userToken,portfolioId, requestData, setPort
     })
     .catch((error) => {
         if(error.response.status === 400)
-            setErrors(['Action changes made are not possible. (Negative Quantity)'])
+            setErrors([error.response.data.message])
         setIsLoading(false)
     })
 }
 
-export const postComparedAssetPortfolio = async (userToken, portfolioId, requestData,setComparedAsset, setComparedAssetPortfolio, setIsLoading) =>{
+export const postComparedAssetPortfolio = async (userToken, portfolioId, requestData,setComparedAsset, setComparedAssetPortfolio, setIsLoading, setError) =>{
     setIsLoading(true)
     await axios.post(domain + `/portfolios/${portfolioId}/compare/`,
     requestData,
@@ -110,7 +110,11 @@ export const postComparedAssetPortfolio = async (userToken, portfolioId, request
     setComparedAsset(portfolio.holdings[0].asset)
     setIsLoading(false)
 })
-.catch(error => console.log(error))
+.catch(error => {
+    console.log(error)
+    setError("Error: Could not compare the portfolio with this asset!")
+    setIsLoading(false)
+})
 }
 
 export const deletePortfolio = async (userToken, portfolioId, portfolios, setPortfolios) =>{

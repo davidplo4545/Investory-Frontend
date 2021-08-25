@@ -5,7 +5,7 @@ import {Dialog, DialogContent,
 import { LockOutlined } from '@material-ui/icons'
 import { useHistory } from 'react-router'
 import axios from 'axios'
-import GoogleLoginAuth from '../base/GoogleLoginAuth'
+import GoogleLoginAuth from '../../auth/GoogleLoginAuth'
 
 const useStyles = makeStyles((theme) =>{
     return({

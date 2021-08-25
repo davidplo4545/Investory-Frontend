@@ -6,6 +6,7 @@ import AssetAreaChart from '../components/charts/AssetAreaChart'
 import HoldingsPieChart from '../components/charts/HoldingsPieChart'
 import HoldingsTable from '../components/tables/HoldingsTable'
 import { Button, Grid, Paper, Box, Typography, makeStyles, ButtonGroup, Accordion, AccordionSummary, useTheme } from '@material-ui/core'
+import PortfolioDataPaper from '../components/portfolios/PortfolioDataPaper'
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
@@ -34,7 +35,6 @@ const useStyles = makeStyles((theme) =>{
         },
         pieChartPaper:{
             padding:'3rem',
-            // border:`1px solid ${theme.palette.secondary.light}`,
             [theme.breakpoints.down('md')]: {
                 padding:'1rem',
             },
@@ -44,14 +44,7 @@ const useStyles = makeStyles((theme) =>{
                 border:'none',
             },
         },
-        returnsPaper:{
-            padding:'2rem',
-            height:'100%',
-            // border:`1px solid ${theme.palette.secondary.light}`,
-            [theme.breakpoints.down('sm')]: {
-                border:'none',
-            }
-        },
+        
         holdingGrid:{
             direction:'column',
             [theme.breakpoints.down('xl')]: {
@@ -69,36 +62,24 @@ const useStyles = makeStyles((theme) =>{
 const numberFormatter = new Intl.NumberFormat('en-US',  {style: 'currency', currency: 'USD'})
 
 const PortfolioPage = ({match}) =>{
-    let history = useHistory()
     const user = useContext(UserContext)
     const [portfolio, setPortfolio] = useState(null)
     const portfolioId = match.params.portfolioId
     const [expanded, setExpanded] = useState(true)
     const [selectedHolding , setSelectedHolding] = useState(null)
     const [activeCellIndex, setActiveCellIndex] = useState(null)
+    const theme = useTheme()
 
     useEffect(() => { 
         getPortfolio(user.token, portfolioId, setPortfolio)
-    },[])
+    },[portfolioId, user.token])
     
-    const navigateToPortfolioEdit = () =>{
-        history.push({
-            pathname: `/portfolios/${portfolioId}/edit`,
-            state: {portfolio:portfolio}
-        })
-    }
-    const navigateToPortfolioCompare = () =>{
-        history.push({
-            pathname: `/portfolios/${portfolioId}/compare`,
-            state: {portfolio:portfolio}
-        })
-    }
+
 
     const handleChange = (panel) => (event, isExpanded) => {
         setExpanded(isExpanded);
       };
     const classes = useStyles()
-    const theme = useTheme()
     return ( 
         
         <React.Fragment>
@@ -136,88 +117,14 @@ const PortfolioPage = ({match}) =>{
                                     setActiveCellIndex={setActiveCellIndex}/> 
                                 </Grid>
                                 <Grid item>
-                                    <ButtonGroup color="default" style={{marginTop:'1rem'}}>
-                                        <Button onClick={navigateToPortfolioEdit}
-                                        color="default">
-                                            Edit Portfolio
-                                        </Button>
-                                        <Button onClick={navigateToPortfolioCompare}
-                                        color="default">
-                                            Compare
-                                        </Button>
-                                        {/* <Button>Edit</Button> */}
-                                    </ButtonGroup>
+                                    <PortfolioActionsGroup portfolio={portfolio}/>
                                 </Grid>
                             </Grid>
                         </Paper>
                     </Grid> 
                     <Grid item md={6} lg={12} style={{width: '100%', marginTop:'0'}}>
-                            <Paper className={classes.returnsPaper}>
-                                <Typography gutterBottom style={{
-                                 borderBottom: `1px solid ${theme.palette.secondary.light}`}} 
-                                variant="h5" color="textSecondary">Portfolio Returns:</Typography>
-                                <Grid container>
-                                    <Grid item xs={6} style={{borderRight:`1px solid ${theme.palette.secondary.dark}`}}>
-                                        <Typography gutterBottom variant="body2" component="h2">
-                                            1 Month:
-                                            <Typography variant="body2" className={classes.resultTypo}>
-                                                56%
-                                            </Typography>
-                                        </Typography>
-                                        <Typography gutterBottom variant="body2" component="h2" >
-                                            3 Month:
-                                            <Typography variant="body2" className={classes.resultTypo}>
-                                                56%
-                                            </Typography>
-                                            </Typography>
-                                        <Typography gutterBottom variant="body2" component="h2">
-                                            6 Month:
-                                            <Typography variant="body2" className={classes.resultTypo}>
-                                                56%
-                                            </Typography>
-                                        </Typography>
-                                        <Typography gutterBottom variant="body2" component="h2"> 
-                                            YTD:
-                                            <Typography variant="body2" className={classes.resultTypo}>
-                                                56%
-                                            </Typography>
-                                        </Typography>
-                                        <Typography gutterBottom variant="body2" component="h2">
-                                            1 Year:
-                                            <Typography variant="body2" className={classes.resultTypo}>
-                                                56%
-                                            </Typography>
-                                        </Typography>
-                                        <Typography gutterBottom variant="body2" component="h2">
-                                            3 Year: 
-                                            <Typography variant="body2" className={classes.resultTypo}>
-                                                56%
-                                            </Typography>
-                                        </Typography>
-                                    </Grid>
-                                    <Grid item xs={6} style={{paddingLeft:'1rem'}}>
-                                        <Typography gutterBottom variant="body2" component="h2">
-                                            Realized Gain/Loss:
-                                            <Typography variant="body2" className={classes.resultTypo}>
-                                                {numberFormatter.format(portfolio.realized_gain)}
-                                            </Typography>
-                                        </Typography>
-                                        <Typography gutterBottom variant="body2" component="h2">
-                                            Unrealized Gain/Loss:
-                                            <Typography variant="body2" className={classes.resultTypo}>
-                                                {numberFormatter.format(portfolio.gain)}
-                                            </Typography>
-                                        </Typography>
-                                        <Typography gutterBottom variant="body2" component="h2">
-                                            Total Gain/Loss:
-                                            <Typography variant="body2" className={classes.resultTypo}>
-                                                {numberFormatter.format(portfolio.gain + portfolio.realized_gain)}
-                                            </Typography>
-                                        </Typography>
-                                    </Grid>
-                                </Grid>
-                            </Paper>
-                        </Grid> 
+                        <PortfolioDataPaper portfolio={portfolio}/>        
+                    </Grid> 
                     </Grid>
                     <Grid item container direction="column" xl={7} md={12}>
                             <Grid item>
@@ -256,21 +163,49 @@ const PortfolioPage = ({match}) =>{
                         </Grid>
                     </AccordionDetails>
                 </Accordion>
-                        <Grid item container direction="column">
-                            <Grid item>
-                                <Box>
-                                    <HoldingsTable setActiveCellIndex={setActiveCellIndex} setSelectedHolding={setSelectedHolding} holdings={portfolio.holdings}/>
-                                </Box>
-                            </Grid>
+                    <Grid item container direction="column">
+                        <Grid item>
+                            <Box>
+                                <HoldingsTable setActiveCellIndex={setActiveCellIndex} setSelectedHolding={setSelectedHolding} holdings={portfolio.holdings}/>
+                            </Box>
                         </Grid>
+                    </Grid>
                 </Grid>
-                
-
-
         </Grid>
         }
     </React.Fragment>
         
+    )
+}
+
+const PortfolioActionsGroup = ({portfolio}) =>{
+    const history = useHistory()
+    const theme = useTheme()
+
+    const navigateToPortfolioEdit = () =>{
+        history.push({
+            pathname: `/portfolios/${portfolio.id}/edit`,
+            state: {portfolio:portfolio}
+        })
+    }
+    const navigateToPortfolioCompare = () =>{
+        history.push({
+            pathname: `/portfolios/${portfolio.id}/compare`,
+            state: {portfolio:portfolio}
+        })
+    }
+
+    return(
+        <ButtonGroup style={{marginTop:'1rem'}}>
+            <Button onClick={navigateToPortfolioEdit}
+            style={{color:theme.palette.text.secondary}}>
+                Edit Portfolio
+            </Button>
+            <Button onClick={navigateToPortfolioCompare}
+            style={{color:theme.palette.text.secondary}}>
+                Compare
+            </Button>
+        </ButtonGroup>
     )
 }
 

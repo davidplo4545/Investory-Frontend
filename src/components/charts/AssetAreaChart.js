@@ -11,8 +11,9 @@ import {
   } from "recharts";
 
 import { format, parseISO } from "date-fns";
-import { Typography, useTheme, useMediaQuery, makeStyles } from '@material-ui/core';
-  
+import { Typography, useTheme,  makeStyles } from '@material-ui/core';
+import { formatNumber } from '../base/helpers';
+
 const useStyles = makeStyles((theme) =>{
     return({
         areaChart:{
@@ -30,7 +31,7 @@ const AssetAreaChart = ({asset, records}) =>{
     const formatToolTipNumber = (payload) =>{
         try{
             let number = payload[0].payload.price
-            return formatNumber(number, true)
+            return formatNumber(number, asset ? asset.currency : "USD", false)
         }
         catch{
             return ""
@@ -45,18 +46,7 @@ const AssetAreaChart = ({asset, records}) =>{
         }  
     }
 
-    const formatNumber = (number, isDecimalPoint=false) =>{
-        let numberFormatter
-        if (isDecimalPoint)
-            numberFormatter = new Intl.NumberFormat('en-US',  {style: 'currency', currency: 'USD', maximumFractionDigits:2})
-        else if(number > 10000)
-        numberFormatter = new Intl.NumberFormat('en-US',  {style: 'currency', currency: 'USD', maximumFractionDigits:0})
-        else
-            numberFormatter = new Intl.NumberFormat('en-US',  {style: 'currency', currency: 'USD', maximumFractionDigits:2})
-        return numberFormatter.format(number)
-
-
-    }
+    
     useEffect(() =>{
         if (records && records.length)
         {
@@ -106,7 +96,7 @@ const AssetAreaChart = ({asset, records}) =>{
                     // Make width dynamic on screen size
                     width={80}
                     tickCount={8}
-                    tickFormatter={(number) => `${formatNumber(number)}`}
+                    tickFormatter={(number) => `${formatNumber(number, asset && asset.currency)}`}
                     />
 
                     <Tooltip content={<CustomTooltip/>}/>

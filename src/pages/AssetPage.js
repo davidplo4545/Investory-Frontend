@@ -4,6 +4,7 @@ import AssetAreaChart from '../components/charts/AssetAreaChart'
 import axios from 'axios'
 import RightSidebarData from '../components/assets/RightSidebarData'
 import {Box, Grid, makeStyles, Typography, useTheme} from '@material-ui/core'
+import { formatNumber } from '../components/base/helpers'
 
 const useStyles = makeStyles((theme) =>{
     return{
@@ -22,9 +23,8 @@ const useStyles = makeStyles((theme) =>{
 const AssetPage = ({match}) =>{
     const user = useContext(UserContext)
     const [asset, setAsset] = useState(null)
-    const [isValid, setIsValid] = useState(false)
+    const [error, setError] = useState("")
     const assetId = match.params.assetId
-
     useEffect(() => {
         const getAsset = async () =>{ 
             const domain = "http://localhost:8000/api"
@@ -37,14 +37,12 @@ const AssetPage = ({match}) =>{
                 setAsset(res.data)
             })
             .catch((error) =>{
-                setIsValid(false)
+                setError("Asset was not found.")
             })
         }
         getAsset()
-        setIsValid(true)
-    },[match]);
+    },[assetId, user.token]);
 
-    const numberFormatter = new Intl.NumberFormat('en-US',  {style: 'currency', currency: 'USD'})
     const classes = useStyles()
     const theme = useTheme()
     return(
@@ -55,7 +53,9 @@ const AssetPage = ({match}) =>{
                 <Grid container item lg={8} md={8} sm={12} direction="column" spacing={3}>
                     <Grid item style={{marginLeft:'1rem'}}>
                             <Typography gutterBottom style={{fontWeight:'bold'}} variant="h4">{asset.symbol} - {asset.name}</Typography>
-                            <Typography color="textSecondary" variant="h5" style={{fontWeight:'bold'}}>{numberFormatter.format(asset.last_price)}</Typography>
+                            <Typography color="textSecondary" variant="h5" style={{fontWeight:'bold'}}>
+                                {formatNumber(asset.last_price, asset.currency)}
+                            </Typography>
                     </Grid>
                     <Grid item>
                         <AssetAreaChart asset={asset} records={asset.records}/>
@@ -83,7 +83,7 @@ const AssetPage = ({match}) =>{
                             <Typography variant="body2" color="textSecondary" gutterBottom>YTD: 5%</Typography>
                             <Typography variant="body2" color="textSecondary" gutterBottom>1 Month: 9%</Typography>
                             <Typography variant="body2" color="textSecondary" gutterBottom>6 Month: 9%</Typography>
-                            <Typography variant="body2" color="textSecondary" color="textSecondary" gutterBottom>1 Year: 9%</Typography>
+                            <Typography variant="body2" color="textSecondary" gutterBottom>1 Year: 9%</Typography>
                             <Typography variant="body2" color="textSecondary" gutterBottom>3 Year: -5%</Typography>
                             <Typography variant="body2" color="textSecondary" gutterBottom>5 Year: 50%</Typography>
                             </Box>
@@ -98,7 +98,7 @@ const AssetPage = ({match}) =>{
 
             </Grid>
             :
-            <React.Fragment>not valid</React.Fragment>
+            <Typography variant="h3">{error}</Typography>
             }
         </React.Fragment>
     )

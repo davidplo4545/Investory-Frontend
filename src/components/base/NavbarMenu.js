@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react'
+import React, { useContext} from 'react'
 import {menuItems} from './constants'
 import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
 import { Link, useHistory } from "react-router-dom";
@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme) =>{
 
                 }
             },
-            [theme.breakpoints.down('sm')]: {
+            [theme.breakpoints.down('md')]: {
                 '& .navbar-center':{
                     flexDirection:'column',
                     transition: 'all ease-in 0.5s',
@@ -78,13 +78,9 @@ const useStyles = makeStyles((theme) =>{
 export const NavbarMenu = ({setIsTheme, isTheme, isLoginDialog, setIsLoginDialog}) =>{
 
     const user = useContext(UserContext)
-    const [secMenuItems, setSecMenuItems] = useState([])
     const history = useHistory()
     const theme = useTheme()
     const classes = useStyles()
-    const handleMenuItemClick = (item) =>{
-        setSecMenuItems(item.secMenuItems)
-    }
 
     const onLogout = () => {
         userLogout(user.token,user.setToken)
@@ -106,8 +102,8 @@ export const NavbarMenu = ({setIsTheme, isTheme, isLoginDialog, setIsLoginDialog
                     <div className="collapsed-center">
                         <Navbar.Brand href="/">
                             {theme.palette.type === 'light'?
-                            <img src={lightThemeLogo} style={{height:'40px', width:'40px', marginRight:'0.4rem'}}/>:
-                            <img src={darkThemeLogo} style={{height:'40px', width:'40px', marginRight:'0.4rem'}}/>
+                            <img alt="light-logo" src={lightThemeLogo} style={{height:'40px', width:'40px', marginRight:'0.4rem'}}/>:
+                            <img alt="dark-logo" src={darkThemeLogo} style={{height:'40px', width:'40px', marginRight:'0.4rem'}}/>
                             }
                             Investory
                         </Navbar.Brand>
@@ -135,7 +131,7 @@ export const NavbarMenu = ({setIsTheme, isTheme, isLoginDialog, setIsLoginDialog
                                                         return <NavDropdown.Item as={Link} key={secItem.title}  to={secItem.link}>{secItem.title}</NavDropdown.Item>            
                                                     })}
                                             </NavDropdown>:
-                                            <Nav.Link key={item.title} onClick={() => handleMenuItemClick(item)} as={Link} to={item.link}>{item.title}</Nav.Link> 
+                                            <Nav.Link key={item.title} as={Link} to={item.link}>{item.title}</Nav.Link> 
                                         )
                                     })}  
                                 </Nav>

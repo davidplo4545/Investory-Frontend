@@ -1,9 +1,9 @@
-import React, {useState} from 'react'
+import React from 'react'
 import { DataGrid, GridOverlay } from '@material-ui/data-grid';
 import { Paper, Button, LinearProgress } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core'
 import DeleteIcon from "@material-ui/icons/Delete";
-  
+import { formatNumber } from '../base/helpers';
 const CustomLoadingOverlay = () => {
     return (
       <GridOverlay>
@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) =>{
         },
         datagrid:{
           '& .MuiDataGrid-cell , .MuiDataGrid-columnHeaderTitle':{
-            color: theme.palette.text.primary,
+            color: theme.palette.text.secondary,
           },
         }
     })
@@ -37,9 +37,6 @@ const useStyles = makeStyles((theme) =>{
 
 
 const ActionsDataGrid = ({ rows, setRows, isLoading, setIsActionsChanged}) =>{
-
-  const numberFormatter = new Intl.NumberFormat('en-US',  {style: 'currency', currency: 'USD'})
-
   const columns = [    
   {
       field: 'type',
@@ -89,7 +86,8 @@ const ActionsDataGrid = ({ rows, setRows, isLoading, setIsActionsChanged}) =>{
       minWidth: 135,
       editable: true,
       valueFormatter: (params) => {
-        return `${numberFormatter.format(params.value)}`
+        const {currency} = params.row
+        return `${formatNumber(params.value, currency)}`
       },
   },
   {
@@ -108,7 +106,6 @@ const ActionsDataGrid = ({ rows, setRows, isLoading, setIsActionsChanged}) =>{
           const valueFormatted = [day,month ,year].join('/')
           return valueFormatted
         },
-
       description: 'This column has a value getter and is not sortable.', 
       minWidth: 150,
   },

@@ -1,6 +1,7 @@
 import {  useTheme } from '@material-ui/core';
 import React, {useState, useEffect} from 'react';
 import {  PieChart, Pie, Cell, Tooltip, Sector } from 'recharts';
+import { formatNumber } from '../base/helpers';
 
 // const RADIAN = Math.PI / 180;
 const LIGHTCOLORS = ['#AF7AC5','#9B59B6','#884EA0','#BB8FCE','#A569BD','#8E44AD','#7D3C98','#6C3483','#5B2C6F','#4A235A']
@@ -39,8 +40,6 @@ const HoldingsPieChart = ({portfolio, isSingle, width, height, innerRadius, oute
         setSelectedHolding(holding)
       }
 
-    const numberFormatter = new Intl.NumberFormat('en-US',  {style: 'currency', currency: 'USD'})
-
     return (
         <React.Fragment>
         {holdings && holdings.length &&
@@ -48,7 +47,7 @@ const HoldingsPieChart = ({portfolio, isSingle, width, height, innerRadius, oute
             {!isSingle && selectedHolding &&
                 <text x={width /2} y={height /2 -30} 
                 style={{fontWeight:'bold'}}
-                fill={theme.palette.text.primary}
+                fill={theme.palette.text.secondary}
                 fontSize={selectedHolding.asset.name.length > 32 ? 10 : 14}
                 textAnchor="middle" 
                 dominantBaseline="central">
@@ -59,7 +58,7 @@ const HoldingsPieChart = ({portfolio, isSingle, width, height, innerRadius, oute
                 <text  style={{fontWeight:'bold'}} x={width/2} y={height/2}
                  textAnchor="middle" 
                  dominantBaseline="middle"
-                 fill={theme.palette.text.primary}>
+                 fill={theme.palette.text.secondary}>
                     {(selectedHolding.percentage).toFixed(2)}%
                 </text>
             }
@@ -69,8 +68,8 @@ const HoldingsPieChart = ({portfolio, isSingle, width, height, innerRadius, oute
                     y={height/2 + 20} 
                     textAnchor="middle" 
                     dominantBaseline="middle"
-                    fill={theme.palette.text.primary}>
-                    {numberFormatter.format(selectedHolding.total_value)}
+                    fill={theme.palette.text.secondary}>
+                    {formatNumber(selectedHolding.total_value)}
                 </text>
             }
             {!isSingle && selectedHolding &&
@@ -80,14 +79,14 @@ const HoldingsPieChart = ({portfolio, isSingle, width, height, innerRadius, oute
                     textAnchor="middle" 
                     dominantBaseline="middle"
                     fill={selectedHolding.gain > 0 ? '#9dc88d' : '#e27d60'}>
-                    {selectedHolding.gain > 0 && '+'}{`${numberFormatter.format(selectedHolding.gain)}`}
+                    {selectedHolding.gain > 0 && '+'}{`${formatNumber(selectedHolding.gain)}`}
                 </text>
             }
 
             {!isSingle && !selectedHolding &&
                 <text x={width /2} y={height /2 -30} 
                 style={{fontWeight:'bold'}}
-                fill={theme.palette.text.primary}
+                fill={theme.palette.text.secondary}
                 textAnchor="middle" 
                 dominantBaseline="central">
                         {`${portfolio.name}\n`}<br/>
@@ -98,8 +97,8 @@ const HoldingsPieChart = ({portfolio, isSingle, width, height, innerRadius, oute
                 <text  style={{fontWeight:'bold'}} x={width/2} y={height/2}
                  textAnchor="middle" 
                  dominantBaseline="middle"
-                 fill={theme.palette.text.primary}>
-                    {numberFormatter.format(portfolio.total_value)}
+                 fill={theme.palette.text.secondary}>
+                    {formatNumber(portfolio.total_value)}
                 </text>
             }
 
@@ -111,7 +110,7 @@ const HoldingsPieChart = ({portfolio, isSingle, width, height, innerRadius, oute
                     textAnchor="middle" 
                     dominantBaseline="middle"
                     fill={portfolio.gain > 0 ? '#9dc88d' : '#e27d60'}>
-                    ({portfolio.gain > 0 && '+'}{`${numberFormatter.format(portfolio.gain)}`})
+                    ({portfolio.gain > 0 && '+'}{`${formatNumber(portfolio.gain)}`})
                 </text>
             }
 

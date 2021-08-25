@@ -3,7 +3,7 @@ import {useHistory} from 'react-router-dom'
 import {  Button,   makeStyles } from '@material-ui/core';
 import { DataGrid } from '@material-ui/data-grid';
 import PageviewIcon from '@material-ui/icons/Pageview';
-
+import { formatNumber } from '../base/helpers';
 
 const useStyles =  makeStyles((theme) => ({
   datagrid:{
@@ -70,7 +70,7 @@ const AssetTable = ({assets}) =>{
         flex: 0.3,
         editable: false,
         valueFormatter: (params) => {
-            return `${params.value.toFixed(3)}$`
+            return formatNumber(params.value,params.row.currency)
           },
     }
     ];

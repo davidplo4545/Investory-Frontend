@@ -1,7 +1,6 @@
-import React, { useContext, useState } from 'react'
+import React, {  useState } from 'react'
 import RegisterDialogForm from '../components/forms/RegisterDialogForm'
-import {UserContext} from '../context/UserContext'
-import { Grid, makeStyles, useTheme, Typography,  Card, CardContent, 
+import { Grid, makeStyles,  Typography,  Card, CardContent, 
   CardActions,  Button } from '@material-ui/core'
 import mainImg from '../images/mainImg.jpg'
 import TrendingUpIcon from '@material-ui/icons/TrendingUp';
@@ -101,21 +100,16 @@ const useStyles = makeStyles((theme) => {
   })
 })
 const GetStartedPage = () => {
-    const {token} = useContext(UserContext)
-    const theme = useTheme()
     const classes = useStyles()
     const [isRegisterDialog, setIsRegisterDialog] = useState(false);
   
-    const showRegisterDialog = () =>{
-      setIsRegisterDialog(!isRegisterDialog)
-    }
     return (
       <Grid container direction="colmun">
         <RegisterDialogForm isRegisterDialog={isRegisterDialog}
         setIsRegisterDialog={setIsRegisterDialog}/>
         <Grid container className={classes.topGrid}>
           <Grid item md={6} sm={12} xs={12}>
-            <img src={mainImg}/>
+            <img alt="main-img" src={mainImg}/>
           </Grid>
           <Grid className="site-description" item md={6} sm={12} xs={12}>
             <Typography gutterBottom variant="h2" color="textPrimary"

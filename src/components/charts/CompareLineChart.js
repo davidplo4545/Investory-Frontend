@@ -3,12 +3,12 @@ import { LineChart, ResponsiveContainer, CartesianGrid, Tooltip, Legend, YAxis, 
 import { Typography } from '@material-ui/core';
 import { format, parseISO } from "date-fns";
 import { useTheme } from '@material-ui/core';
+import { formatNumber } from '../base/helpers';
+
 const CompareLineChart = ({portfolio, comparedAssetPortfolio}) =>{
   const [data, setData] = useState(null)
   const [interval, setInterval] = useState(365)
   const theme = useTheme()
-  const numberFormatter = new Intl.NumberFormat('en-US',  {style: 'currency', currency: 'USD'})
-  const numberFormatter1 = new Intl.NumberFormat('en-US',  {style: 'currency', currency: 'USD', maximumFractionDigits:0})
 
   useEffect(() =>{
     const portfolioRecords = portfolio.records
@@ -30,7 +30,7 @@ const CompareLineChart = ({portfolio, comparedAssetPortfolio}) =>{
         tempData.push({
           date:portfolioRecords[i].date,
           Portfolio: portfolioRecords[i].price,
-          Asset: assetPortfolioRecords[i].price
+          Asset:  assetPortfolioRecords[i].price
         })
       }
       catch(e){
@@ -43,7 +43,7 @@ const CompareLineChart = ({portfolio, comparedAssetPortfolio}) =>{
   const formatToolTipNumber = (payload, type) =>{
     try{
         let number = payload[0].payload[type]
-        return numberFormatter.format(number)
+        return formatNumber(number)
     }
     catch{
         return ""
@@ -90,7 +90,7 @@ const CompareLineChart = ({portfolio, comparedAssetPortfolio}) =>{
             />
         <YAxis  axisLine={false} 
                 tickLine={false}
-                tickFormatter={(number) => `${numberFormatter1.format(number)}`}
+                tickFormatter={(number) => `${formatNumber(number)}`}
                             />
         <Tooltip content={<CustomTooltip/>}/>
         <Legend />

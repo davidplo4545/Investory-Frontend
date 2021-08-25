@@ -136,7 +136,7 @@ function App() {
       getMyUserDetails(token,setUser)
     let currTheme = localStorage.getItem('theme')
     if(currTheme){
-      setIsTheme(currTheme == "light")
+      setIsTheme(currTheme === "light")
     }
     else{
       localStorage.setItem('theme','light')

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container, Grid,Box, Link, IconButton } from '@material-ui/core'
+import { Container, Grid,Box } from '@material-ui/core'
 const Footer = ({isTheme, setIsTheme}) =>{
     return(
         <footer>

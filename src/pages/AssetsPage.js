@@ -3,7 +3,7 @@ import {UserContext} from '../context/UserContext'
 import {getAllAssets} from '../api/assets.js'
 import AssetTable from '../components/tables/AssetTable'
 import RightSidebarData from '../components/assets/RightSidebarData'
-import { Grid, Box, makeStyles } from '@material-ui/core'
+import { Grid,  makeStyles } from '@material-ui/core'
 
 const useStyles =  makeStyles((theme) => ({
     grid:{
@@ -39,7 +39,7 @@ const AssetsPage = ({match}) =>{
                 setIsValid(true)
                 getAllAssets(user.token,assetType,setAssets)
             }
-      },[assetType]);
+      },[user.token, assetType]);
 
     return(
         <Grid container className={classes.grid}>
