@@ -1,15 +1,13 @@
 import React, {useEffect, useContext, useState} from 'react'
-import { Autocomplete } from '@material-ui/lab';
 import { useLocation } from 'react-router';
-import { Paper, Grid, Button, TextField, makeStyles, Box, Typography, Link as MuiLink, useTheme, CircularProgress } from '@material-ui/core';
+import { Paper, Grid, makeStyles, Box, Typography, Link as MuiLink, useTheme, CircularProgress } from '@material-ui/core';
 import { UserContext } from '../context/UserContext';
 import { getPortfolio, postComparedAssetPortfolio } from '../api/portfolios';
-import { getAllAssets1 } from '../api/assets';
 import HoldingsChart from '../components/charts/HoldingsPieChart';
 import CompareLineChart from '../components/charts/CompareLineChart'
 import {Link} from 'react-router-dom';
 import ComparisonDataBox from '../components/portfolios/ComparisonDataBox';
-import CompareIcon from '@material-ui/icons/Compare';
+import PortfolioCompareForm from '../components/forms/PortfolioCompareForm';
 
 const useStyles = makeStyles((theme) =>{
     return({
@@ -21,21 +19,6 @@ const useStyles = makeStyles((theme) =>{
                  padding:'0.7rem',
             },
           },
-        chooseAssetForm:{
-            flexDirection:'row',
-            alignItems:"stretch", 
-            justifyContent:"space-between",
-            marginTop:'2rem',
-            [theme.breakpoints.down('md')]: {
-                flexDirection:'column',
-                alignItems:"center", 
-                justifyContent:'center',
-                '& .MuiAutocomplete-root, .MuiButton-root':{
-                    marginBottom:'1rem',
-                }
-                
-           },
-        },
     })
 })
 
@@ -44,7 +27,6 @@ const ComparePortfolioPage = ({match}) =>{
     const location = useLocation()
     const portfolioId = match.params.portfolioId 
     const [portfolio, setPortfolio] = useState(null)
-    const [assets, setAssets] = useState([])
     const [selectedAsset, setSelectedAsset] = useState(null)
     const [comparedAssetPortfolio, setComparedAssetPortfolio] = useState(null)
     const [comparedAsset, setComparedAsset] = useState(null)
@@ -62,16 +44,10 @@ const ComparePortfolioPage = ({match}) =>{
             getPortfolio(user.token, portfolioId, setPortfolio)
         }
 
-        getAllAssets1(user.token, '', setAssets)
         
     },[user.token, location.state, portfolioId])
 
-    const handleAssetSelectionChanged = (e, values) =>{
-        if(values !== selectedAsset)
-            {
-                setSelectedAsset(values)
-            }
-    }
+
 
     const classes = useStyles()
 
@@ -117,24 +93,11 @@ const ComparePortfolioPage = ({match}) =>{
                             setActiveCellIndex={setActiveCellIndex}/> 
                             }
                         </Grid>
-                        <Grid item container 
-                        spacing={3}
-                        className={classes.chooseAssetForm}>
-                            <Autocomplete
-                            size={"small"} 
-                                options={assets}
-                                getOptionLabel={(option) => option.name}
-                                getOptionSelected={(option, value) => option.id === value.id}
-                                onChange={handleAssetSelectionChanged}
-                                style={{ width: 250 }}
-                                renderInput={(params) => <TextField {...params} label="Choose Asset" variant="outlined" />}
-                                />
-                            <Button variant="contained" 
-                            color="secondary" 
-                            onClick={comparePortfolioToAsset}
-                            endIcon={<CompareIcon/>}
-                            type="submit">Compare</Button>
-                        </Grid>
+                        <PortfolioCompareForm
+                        selectedAsset={selectedAsset}
+                        setSelectedAsset={setSelectedAsset}
+                        comparePortfolioToAsset={comparePortfolioToAsset}/>
+
                         <Typography variant="body1" color="textSecondary" style={{marginTop:'1rem'}}>
                             {error}
                         </Typography>

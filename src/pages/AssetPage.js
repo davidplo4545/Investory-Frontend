@@ -3,7 +3,7 @@ import {UserContext} from '../context/UserContext'
 import AssetAreaChart from '../components/charts/AssetAreaChart'
 import axios from 'axios'
 import RightSidebarData from '../components/assets/RightSidebarData'
-import { Grid, Typography, useTheme} from '@material-ui/core'
+import { Grid, Typography} from '@material-ui/core'
 import { formatNumber } from '../components/base/helpers'
 import StockDataBox from '../components/assets/StockDataBox'
 

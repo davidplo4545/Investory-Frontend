@@ -38,7 +38,6 @@ const renderText = (header, value, symbol="") =>{
                 result = `${value.toFixed(2)}${symbol}`
         }
             
-        console.log(header, value, result)
         return(
             <Typography variant="body2" color="textSecondary" gutterBottom>
                 {header}: <b>{result ? result : ""}</b>

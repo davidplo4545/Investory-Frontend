@@ -15,6 +15,29 @@ const useStyles = makeStyles((theme) =>{
 const PortfolioDataPaper = ({portfolio}) =>{
     const theme = useTheme()
     const classes = useStyles()
+
+    const renderText = (header, number, hasSymbol=true) =>{
+
+        if(!hasSymbol)
+            return(
+                <Typography gutterBottom 
+                variant="body2" 
+                component="h2"
+                color="textSecondary">
+                        {header}:
+                        <b>{number.toFixed(0)}</b>
+                </Typography>
+            )
+        return(
+            <Typography gutterBottom 
+            variant="body2" 
+            component="h2"
+            color="textSecondary">
+                    {header}:
+                    <b>{formatNumber(number, "USD", true)}</b>
+            </Typography>
+        )
+    }
     return(
         <Paper className={classes.returnsPaper}>
             <Typography gutterBottom style={{
@@ -22,62 +45,15 @@ const PortfolioDataPaper = ({portfolio}) =>{
             variant="h5" color="textSecondary">Portfolio Returns:</Typography>
             <Grid container>
                 <Grid item xs={6} style={{borderRight:`1px solid ${theme.palette.secondary.dark}`}}>
-                    <Typography gutterBottom variant="body2" component="h2">
-                        1 Month:
-                        <Typography variant="body2" className={classes.resultTypo}>
-                            56%
-                        </Typography>
-                    </Typography>
-                    <Typography gutterBottom variant="body2" component="h2" >
-                        3 Month:
-                        <Typography variant="body2" className={classes.resultTypo}>
-                            56%
-                        </Typography>
-                        </Typography>
-                    <Typography gutterBottom variant="body2" component="h2">
-                        6 Month:
-                        <Typography variant="body2" className={classes.resultTypo}>
-                            56%
-                        </Typography>
-                    </Typography>
-                    <Typography gutterBottom variant="body2" component="h2"> 
-                        YTD:
-                        <Typography variant="body2" className={classes.resultTypo}>
-                            56%
-                        </Typography>
-                    </Typography>
-                    <Typography gutterBottom variant="body2" component="h2">
-                        1 Year:
-                        <Typography variant="body2" className={classes.resultTypo}>
-                            56%
-                        </Typography>
-                    </Typography>
-                    <Typography gutterBottom variant="body2" component="h2">
-                        3 Year: 
-                        <Typography variant="body2" className={classes.resultTypo}>
-                            56%
-                        </Typography>
-                    </Typography>
+                    {renderText("Current Value", portfolio.total_value)}
+                    {renderText("Total Cost", portfolio.total_cost)}
+                    {renderText("No. of Holdings", portfolio.holdings.length, false)}
                 </Grid>
                 <Grid item xs={6} style={{paddingLeft:'1rem'}}>
-                    <Typography gutterBottom variant="body2" component="h2">
-                        Realized Gain/Loss:
-                        <Typography variant="body2" className={classes.resultTypo}>
-                            {formatNumber(portfolio.realized_gain, "USD", true)}
-                        </Typography>
-                    </Typography>
-                    <Typography gutterBottom variant="body2" component="h2">
-                        Unrealized Gain/Loss:
-                        <Typography variant="body2" className={classes.resultTypo}>
-                            {formatNumber(portfolio.gain, "USD", true)}
-                        </Typography>
-                    </Typography>
-                    <Typography gutterBottom variant="body2" component="h2">
-                        Total Gain/Loss:
-                        <Typography variant="body2" className={classes.resultTypo}>
-                            {formatNumber(portfolio.gain + portfolio.realized_gain, "USD", true)}
-                        </Typography>
-                    </Typography>
+                    {renderText("Realized Gain/Loss", portfolio.realized_gain)}
+                    {renderText("Unrealized Gain/Loss", portfolio.gain)}
+                    {renderText("Total Gain/Loss", portfolio.gain + portfolio.realized_gain)}
+                    
                 </Grid>
             </Grid>
         </Paper>

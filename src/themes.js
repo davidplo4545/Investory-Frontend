@@ -20,7 +20,8 @@ export const lightTheme = {
     type:'dark',
     backgroundColor: "#424242",
     text:{
-      primary: "#d8c3a5",
+      // primary: "#d8c3a5",
+      primary: "#F2F4F3",
       secondary:  "#c5ccd6",
     },
     primary:{

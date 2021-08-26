@@ -68,14 +68,14 @@ const PortfolioPage = ({match}) =>{
     const [expanded, setExpanded] = useState(true)
     const [selectedHolding , setSelectedHolding] = useState(null)
     const [activeCellIndex, setActiveCellIndex] = useState(null)
+    const conversionRate = 3.22
+    const [currency, setCurrency] = useState("USD")
     const theme = useTheme()
 
     useEffect(() => { 
         getPortfolio(user.token, portfolioId, setPortfolio)
     },[portfolioId, user.token])
     
-
-
     const handleChange = (panel) => (event, isExpanded) => {
         setExpanded(isExpanded);
       };

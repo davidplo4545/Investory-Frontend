@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) =>{
         root:{
             background: 'transparent !important',
             color:  `${theme.palette.text.primary} !important`,
-            borderBottom: `1px solid ${theme.palette.secondary.main}`,
+            borderBottom: `1px solid ${theme.palette.text.secondary}`,
             paddingBottom:'5px',
             fontWeight:'bold',
             '& .navbar-center':{
@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) =>{
                 fontFamily: theme.palette.text.fontFamily,
                 transition: 'all ease-in 0.2s',
                 '&:hover':{
-                    color:`${theme.palette.secondary.light} !important`,
+                    color:`${theme.palette.text.secondary} !important`,
                 },
             },
             '& .dropdown-menu':{

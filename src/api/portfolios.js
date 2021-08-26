@@ -111,7 +111,6 @@ export const postComparedAssetPortfolio = async (userToken, portfolioId, request
     setIsLoading(false)
 })
 .catch(error => {
-    console.log(error)
     setError("Error: Could not compare the portfolio with this asset!")
     setIsLoading(false)
 })

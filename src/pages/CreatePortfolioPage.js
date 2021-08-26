@@ -1,16 +1,14 @@
 import React, {useState, useContext, useEffect} from 'react'
-import { getAllAssets1 } from '../api/assets'
 import { patchPortfolio, postPortfolio } from '../api/portfolios'
 import { UserContext } from '../context/UserContext'
 import { TextField, Paper,  Grid, Button, Typography } from '@material-ui/core'
-import { Autocomplete } from '@material-ui/lab';
 import ActionsDataGrid from '../components/tables/ActionsDataGrid'
 import { useHistory, useLocation } from 'react-router-dom'
-
+import AutoCompleteAsync from '../components/forms/AutoCompleteAsync'
 
 const CreatePortfolioPage = () =>{
     const user = useContext(UserContext)
-    const [assets, setAssets] = useState(null)
+    const [queriedAssets, setQueriedAssets] = useState(null)
     const [name, setName] = useState('')
     const [rows, setRows] = useState([])
     const [portfolio, setPortfolio] = useState(null)
@@ -18,7 +16,7 @@ const CreatePortfolioPage = () =>{
     const [errors, setErrors] = useState([])
     const location = useLocation()
     const history = useHistory()
-    const [newSymbol, setNewSymbol] = useState(null)
+    const [selectedAsset, setSelectedAsset] = useState(null)
     const [isActionsChanged, setIsActionsChanged] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
 
@@ -45,7 +43,6 @@ const CreatePortfolioPage = () =>{
         }
         else
             setIsEdit(true)
-        getAllAssets1(user.token, '', setAssets)
 
     }, [location.state, user.token])
 
@@ -137,11 +134,6 @@ const CreatePortfolioPage = () =>{
         }
     }
 
-    const handleAssetSelectionChanged = (e, values) =>{
-        if(values)
-            setNewSymbol(values)
-    }
-
     const generateKey = (pre) => {
         return `${ pre }_${ new Date().getTime() }`;
     }
@@ -149,7 +141,7 @@ const CreatePortfolioPage = () =>{
     const handleFormSubmit = (e) =>{
         e.preventDefault()
         
-        if (newSymbol)
+        if (selectedAsset)
         {
             // Adjust completed_at field to same format
             // as given from api to the new action added
@@ -163,11 +155,11 @@ const CreatePortfolioPage = () =>{
             completed_at = [year,month ,day].join('-')
 
             const newAction = { 
-                id: generateKey(newSymbol.name),
-                asset: newSymbol.id,
+                id: generateKey(selectedAsset.name),
+                asset: selectedAsset.id,
                 type:"BUY", 
-                currency: newSymbol.currency,
-                name:newSymbol.name, 
+                currency: selectedAsset.currency,
+                name:selectedAsset.name, 
                 quantity: 0, 
                 share_price: 0, 
                 completed_at: completed_at }
@@ -192,16 +184,13 @@ const CreatePortfolioPage = () =>{
                         <TextField style={{marginBottom: '1rem'}} value={name} label="Portfolio Name" onChange={(e) =>setName(e.target.value)}/>
                         </Grid>
                         <Grid item>
-                        {assets &&
                         <form onSubmit={handleFormSubmit}>
-                            <Autocomplete
-                            options={assets}
-                            getOptionLabel={(option) => option.name}
-                            getOptionSelected={(option, value) => option.id === value.id}
-                            onChange={handleAssetSelectionChanged}
-                            style={{ width: '100%' }}
-                            renderInput={(params) => <TextField {...params} label="Choose Asset" variant="outlined" />}
-                            />
+                            <AutoCompleteAsync
+                            selectedAsset={selectedAsset}
+                            setSelectedAsset={setSelectedAsset}
+                            queriedAssets={queriedAssets}
+                            setQueriedAssets={setQueriedAssets}
+                            width={"100%"}/>
                             <Grid container justifyContent="space-between"
                              style={{marginTop:'1rem', marginBottom:'1rem'}}>
 
@@ -215,18 +204,15 @@ const CreatePortfolioPage = () =>{
                             <p key={index}>{error}</p>
                             )}
                         </form>
-                        }
                         </Grid>
                     </Grid>
                 </Paper>
             </Grid>
             <Grid item xl={9} md={12} xs={12}>
-                {assets && assets.length &&
-                   <ActionsDataGrid rows={rows}
-                    setRows={setRows} 
-                    isLoading={isLoading}
-                    setIsActionsChanged={setIsActionsChanged}/>
-                }
+                <ActionsDataGrid rows={rows}
+                setRows={setRows} 
+                isLoading={isLoading}
+                setIsActionsChanged={setIsActionsChanged}/>
             </Grid>
         </Grid>
     )
