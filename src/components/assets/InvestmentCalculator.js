@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import DateFnsUtils from '@date-io/date-fns';
 import {
   MuiPickersUtilsProvider,
@@ -30,8 +30,11 @@ const InvestmentCalculator = ({asset, records}) =>{
         setAmount(e.target.value)
     }
 
-    const handleSubmit = (event) =>{
-        event.preventDefault();
+    useEffect(() => {
+        if(result !== 0)
+            calculateReturns()
+        },[asset]);
+    const calculateReturns = () =>{
         let i =0
         while (selectedDate > Date.parse(records[i].date) && i < records.length - 1)
         {
@@ -43,6 +46,11 @@ const InvestmentCalculator = ({asset, records}) =>{
         setResult(lastPrice / startPrice * amount)
         setReturnRate((lastPrice / startPrice -1)* 100)
     }
+    const handleSubmit = (event) =>{
+        event.preventDefault();
+        calculateReturns()
+    }
+
 
     return(
         <React.Fragment>

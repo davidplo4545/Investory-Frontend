@@ -81,7 +81,7 @@ const PortfolioPage = ({match, shortUrl=null}) =>{
         else if(shortUrl)
             getSharedPortfolio(shortUrl, setPortfolio, history)
             
-    },[user.token, shortUrl, match])
+    },[user.token, shortUrl, match, history])
     
     const handleChange = (panel) => (event, isExpanded) => {
         setExpanded(isExpanded);

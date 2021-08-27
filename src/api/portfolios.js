@@ -1,6 +1,5 @@
 // import { ContactSupportOutlined } from '@material-ui/icons'
 import axios from 'axios'
-import { useHistory, Redirect } from 'react-router'
 
 const domain = "http://localhost:8000/api"
 

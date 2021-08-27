@@ -81,7 +81,7 @@ const PortfolioCard = ({portfolio, handleDialogShow}) =>{
                             Value: {`${formatNumber(portfolio.total_value)}`} 
                         </Typography>
                         <Typography variant="body1" style={{display:'inline-block', marginLeft:'0.3rem', color: portfolio.return < 0 ? '#E27D60' : '#379683'}}>
-                             ({portfolio.return < 0 ? `${formatNumber(portfolio.gain)}$` : `+${formatNumber(portfolio.gain)}`})
+                             ({portfolio.return < 0 ? `${formatNumber(portfolio.gain)}` : `+${formatNumber(portfolio.gain)}`})
 
                         </Typography>
                         <LargetHoldingsList portfolio={portfolio}/>

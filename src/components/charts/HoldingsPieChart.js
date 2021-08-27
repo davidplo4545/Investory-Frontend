@@ -40,6 +40,10 @@ const HoldingsPieChart = ({portfolio, isSingle, width, height, innerRadius, oute
         setSelectedHolding(holding)
       }
 
+    const onCellLeave = () =>{
+        setActiveCellIndex(null)
+        setSelectedHolding(null)
+    }
     return (
         <React.Fragment>
         {holdings && holdings.length &&
@@ -126,6 +130,7 @@ const HoldingsPieChart = ({portfolio, isSingle, width, height, innerRadius, oute
                 activeShape={!isSingle && renderActiveShape} 
                 activeIndex={!isSingle && activeCellIndex}
                 onMouseEnter={!isSingle && onCellEnter}
+                onMouseLeave={!isSingle && onCellLeave}
                 fill="#8884d8"
                 dataKey="percentage"
             >

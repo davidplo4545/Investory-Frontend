@@ -51,7 +51,10 @@ const useStyles = makeStyles((theme) =>{
                 },
             },
             '& .dropdown-menu':{
-                background: theme.palette.type === 'light' ? '#fff' : theme.palette.secondary.main,
+                background: theme.palette.type === "light" ? 
+                '#fff'
+                :
+                theme.palette.text.primary,
                 '& .dropdown-item':{
                     color: theme.palette.common.black,
                     transition:'all ease-in 0.3s'

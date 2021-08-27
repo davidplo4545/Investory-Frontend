@@ -37,7 +37,7 @@ const AutoCompleteAsync = ({queriedAssets, setQueriedAssets, selectedAsset, setS
 
               return () => clearTimeout(timer);
         }
-    }, [text, user.token])
+    }, [text, user.token, setQueriedAssets])
     
     const handleClose = () =>{
         setIsLoading(false)

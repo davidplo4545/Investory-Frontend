@@ -106,7 +106,7 @@ const GetStartedPage = () => {
     const [isRegisterDialog, setIsRegisterDialog] = useState(false);
   
     return (
-      <Grid container direction="colmun">
+      <Grid container direction="column">
         <RegisterDialogForm isRegisterDialog={isRegisterDialog}
         setIsRegisterDialog={setIsRegisterDialog}/>
         <Grid container className={classes.topGrid}>
