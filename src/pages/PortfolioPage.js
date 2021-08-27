@@ -1,14 +1,16 @@
 import React, {useEffect, useContext, useState} from 'react'
 import { useHistory } from 'react-router'
 import { UserContext } from '../context/UserContext'
-import { getPortfolio } from '../api/portfolios'
+import { getPortfolio, getSharedPortfolio } from '../api/portfolios'
 import AssetAreaChart from '../components/charts/AssetAreaChart'
 import HoldingsPieChart from '../components/charts/HoldingsPieChart'
 import HoldingsTable from '../components/tables/HoldingsTable'
-import { Button, Grid, Paper, Box, Typography, makeStyles, ButtonGroup, Accordion, AccordionSummary, useTheme } from '@material-ui/core'
+import { Button, Grid, Paper, TextField, Box, Typography, makeStyles, ButtonGroup, Accordion, AccordionSummary, useTheme } from '@material-ui/core'
 import PortfolioDataPaper from '../components/portfolios/PortfolioDataPaper'
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import AttachFileIcon from '@material-ui/icons/AttachFile';
+import { patchPortfolioIsShare } from '../api/portfolios'
 
 const useStyles = makeStyles((theme) =>{
     return({
@@ -61,24 +63,31 @@ const useStyles = makeStyles((theme) =>{
 
 const numberFormatter = new Intl.NumberFormat('en-US',  {style: 'currency', currency: 'USD'})
 
-const PortfolioPage = ({match}) =>{
+const PortfolioPage = ({match, shortUrl=null}) =>{
     const user = useContext(UserContext)
+    const history = useHistory()
     const [portfolio, setPortfolio] = useState(null)
-    const portfolioId = match.params.portfolioId
     const [expanded, setExpanded] = useState(true)
     const [selectedHolding , setSelectedHolding] = useState(null)
     const [activeCellIndex, setActiveCellIndex] = useState(null)
-    const conversionRate = 3.22
-    const [currency, setCurrency] = useState("USD")
     const theme = useTheme()
-
+    
     useEffect(() => { 
-        getPortfolio(user.token, portfolioId, setPortfolio)
-    },[portfolioId, user.token])
+        if(match)
+        {
+            const portfolioId = match.params.portfolioId
+            getPortfolio(user.token, portfolioId, setPortfolio, history)
+        }
+        else if(shortUrl)
+            getSharedPortfolio(shortUrl, setPortfolio, history)
+            
+    },[user.token, shortUrl, match])
     
     const handleChange = (panel) => (event, isExpanded) => {
         setExpanded(isExpanded);
       };
+
+
     const classes = useStyles()
     return ( 
         
@@ -117,9 +126,17 @@ const PortfolioPage = ({match}) =>{
                                     setActiveCellIndex={setActiveCellIndex}/> 
                                 </Grid>
                                 <Grid item>
-                                    <PortfolioActionsGroup portfolio={portfolio}/>
+                                    <PortfolioActionsGroup portfolio={portfolio} setPortfolio={setPortfolio}/>                                    
                                 </Grid>
+                                {portfolio.is_shared &&
+                                    <Grid item>
+                                        <ClipboardBox portfolio={portfolio}/>
+                                    </Grid>
+                                }
+
                             </Grid>
+                            
+
                         </Paper>
                     </Grid> 
                     <Grid item md={6} lg={12} style={{width: '100%', marginTop:'0'}}>
@@ -127,7 +144,7 @@ const PortfolioPage = ({match}) =>{
                     </Grid> 
                     </Grid>
                     <Grid item container direction="column" xl={7} md={12}>
-                            <Grid item>
+                            <Grid item container style={{justifyContent:'space-between'}}>
                                 <Typography gutterBottom variant="h4" className={classes.title}>{portfolio.name}</Typography>
                             </Grid>
                 <Accordion style={{marginBottom: '1rem'}}
@@ -178,9 +195,11 @@ const PortfolioPage = ({match}) =>{
     )
 }
 
-const PortfolioActionsGroup = ({portfolio}) =>{
+const PortfolioActionsGroup = ({portfolio, setPortfolio}) =>{
     const history = useHistory()
     const theme = useTheme()
+    const user = useContext(UserContext)
+
 
     const navigateToPortfolioEdit = () =>{
         history.push({
@@ -195,6 +214,16 @@ const PortfolioActionsGroup = ({portfolio}) =>{
         })
     }
 
+    const changePortfolioIsShare = () =>{
+        const requestData = {'is_shared':!portfolio.is_shared}
+        patchPortfolioIsShare(
+            user.token, 
+            portfolio.id, 
+            requestData, 
+            portfolio,
+            setPortfolio)
+    }
+
     return(
         <ButtonGroup style={{marginTop:'1rem'}}>
             <Button onClick={navigateToPortfolioEdit}
@@ -205,7 +234,44 @@ const PortfolioActionsGroup = ({portfolio}) =>{
             style={{color:theme.palette.text.secondary}}>
                 Compare
             </Button>
+            <Button variant="outlined" 
+                style={{ color: theme.palette.text.secondary}}
+                onClick={() => changePortfolioIsShare()}>
+                {portfolio.is_shared ? "UnShare" : "Share"}
+            </Button>
         </ButtonGroup>
+    )
+}
+
+const ClipboardBox = ({portfolio}) =>{
+    const theme = useTheme()
+    const url = `${window.location.host}/shared/${portfolio.short_url}`
+
+    const copyToClipboard = (e) =>{
+        navigator.clipboard.writeText(url)
+        document.execCommand('copy');
+        e.target.focus();
+    }
+
+    return(
+        <Box style={{justifyContent:'center',
+            marginTop:'1rem',
+            border:`1px solid ${theme.palette.text.secondary}`,
+            borderRadius:'1rem',
+            padding:'0.5rem'}}>
+            <TextField
+                value={url}
+                style={{paddingRight:'0.5rem',
+                color:theme.palette.text.primary,
+            borderRight:`1px solid ${theme.palette.text.secondary}`}}
+                />
+                <Button
+                    style={{color:theme.palette.text.secondary, margin:0}}
+                    onClick={copyToClipboard}
+                    endIcon={<AttachFileIcon/>}>
+                        Copy
+                </Button>
+        </Box>
     )
 }
 

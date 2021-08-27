@@ -1,5 +1,6 @@
 // import { ContactSupportOutlined } from '@material-ui/icons'
 import axios from 'axios'
+import { useHistory, Redirect } from 'react-router'
 
 const domain = "http://localhost:8000/api"
 
@@ -39,7 +40,7 @@ export const getAllPortfolios = (userToken, setPortfolios) =>{
 }
 
 
-export const getPortfolio = async (userToken, portfolioId, setPortfolio) =>{
+export const getPortfolio = async (userToken, portfolioId, setPortfolio, history) =>{
     await axios.get(domain + `/portfolios/${portfolioId}`,{
         headers:{
             'Authorization': `Token ${userToken}`
@@ -50,7 +51,27 @@ export const getPortfolio = async (userToken, portfolioId, setPortfolio) =>{
         calculatePortfolioDetails(portfolio)
         setPortfolio(portfolio)
     })
+    .catch((error) =>{
+        history.push({
+            pathname: `/404`,
+        })
+    })
 }
+
+export const getSharedPortfolio = async (shortUrl, setPortfolio, history) =>{
+    await axios.get(domain + `/${shortUrl}`,{})
+    .then((res) =>{
+        let portfolio = res.data
+        calculatePortfolioDetails(portfolio)
+        setPortfolio(portfolio)
+    })
+    .catch((error) =>{
+        history.push({
+            pathname: `/404`,
+        })
+    })
+}
+
 
 export const postPortfolio = async (userToken, requestData, history, setIsLoading, setErrors) =>{
     setIsLoading(true)
@@ -92,6 +113,28 @@ export const patchPortfolio = async (userToken,portfolioId, requestData, setPort
         if(error.response.status === 400)
             setErrors([error.response.data.message])
         setIsLoading(false)
+    })
+}
+
+export const patchPortfolioIsShare = async (userToken,
+    portfolioId, 
+    requestData, 
+    portfolio,
+    setPortfolio) =>{
+    await axios.patch(domain + `/portfolios/${portfolioId}/`,
+        requestData,
+        {headers:{
+            'Authorization': `Token ${userToken}`
+        }}
+    )
+    .then((res) =>{
+        const tempPortfolio = {...portfolio}
+        tempPortfolio.is_shared = res.data.is_shared
+        setPortfolio(tempPortfolio)
+        
+    })
+    .catch((error) => {
+        console.log(error)
     })
 }
 

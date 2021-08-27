@@ -1,7 +1,7 @@
 import React, {  useState } from 'react'
 import RegisterDialogForm from '../components/forms/RegisterDialogForm'
 import { Grid, makeStyles,  Typography,  Card, CardContent, 
-  CardActions,  Button } from '@material-ui/core'
+   Button } from '@material-ui/core'
 import mainImg from '../images/mainImg.jpg'
 import TrendingUpIcon from '@material-ui/icons/TrendingUp';
 import AssessmentIcon from '@material-ui/icons/Assessment';
@@ -36,14 +36,14 @@ const useStyles = makeStyles((theme) => {
           },
         },
         '& h2':{
-          fontSize:'4rem',
+          fontSize:'5rem',
           fontFamily: 'Cabin Sketch'
         },
         '& h2:nth-child(2)':{
           marginLeft:'5rem',
         },
         '& h2:nth-child(3)':{
-          marginLeft:'10rem',
+          marginLeft:'17rem',
         },
         [theme.breakpoints.up('md')]: {
           spacing:theme.spacing(2),
@@ -76,6 +76,8 @@ const useStyles = makeStyles((theme) => {
     },
     card:{
       // color: theme.palette.primary.light,
+      paddingBottom: '3rem',
+      height:'250px',
       '& h5':{
         borderBottom: `1px solid ${theme.palette.text.primary}`,
         paddingBottom:'0.5rem',
@@ -114,20 +116,17 @@ const GetStartedPage = () => {
           <Grid className="site-description" item md={6} sm={12} xs={12}>
             <Typography gutterBottom variant="h2" color="textPrimary"
              component="h2">
-              <b>Invest,</b>
+              <b>Track,</b>
             </Typography>
             <Typography gutterBottom variant="h2" color="textPrimary"
              component="h2">
-              Track
+              Compare
             </Typography>
             <Typography gutterBottom variant="h2" color="textPrimary"
              component="h2">
-              & Compare
+              & Share
             </Typography>
             <Typography gutterBottom variant="body1" color="textSecondary">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed molestie ornare ex in ornare. Vivamus feugiat, justo et placerat volutpat, magna sapien vulputate erat, ut vestibulum velit dolor porttitor eros. Curabitur et ex nec lorem congue vestibulum. Mauris ultrices, velit at venenatis porttitor, quam ex molestie lorem, vulputate posuere est nulla in tellus. Pellentesque tortor massa, malesuada at lacus in, iaculis congue massa. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam posuere et nulla vitae congue.
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
             </Typography>
             <Button variant="contained" 
             style={{marginTop:'1rem'}} 
@@ -146,50 +145,41 @@ const GetStartedPage = () => {
               <CardContent>
                 
                 <Typography gutterBottom component="h5" variant="h5" color="textPrimary">
-                  Invest <TrendingUpIcon/>
+                  Track <TrendingUpIcon/>
                 </Typography>
                 <Typography variant="subtitle1" color="textSecondary">
-                  Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
-                    across all continents except Antarctica
+                  Easily track your favorite equities: <b>cryptos, stocks and ETFs</b>.
+                  <br/>Follow your entire portfolio lifetime and manage your returns.
                 </Typography>
               </CardContent>
-              <CardActions style={{justifyContent:'flex-end', padding:'1rem'}}>
-                  <Button variant="contained" color="primary">Read More</Button>
-                </CardActions>
-            </Card>
-          </Grid>
-          <Grid item md={4} xs={12}>
-            <Card className={classes.card}>
-              <CardContent>
-                <Typography gutterBottom component="h5" variant="h5" color="textPrimary">
-                  Track <AssessmentIcon/>
-                </Typography>
-                <Typography variant="subtitle1" color="textSecondary">
-                  Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
-                    across all continents except Antarctica
-                </Typography>
-              </CardContent>
-              <CardActions style={{justifyContent:'flex-end', padding:'1rem'}}>
-                  <Button variant="contained" color="primary">Read More</Button>
-                </CardActions>
             </Card>
           </Grid>
           <Grid item md={4} xs={12}>
             <Card className={classes.card}>
                 <CardContent>
                   <Typography gutterBottom component="h5" variant="h5" color="textPrimary">
-                    Compare <CompareArrowsIcon/>
+                    Compare <AssessmentIcon/>
                   </Typography>
                   <Typography variant="subtitle1" color="textSecondary">
-                    Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
-                      across all continents except Antarctica
+                    Compare your portfolio to any asset, from the most popular ones
+                    such as: <b>QQQ, SPY</b>, to the least popular ones like small-caps and cryptos.
                   </Typography>
                 </CardContent>
-                <CardActions style={{justifyContent:'flex-end', padding:'1rem'}}>
-                  <Button variant="contained" color="primary">
-                    Read More
-                  </Button>
-                </CardActions>
+            </Card>
+          </Grid>
+          <Grid item md={4} xs={12}>
+            <Card className={classes.card}>
+              <CardContent>
+                <Typography gutterBottom component="h5" variant="h5" color="textPrimary">
+                  Share <CompareArrowsIcon/>
+                </Typography>
+                <Typography variant="subtitle1" color="textSecondary">
+                  Let your friends see how your portfolio is doing (you can keep it
+                  private as well).
+                  <br/>
+                  Share your portfolios highs, lows, and any new investment ideas.
+                </Typography>
+              </CardContent>
             </Card>
           </Grid>
         </Grid>

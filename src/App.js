@@ -9,6 +9,7 @@ import AssetsPage from './pages/AssetsPage'
 import AssetPage from './pages/AssetPage'
 import PortfoliosPage from './pages/PortfoliosPage'
 import PortfolioPage from './pages/PortfolioPage'
+import SharedPortfolioPage from './pages/SharedPortfolioPage';
 import CreatePortfolioPage from './pages/CreatePortfolioPage'
 import {UserContext} from './context/UserContext'
 import useToken from './context/useToken'
@@ -164,6 +165,7 @@ function App() {
           <Grid container>
             <Switch>
               <DisallowedForAuthRoute exact path="/" component={GetStartedPage}/>
+              <Route exact path="/shared/:shortUrl" component={SharedPortfolioPage}/>
               <PrivateRoute path="/assets/:assetType" component={AssetsPage}/>
               <PrivateRoute path="/asset/:assetId" component={AssetPage}/>
               <PrivateRoute exact path="/portfolios" component={PortfoliosPage}/>
@@ -172,6 +174,7 @@ function App() {
               <PrivateRoute exact path="/portfolio-create" component={CreatePortfolioPage}/>
               <PrivateRoute exact path="/portfolios/:portfolioId/compare" component={ComparePortfolioPage}/>
               <PrivateRoute exact path="/instructions" component={InstructionsPage}/>
+              <Route path="/404" component={NotFound} />
             </Switch> 
           </Grid>
         </Box>
@@ -183,6 +186,10 @@ function App() {
   );
 }
 
+
+const NotFound = () =>{
+  return <h1>Not Found</h1>
+}
 const PrivateRoute = ({ component: Component, ...rest }) => {
   const user = useContext(UserContext)
   return <Route {...rest} render={(props) => (
