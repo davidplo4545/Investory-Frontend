@@ -8,7 +8,7 @@ import AutoCompleteAsync from '../components/forms/AutoCompleteAsync'
 
 const CreatePortfolioPage = () =>{
     const user = useContext(UserContext)
-    const [queriedAssets, setQueriedAssets] = useState(null)
+    const [queriedAssets, setQueriedAssets] = useState([])
     const [name, setName] = useState('')
     const [rows, setRows] = useState([])
     const [portfolio, setPortfolio] = useState(null)
@@ -55,17 +55,30 @@ const CreatePortfolioPage = () =>{
             errorData.push(`Please set new portfolio actions.`)
         if(rows && rows.length){
             rows.forEach((row) =>{
+                row.isError = false
                 if(parseInt(row.quantity) <= 0 || row.quantity === "")
+                {
+                    row.isError = true
                     errorData.push(`${row.type} action ${row.name} quantity is zero or negative`)
+                }
                 if(parseInt(row.share_price) <= 0 || row.share_price === "")
+                {
+                    row.isError = true
                     errorData.push(`${row.type} action ${row.name} share price is zero or negative`)
+                }
                 if(row.completed_at === null)
+                {
+                    row.isError = true
                     errorData.push(`${row.type} action ${row.name} date is empty.`)
+                }
             })
         }
         setErrors(errorData)
         if (errorData.length)
+        {
+            setRows(rows)
             return false
+        }
         return true
     }
 

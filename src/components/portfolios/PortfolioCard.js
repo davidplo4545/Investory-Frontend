@@ -1,6 +1,6 @@
 import React from 'react'
 import HoldingsPieChart from '../charts/HoldingsPieChart'
-import { Card, Button, CardContent, Typography, Link as MuiLink,
+import { Card, Button, CardContent, Typography, Link as MuiLink, Box,
      CardActions, makeStyles, CardMedia } from '@material-ui/core'
 import { formatNumber } from '../base/helpers'
 import { Link, useHistory } from "react-router-dom";
@@ -55,10 +55,11 @@ const PortfolioCard = ({portfolio, handleDialogShow}) =>{
             pathname: `/portfolios/${id}`,
         })
     }
-
+    console.log(portfolio)
     return(
         <Card elevation={2} style={{background:'transparent', width: "100%", height:"auto"}}>
                     <CardMedia>
+                        {portfolio.holdings.length ? 
                         <HoldingsPieChart portfolio={portfolio} 
                         isSingle={true}
                         width={350}
@@ -66,7 +67,14 @@ const PortfolioCard = ({portfolio, handleDialogShow}) =>{
                         innerRadius={60} 
                         outerRadius={100}
                         cx={'50%'}
-                        cy={'50%'}/>
+                        cy={'50%'}/> 
+                        :
+
+                        <Box style={{background:'transparent', width:350, height:230,
+                        display:'flex', alignItems:'center', justifyContent:'center'}}>
+                            <Typography variant="h5">Portfolio has no holdings</Typography>
+                        </Box>
+                        }
                     </CardMedia>
                     <CardContent>
                         <MuiLink className={classes.portfolioLink} color="textPrimary" component={Link} to={`/portfolios/${portfolio.id}`}>

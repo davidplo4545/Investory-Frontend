@@ -1,6 +1,6 @@
 import React from 'react'
 import { DataGrid, GridOverlay } from '@material-ui/data-grid';
-import { Paper, Button, LinearProgress } from '@material-ui/core';
+import { Paper, Button, LinearProgress, useTheme } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core'
 import DeleteIcon from "@material-ui/icons/Delete";
 import { formatNumber } from '../base/helpers';
@@ -37,6 +37,8 @@ const useStyles = makeStyles((theme) =>{
 
 
 const ActionsDataGrid = ({ rows, setRows, isLoading, setIsActionsChanged}) =>{
+
+  const theme = useTheme()
   const columns = [    
   {
       field: 'type',
@@ -64,7 +66,7 @@ const ActionsDataGrid = ({ rows, setRows, isLoading, setIsActionsChanged}) =>{
   {
       field: 'name',
       headerName: 'Name',
-      flex:0.25,
+      flex:0.3,
       sortable: false,
       minWidth: 150,
   },
@@ -120,7 +122,8 @@ const ActionsDataGrid = ({ rows, setRows, isLoading, setIsActionsChanged}) =>{
         <div>
           <Button
             variant="contained"
-            color="secondary"
+            style={{background : params.row.isError ?  '#E27D60' : 
+              theme.palette.secondary.main}}
             size="small"
             startIcon={<DeleteIcon />}
           >

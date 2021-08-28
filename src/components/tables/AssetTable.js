@@ -93,7 +93,8 @@ const AssetTable = ({assets}) =>{
               columns={columns} 
               onCellClick={handleCellClicked}
               rows={assets}
-              rowsPerPageOptions={[]}/>
+              rowsPerPageOptions={[]}
+              disableColumnSelector/>
             
   )
 }

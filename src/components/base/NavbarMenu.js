@@ -4,10 +4,12 @@ import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
 import { Link, useHistory } from "react-router-dom";
 import {userLogout} from '../../api/authentication.js'
 import {UserContext} from '../../context/UserContext'
-import {Switch, useTheme, makeStyles} from "@material-ui/core";
+import {Button, useTheme, makeStyles} from "@material-ui/core";
 import LoginDialogForm from '../forms/LoginDialogForm';
 import lightThemeLogo from '../../images/light_logo.png'
 import darkThemeLogo from '../../images/dark_logo.png'
+import Brightness2Icon from '@material-ui/icons/Brightness2';
+import Brightness7Icon from '@material-ui/icons/Brightness7';
 
 const useStyles = makeStyles((theme) =>{
     return({
@@ -17,6 +19,16 @@ const useStyles = makeStyles((theme) =>{
             borderBottom: `1px solid ${theme.palette.text.secondary}`,
             paddingBottom:'5px',
             fontWeight:'bold',
+            themeBtn:{
+                padding:0, 
+                minWidth:30, 
+                height:30, 
+                marginTop:5,
+                '& .MuiButton-label':{
+                    width:'auto'
+                },
+                
+            },
             '& .navbar-center':{
                 width: '60%',
                 margin: '0 auto',
@@ -67,12 +79,20 @@ const useStyles = makeStyles((theme) =>{
                     transition: 'all ease-in 0.5s',
                     width: '100%',
                 },
+
                 '& .collapsed-center':{
                     width: '100%',
                     marginBottom:'0.2rem',
                 },
                 '& .navbar-collapse':{
                     width: '95%',
+                },
+                '& .MuiButton-label':{
+                    width:'auto'
+                },
+                '& .MuiButton-textSecondary':{
+                    width:'10px',
+                    padding:0,
                 }
             }
         }
@@ -116,8 +136,12 @@ export const NavbarMenu = ({setIsTheme, isTheme, isLoginDialog, setIsLoginDialog
                         {user.token == null ?
                             <Navbar.Collapse id="basic-navbar-nav"> 
                                 <Nav className="ml-auto">
-                                    <Switch color="default" checked={isTheme} onChange={handleThemeChange}/>
-
+                                    <Button color="secondary" 
+                                    className={classes.themeBtn}
+                                     onClick={handleThemeChange}>
+                                        {isTheme ? <Brightness2Icon color="primary" /> : <Brightness7Icon/>}
+                                    </Button>
+                                    
                                     <Nav.Link onClick={() => setIsLoginDialog(!isLoginDialog)}>Sign In</Nav.Link>
                                 </Nav>
                             </Navbar.Collapse>
@@ -139,7 +163,11 @@ export const NavbarMenu = ({setIsTheme, isTheme, isLoginDialog, setIsLoginDialog
                                     })}  
                                 </Nav>
                                 <Nav>
-                                    <Switch color="default" checked={isTheme} onChange={handleThemeChange}/>
+                                    <Button color="secondary" 
+                                    className={classes.themeBtn}
+                                     onClick={handleThemeChange}>
+                                        {isTheme ? <Brightness2Icon color="primary" /> : <Brightness7Icon/>}
+                                    </Button>
                                     <Nav.Link onClick={onLogout}>Logout</Nav.Link>
                                 </Nav>
                             </Navbar.Collapse>

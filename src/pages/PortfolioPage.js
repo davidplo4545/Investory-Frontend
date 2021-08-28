@@ -113,6 +113,7 @@ const PortfolioPage = ({match, shortUrl=null}) =>{
                             justifyContent="center" 
                              alignItems="center">
                                 <Grid item>
+                                    {portfolio.holdings.length ? 
                                     <HoldingsPieChart
                                     selectedHolding={selectedHolding} 
                                     setSelectedHolding={setSelectedHolding} 
@@ -123,7 +124,12 @@ const PortfolioPage = ({match, shortUrl=null}) =>{
                                     innerRadius={120} 
                                     outerRadius={160} 
                                     activeCellIndex={activeCellIndex} 
-                                    setActiveCellIndex={setActiveCellIndex}/> 
+                                    setActiveCellIndex={setActiveCellIndex}/> :
+                                    <Box style={{background:'transparent', width:350, height:350,
+                                    display:'flex', alignItems:'center', justifyContent:'center'}}>
+                                        <Typography variant="h5">Portfolio has no holdings</Typography>
+                                    </Box>
+                                    }
                                 </Grid>
                                 <Grid item>
                                     <PortfolioActionsGroup portfolio={portfolio} setPortfolio={setPortfolio}/>                                    
@@ -166,11 +172,11 @@ const PortfolioPage = ({match, shortUrl=null}) =>{
                                 </Grid>
                                 <Grid item>
                                     <Typography variant="subtitle1">Gain:</Typography>
-                                    <Typography variant="body1" style={{color:portfolio.gain > 0 ? "#9dc88d" : "#e27d60"}}>{numberFormatter.format(portfolio.gain)}</Typography>                                    
+                                    <Typography variant="body1" style={{color:portfolio.gain >= 0 ? "#9dc88d" : "#e27d60"}}>{numberFormatter.format(portfolio.gain)}</Typography>                                    
                                 </Grid>
                                 <Grid item>
                                     <Typography variant="subtitle1">Return:</Typography>
-                                    <Typography variant="body1" style={{color:portfolio.return > 0 ? "#9dc88d" : "#e27d60"}}>{portfolio.return.toFixed(2)}%</Typography>                                    
+                                    <Typography variant="body1" style={{color:portfolio.return < 0 ? "#e27d60" : "#9dc88d" }}>{portfolio.return.toFixed(2)}%</Typography>                                    
                                 </Grid>
 
                             </Grid>
