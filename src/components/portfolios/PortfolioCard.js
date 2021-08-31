@@ -55,7 +55,6 @@ const PortfolioCard = ({portfolio, handleDialogShow}) =>{
             pathname: `/portfolios/${id}`,
         })
     }
-    console.log(portfolio)
     return(
         <Card elevation={2} style={{background:'transparent', width: "100%", height:"auto"}}>
                     <CardMedia>
@@ -88,8 +87,8 @@ const PortfolioCard = ({portfolio, handleDialogShow}) =>{
                         <Typography  color="textSecondary" style={{display:'inline-block', fontWeight:600}} variant="body1" component="h2">
                             Value: {`${formatNumber(portfolio.total_value)}`} 
                         </Typography>
-                        <Typography variant="body1" style={{display:'inline-block', marginLeft:'0.3rem', color: portfolio.return < 0 ? '#E27D60' : '#379683'}}>
-                             ({portfolio.return < 0 ? `${formatNumber(portfolio.gain)}` : `+${formatNumber(portfolio.gain)}`})
+                        <Typography variant="body1" style={{display:'inline-block', marginLeft:'0.3rem', color: portfolio.gain < 0 ? '#E27D60' : '#379683'}}>
+                             ({portfolio.gain < 0 ? `${formatNumber(portfolio.gain)}` : `+${formatNumber(portfolio.gain)}`})
 
                         </Typography>
                         <LargetHoldingsList portfolio={portfolio}/>

@@ -1,7 +1,10 @@
 import React from 'react'
 import { DataGrid } from '@material-ui/data-grid';
-import {makeStyles, Box, Typography} from '@material-ui/core'
+import { useHistory } from 'react-router';
+import {makeStyles, Box, Typography, Tooltip} from '@material-ui/core'
 import { formatNumber } from '../base/helpers';
+import HelpIcon from '@material-ui/icons/Help';
+
 const useStyles =  makeStyles((theme) => ({
   datagrid:{
     color: theme.palette.text.secondary,
@@ -24,7 +27,12 @@ const useStyles =  makeStyles((theme) => ({
   }
 }));
 const HoldingsTable = ({holdings, setSelectedHolding, setActiveCellIndex}) =>{
+  const history = useHistory()
 
+  const helpText = `
+  You can double click a row to redirect to the
+  asset's page!
+  `
   const columns = [   
     {
       field: 'id',
@@ -35,7 +43,18 @@ const HoldingsTable = ({holdings, setSelectedHolding, setActiveCellIndex}) =>{
     }, 
     {
         field: 'asset.name',
-        headerName: 'Name',
+        renderHeader: (params) => (
+          <Box style={{display:'flex', alignItems:'center'}}>
+            <Typography variant="body2" style={{marginRight:'0.5rem'}}>
+              Name
+            </Typography>
+            <Tooltip title={<Typography style={{fontSize:'0.7rem'}}>{helpText}</Typography>}>
+              <HelpIcon size="small"/>
+
+            </Tooltip>
+            
+          </Box>
+        ),
         editable: false,
         flex:1,
         renderCell: (params) => (
@@ -109,12 +128,21 @@ const HoldingsTable = ({holdings, setSelectedHolding, setActiveCellIndex}) =>{
       setSelectedHolding(holding)  
       setActiveCellIndex(holdings.indexOf(holding))
     };
+
+    const handleCellDoubleClick = (param, event) =>{
+      // asset id
+      const {id} =  param.row.asset
+      history.push({
+        pathname:`/asset/${id}`
+      })
+    }
     return(
 
       <DataGrid 
       disableColumnMenu
         className={classes.datagrid}
         pageSize={10} 
+        onCellDoubleClick={handleCellDoubleClick}
         style={{minHeight:'650px'}}
         autoHeight={true} 
         columns={columns} 

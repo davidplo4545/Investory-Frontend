@@ -4,11 +4,11 @@ import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
 import { Link, useHistory } from "react-router-dom";
 import {userLogout} from '../../api/authentication.js'
 import {UserContext} from '../../context/UserContext'
-import {Button, useTheme, makeStyles} from "@material-ui/core";
+import {useTheme, makeStyles, Switch, Box} from "@material-ui/core";
 import LoginDialogForm from '../forms/LoginDialogForm';
 import lightThemeLogo from '../../images/light_logo.png'
 import darkThemeLogo from '../../images/dark_logo.png'
-import Brightness2Icon from '@material-ui/icons/Brightness2';
+import NightsStayIcon from '@material-ui/icons/NightsStay';
 import Brightness7Icon from '@material-ui/icons/Brightness7';
 
 const useStyles = makeStyles((theme) =>{
@@ -73,6 +73,10 @@ const useStyles = makeStyles((theme) =>{
 
                 }
             },
+            '& .right-nav':{
+                display:'flex',
+                alignItems:'center',
+            },
             [theme.breakpoints.down('md')]: {
                 '& .navbar-center':{
                     flexDirection:'column',
@@ -93,7 +97,10 @@ const useStyles = makeStyles((theme) =>{
                 '& .MuiButton-textSecondary':{
                     width:'10px',
                     padding:0,
-                }
+                },
+                '& .right-nav':{
+                    alignItems:'flex-start',
+                },
             }
         }
     })
@@ -135,12 +142,11 @@ export const NavbarMenu = ({setIsTheme, isTheme, isLoginDialog, setIsLoginDialog
                     
                         {user.token == null ?
                             <Navbar.Collapse id="basic-navbar-nav"> 
-                                <Nav className="ml-auto">
-                                    <Button color="secondary" 
-                                    className={classes.themeBtn}
-                                     onClick={handleThemeChange}>
-                                        {isTheme ? <Brightness2Icon color="primary" /> : <Brightness7Icon/>}
-                                    </Button>
+                                <Nav className="ml-auto nav-right">
+                                    <Box>
+                                        {isTheme ? <Brightness7Icon color="primary"/>: <NightsStayIcon />}
+                                        <Switch style={{color:theme.palette.text.secondary}} onChange={handleThemeChange}/>
+                                    </Box>
                                     
                                     <Nav.Link onClick={() => setIsLoginDialog(!isLoginDialog)}>Sign In</Nav.Link>
                                 </Nav>
@@ -162,12 +168,12 @@ export const NavbarMenu = ({setIsTheme, isTheme, isLoginDialog, setIsLoginDialog
                                         )
                                     })}  
                                 </Nav>
-                                <Nav>
-                                    <Button color="secondary" 
-                                    className={classes.themeBtn}
-                                     onClick={handleThemeChange}>
-                                        {isTheme ? <Brightness2Icon color="primary" /> : <Brightness7Icon/>}
-                                    </Button>
+                                <Nav className="right-nav">
+                                    <Box>
+                                        {isTheme ? <Brightness7Icon color="primary"/>: <NightsStayIcon />}
+                                        <Switch style={{color:theme.palette.text.secondary}} onChange={handleThemeChange}/>
+                                    </Box>
+
                                     <Nav.Link onClick={onLogout}>Logout</Nav.Link>
                                 </Nav>
                             </Navbar.Collapse>

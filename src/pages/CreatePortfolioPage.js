@@ -103,11 +103,12 @@ const CreatePortfolioPage = () =>{
                         let action = {
                             type: row.type,
                             asset_id: parseInt(asset_id),
-                            quantity: parseInt(row.quantity),
-                            share_price: parseInt(row.share_price),
+                            quantity: parseFloat(row.quantity),
+                            share_price: parseFloat(row.share_price),
                             completed_at: completed_at,
                         }
                         requestData.actions.push(action)
+
                     })
                 }
             }
@@ -137,6 +138,12 @@ const CreatePortfolioPage = () =>{
             // check if there is any data for a request to be made
             if(Object.keys(requestData).length > 0)
             {
+
+                requestData.actions.sort(function(a,b){
+                    // Turn your strings into dates, and then subtract them
+                    // to get a value that is either negative, positive, or zero.
+                    return new Date(a.completed_at) - new Date(b.completed_at);
+                  });
                 if(isEdit)
                 {
                     patchPortfolio(user.token, portfolio.id, requestData, setPortfolio, history, setIsLoading, setErrors)

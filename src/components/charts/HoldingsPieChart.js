@@ -73,7 +73,7 @@ const HoldingsPieChart = ({portfolio, isSingle, width, height, innerRadius, oute
                     textAnchor="middle" 
                     dominantBaseline="middle"
                     fill={theme.palette.text.secondary}>
-                    {formatNumber(selectedHolding.total_value)}
+                    {formatNumber(selectedHolding.total_value, selectedHolding.asset.currency)}
                 </text>
             }
             {!isSingle && selectedHolding &&
@@ -83,7 +83,7 @@ const HoldingsPieChart = ({portfolio, isSingle, width, height, innerRadius, oute
                     textAnchor="middle" 
                     dominantBaseline="middle"
                     fill={selectedHolding.gain > 0 ? '#9dc88d' : '#e27d60'}>
-                    {selectedHolding.gain > 0 && '+'}{`${formatNumber(selectedHolding.gain)}`}
+                    {selectedHolding.gain > 0 && '+'}{`${formatNumber(selectedHolding.gain,  selectedHolding.asset.currency)}`}
                 </text>
             }
 

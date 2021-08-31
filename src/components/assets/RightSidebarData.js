@@ -2,6 +2,7 @@ import React from 'react'
 import RecentlyViewedAssetsList from './RecentlyViewedAssetsList'
 import InvestmentCalculator from './InvestmentCalculator'
 import {  Grid, makeStyles } from '@material-ui/core'
+import PortfoliosInList from './PortfoliosInList'
 
 const useStyles = makeStyles((theme) =>{
     return{
@@ -49,10 +50,7 @@ const RightSidebarData = ({isSingleAsset, asset}) =>{
                     }
                 </Grid>
                 <Grid item style={{marginTop:'1rem'}}>
-                    <h4>Portfolios in:</h4>
-                    <p>Growth Portfolio</p>
-                    <p>Value Portfolio</p>
-                    <p>Cryptos</p>
+                    <PortfoliosInList assetId={asset.id}/>
                 </Grid>
                 </React.Fragment>
             }

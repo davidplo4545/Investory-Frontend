@@ -143,7 +143,9 @@ const ActionsDataGrid = ({ rows, setRows, isLoading, setIsActionsChanged}) =>{
           rows[rowIndex][field] = date;
       }
       else
-          rows[rowIndex][field] = props.value;
+      {
+        rows[rowIndex][field] = props.value;
+      }
 
       setRows(rows)
       setIsActionsChanged(true)

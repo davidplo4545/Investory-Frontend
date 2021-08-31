@@ -71,15 +71,28 @@ const PortfolioPage = ({match, shortUrl=null}) =>{
     const [selectedHolding , setSelectedHolding] = useState(null)
     const [activeCellIndex, setActiveCellIndex] = useState(null)
     const theme = useTheme()
-    
     useEffect(() => { 
+        let timer = null
         if(match)
         {
             const portfolioId = match.params.portfolioId
             getPortfolio(user.token, portfolioId, setPortfolio, history)
+
+            // polling api for portfolio updates every few seconds
+            timer = setInterval(()=> 
+            getPortfolio(user.token, portfolioId, setPortfolio, history)
+            , 10000);
         }
         else if(shortUrl)
             getSharedPortfolio(shortUrl, setPortfolio, history)
+
+
+        console.log('here1')
+
+        return(() =>{
+            clearInterval(timer)
+            timer = null
+        })
             
     },[user.token, shortUrl, match, history])
     
