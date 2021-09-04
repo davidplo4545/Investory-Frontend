@@ -35,7 +35,7 @@ const PortfoliosInList = ({assetId}) =>{
         .catch((error) => setPortfoliosIn([]))
     }
         getPortfoliosIn()
-    }, [assetId])
+    }, [assetId, user.token])
     return (
     <React.Fragment>
         {portfoliosIn.length ?

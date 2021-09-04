@@ -31,10 +31,6 @@ const InvestmentCalculator = ({asset, records}) =>{
     }
 
     useEffect(() => {
-        if(result !== 0)
-            calculateReturns()
-        },[asset]);
-    const calculateReturns = () =>{
         let i =0
         while (selectedDate > Date.parse(records[i].date) && i < records.length - 1)
         {
@@ -45,10 +41,21 @@ const InvestmentCalculator = ({asset, records}) =>{
         setPriceAtStartDate(startPrice)
         setResult(lastPrice / startPrice * amount)
         setReturnRate((lastPrice / startPrice -1)* 100)
-    }
+        },[asset, amount, records, selectedDate]);
+        
+
     const handleSubmit = (event) =>{
         event.preventDefault();
-        calculateReturns()
+        let i =0
+        while (selectedDate > Date.parse(records[i].date) && i < records.length - 1)
+        {
+            i++;
+        }
+        const startPrice = i > 0 ? records[i-1].price :records[i].price
+        const lastPrice = records[records.length - 1].price
+        setPriceAtStartDate(startPrice)
+        setResult(lastPrice / startPrice * amount)
+        setReturnRate((lastPrice / startPrice -1)* 100)
     }
 
 
