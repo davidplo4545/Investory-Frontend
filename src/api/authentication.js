@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const domain = "http://localhost:8000/api"
+const domain = "https://investory-backend.herokuapp.com/api"
 
 export const userRegister = (userCredentials, setToken, setError) => {
     axios.post(domain + '/register/', {

@@ -14,7 +14,7 @@ const AutoCompleteAsync = ({queriedAssets, setQueriedAssets, selectedAsset, setS
     useEffect(() => {
         const getQueriedAssets = async (query) =>{
 
-            await axios.get(`http://127.0.0.1:8000/api/assets/?search=${query}`,{
+            await axios.get(`https://investory-backend.herokuapp.com/api/assets/?search=${query}`,{
                 headers:{
                     'Authorization': `Token ${user.token}`
                 }

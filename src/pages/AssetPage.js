@@ -15,7 +15,7 @@ const AssetPage = ({match}) =>{
     const assetId = match.params.assetId
     useEffect(() => {
         const getAsset = async () =>{ 
-            const domain = "http://localhost:8000/api"
+            const domain = "https://investory-backend.herokuapp.com/api"
             await axios.get( domain + `/assets/${assetId}`,{
                 headers:{
                     'Authorization': `Token ${user.token}`

@@ -1,7 +1,7 @@
 // import { ContactSupportOutlined } from '@material-ui/icons'
 import axios from 'axios'
 
-const domain = "http://localhost:8000/api"
+const domain = "https://investory-backend.herokuapp.com/api"
 
 
 

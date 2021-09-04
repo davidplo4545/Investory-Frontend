@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const domain = "http://localhost:8000/api"
+const domain = "https://investory-backend.herokuapp.com/api"
 
 export const getAllAssets = (userToken, assetType, setAssets) =>{
     axios.get(domain + `/assets/?type=${assetType}`,{

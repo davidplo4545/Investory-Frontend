@@ -9,7 +9,7 @@ const GoogleLoginAuth = ({setToken, setError, closeFormDialog}) =>{
 
     const onGoogleLoginSuccess = (response) =>{
         const { accessToken } = response
-        axios.post('http://127.0.0.1:8000/rest-auth/google/',{
+        axios.post('https://investory-backend.herokuapp.com/rest-auth/google/',{
             access_token:accessToken,
         }).then((res) =>{
             setToken(res.data['key']);

@@ -114,7 +114,7 @@ const RegisterDialogForm = ({isRegisterDialog, setIsRegisterDialog}) =>{
                             fullWidth
                             style={{marginBottom:'0.7rem'}}
                             placeholder="Enter password"
-                            value={email} 
+                            value={password} 
                             onChange={(e) => setPassword(e.target.value)} required />
 
                         <Typography variant="body2" style={{marginBottom:'0.3rem'}}>

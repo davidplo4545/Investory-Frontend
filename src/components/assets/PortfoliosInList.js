@@ -24,7 +24,7 @@ const PortfoliosInList = ({assetId}) =>{
     const classes = useStyles()
 
     useEffect(() => {
-        const domain = "http://localhost:8000/api"
+        const domain = "https://investory-backend.herokuapp.com/api"
         const getPortfoliosIn = async () =>{
             await axios.get(`${domain}/assets/${assetId}/portfolios_in/`,{
             headers:{

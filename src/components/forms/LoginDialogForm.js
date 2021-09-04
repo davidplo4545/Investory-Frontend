@@ -42,7 +42,7 @@ const LoginDialogForm = ({isLoginDialog, setIsLoginDialog}) =>{
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        axios.post('http://localhost:8000/api/login/',{
+        axios.post('https://investory-backend.herokuapp.com/api/login/',{
             'email':email,
             'password':password,
         })
